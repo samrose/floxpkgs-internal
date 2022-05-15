@@ -2,52 +2,46 @@ rec {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
   inputs.capacitor.inputs.root.follows = "/";
 
-  inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";
-
-  inputs.tracelinks.url = "git+ssh://git@github.com/flox/tracelinks?ref=main";
-  inputs.tracelinks.flake = false;
+  inputs.tracelinks.url = "path:./pkgs/tracelinks";
 
   outputs = {
     self,
     capacitor,
     ...
-  } @ args:
-    capacitor args ({auto, ...}: rec {
+  } @ args: let
+    inherit (import ./helper.nix self capacitor inputs) callSubflakes callSubflakeWith;
+  in
+    capacitor args ({auto, ...}: {
 
-      packages = {system, pkgs', ...}: auto.automaticPkgsWith inputs ./pkgs pkgs';
-
-      legacyPackages = {system, pkgs', ...}: {
-
-        nixpkgs = capacitor.lib.recurseIntoAttrs2 pkgs';
-
-        flox = capacitor.lib.recurseIntoAttrs2 {
-          unstable = auto.automaticPkgsWith inputs ./pkgs pkgs'.unstable;
-          stable = auto.automaticPkgsWith inputs ./pkgs pkgs'.stable;
-          staging = auto.automaticPkgsWith inputs ./pkgs pkgs'.staging;
-        };
-
-        # package set with eval+built invariant
-        cached.nixpkgs.stable =
-          if system == "x86_64-linux"
-          then args.cached__nixpkgs-stable__x86_64-linux.legacyPackages.${system}
-          else {};
-
-        # Provides a search speedup, bypassing descriptions
-        search = {
-          recurseForDerivations = true;
-          nixpkgs = capacitor.lib.recurseIntoAttrs2 (
-            capacitor.lib.mapAttrsRecursiveCond
-            (path: a: (a ? element))
-            (path: value: {
-              type = "derivation";
-              name = builtins.concatStringsSep "." (capacitor.lib.init path);
-              meta.description = "";
-              version = "";
-            })
-            self.legacyPackages.x86_64-linux.nixpkgs);
+      packages = {pkgs, ...}: {
+        tracelinks = callSubflakeWith pkgs "tracelinks" {
+          inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
         };
       };
 
-      # apps = auto.automaticPkgsWith inputs ./apps ;
+      legacyPackages = {pkgs, ...}: {
+        nixpkgs = pkgs;
+        flox = capacitor.lib.recurseIntoAttrs2 {
+            # Protect from shadowing names
+            unstable = callSubflakes pkgs {
+              inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
+            };
+            stable = callSubflakes pkgs {
+              inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-stable";
+            };
+            staging = callSubflakes pkgs {
+              inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-staging";
+            };
+          };
+
+        # Provide built invariant {{{
+        cached.nixpkgs.stable =
+          if pkgs.system or pkgs.unstable.system == "x86_64-linux"
+          then args.cached__nixpkgs-stable__x86_64-linux.legacyPackages.${pkgs.system or pkgs.unstable.system}
+          else {}; # }}}
+      };
     });
+
+  # API calls
+  inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";
 }
