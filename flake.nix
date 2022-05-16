@@ -4,25 +4,25 @@ rec {
 
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
 
-  outputs = _: _.capacitor _ ({self,capacitor,auto,...}:
+  outputs = _: 
   # boilerplate {{{
   let
-    inherit (import ./helper.nix self capacitor inputs) autoSubflakesWith mapRoot;
+    inherit (import ./helper.nix _.self _.capacitor inputs) autoSubflakesWith mapRoot callSubflakeWith merge;
   in
-  mapRoot
+  mapRoot (_.capacitor _ ({self,capacitor,auto,...}:
     # }}}
   {
-    packages = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-unstable";
-
-    legacyPackages = {
+    legacyPackages = {pkgs,...}: {
       nixpkgs = capacitor.inputs.nixpkgs;
-      flox = {
-        stable = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-stable";
-        unstable = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-unstable";
-        staging = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-staging";
-      };
+      flox = capacitor.lib.genAttrs [ "stable" "staging" "unstable"] (stability:
+        # support flakes approach
+        autoSubflakesWith "capacitor/nixpkgs/nixpkgs-${stability}"
+        //
+        # support default.nix approach
+        auto.automaticPkgs ./pkgs pkgs.${stability}
+      );
     };
-  });
+  }));
 
   # API calls
   inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";

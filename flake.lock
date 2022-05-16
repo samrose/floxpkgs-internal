@@ -122,22 +122,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable_2": {
-      "locked": {
-        "lastModified": 1647598144,
-        "narHash": "sha256-ulGq3W5XsrBMU/u5k9d4oPy65pQTkunR4HKKtTq0RwY=",
-        "owner": "flox",
-        "repo": "nixpkgs",
-        "rev": "d236aeb87f660cb2945dad63bcfdd2540eda1b53",
-        "type": "github"
-      },
-      "original": {
-        "owner": "flox",
-        "repo": "nixpkgs",
-        "rev": "d236aeb87f660cb2945dad63bcfdd2540eda1b53",
-        "type": "github"
-      }
-    },
     "nixpkgs-staging": {
       "locked": {
         "lastModified": 1650161686,
@@ -228,12 +212,11 @@
     },
     "tracelinks": {
       "inputs": {
-        "nixpkgs-stable": "nixpkgs-stable_2",
         "src": "src"
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-/ATGBqEmxobQaqVDzbiI5tEP8JV4SM3dEQfRBjajrKQ=",
+        "narHash": "sha256-MEVfFL77CnZ07azJ37C4XQmWT5XZZEeVWae5OYC/Ymk=",
         "path": "./pkgs/tracelinks",
         "type": "path"
       },

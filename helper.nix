@@ -15,7 +15,6 @@ self: capacitor: inputs: rec {
     outputs = subflake sub {capacitor = ["capacitor"];} overrides;
   in
     outputs;
-  #if outputs?default && builtins.length (builtins.attrNames outputs) == 1 then outputs.default else outputs;
 
   callSubflakesWith = subflakes: overrides:
     capacitor.lib.genAttrs subflakes (sub: let
@@ -78,7 +77,7 @@ self: capacitor: inputs: rec {
       else
         {
           "derivation" = fragment;
-          "lambda" = recurse depth (fragment system) system;
+          "lambda" = arg: recurse depth (fragment arg) system;
           "list" = map (x: recurse (depth - 1) x system) fragment;
           "set" =
             if fragment ? ${system}
