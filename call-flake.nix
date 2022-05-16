@@ -13,10 +13,10 @@ lockFileStr: rootSrc: rootSubdir: subflakeSubdir: subflakeKey: extras: overrides
 
         sourceInfo =
           if key == subflakeKey
-          then {outPath = rootSrc;}
+          then {outPath = rootSrc;} // node
           else if key == lockFile.root
-          then rootSrc
-          else fetchTree (node.info or {} // removeAttrs node.locked ["dir"]);
+          then rootSrc // node
+          else (fetchTree (node.info or {} // removeAttrs node.locked ["dir"])) // node;
 
         subdir =
           if key == subflakeKey

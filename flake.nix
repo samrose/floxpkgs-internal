@@ -4,43 +4,34 @@ rec {
 
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
 
-  outputs = {
-    self,
-    capacitor,
-    ...
-  } @ args: let
-    inherit (import ./helper.nix self capacitor inputs) callSubflakes callSubflakeWith;
+  outputs = _: _.capacitor _ ({self,capacitor,auto,...}:
+  # {{{
+  let
+    inherit (import ./helper.nix self capacitor inputs) callSubflakes callSubflakeWith sanitize callSubflake;
+    autoSubflakes = callSubflakes {
+        inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
+    };
+    autoSubflakesWith = override: callSubflakes {
+        inputs.capacitor.inputs.nixpkgs.follows = override;
+    };
+    merge = value: builtins.foldl' (acc: x: sanitize acc x) value;
   in
-    capacitor args ({auto, ...}: {
-
-      packages = {pkgs, ...}: {
-        tracelinks = callSubflakeWith pkgs "tracelinks" {
-          inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
-        };
+  builtins.mapAttrs (key: value:
+    if capacitor.lib.elem key ["legacyPackages" "packages" "hydraJobs" "nixosConfiguraitons" "devShells"]
+    then capacitor.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (s: merge value [key s])
+    else value)
+    # }}}
+  {
+    packages = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-unstable";
+    legacyPackages = {
+      nixpkgs = capacitor.inputs.nixpkgs;
+      flox = {
+        stable = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-stable";
+        unstable = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-unstable";
+        staging = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-staging";
       };
-
-      legacyPackages = {pkgs, ...}: {
-        nixpkgs = pkgs;
-        flox = capacitor.lib.recurseIntoAttrs2 {
-            # Protect from shadowing names
-            unstable = callSubflakes pkgs {
-              inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
-            };
-            stable = callSubflakes pkgs {
-              inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-stable";
-            };
-            staging = callSubflakes pkgs {
-              inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-staging";
-            };
-          };
-
-        # Provide built invariant {{{
-        cached.nixpkgs.stable =
-          if pkgs.system or pkgs.unstable.system == "x86_64-linux"
-          then args.cached__nixpkgs-stable__x86_64-linux.legacyPackages.${pkgs.system or pkgs.unstable.system}
-          else {}; # }}}
-      };
-    });
+    };
+  });
 
   # API calls
   inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";
