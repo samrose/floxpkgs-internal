@@ -12,6 +12,7 @@ rec {
   mapRoot (_.capacitor _ ({self,capacitor,auto,...}:
     # }}}
   {
+    __systems = ["x86_64-linux"];
     legacyPackages = {pkgs,...}: {
       nixpkgs = capacitor.inputs.nixpkgs;
       flox = capacitor.lib.genAttrs [ "stable" "staging" "unstable"] (stability:

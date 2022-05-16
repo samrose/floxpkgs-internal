@@ -43,11 +43,6 @@ self: capacitor: inputs: rec {
   callSubflakes = callSubflakesWith subflakes;
   follows = capacitor.lib.strings.splitString "/";
 
-  /*
-   Remove levels from attrset
-   Adapted from std
-   */
-
   autoSubflakes = callSubflakes {
     inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
   };
@@ -56,11 +51,18 @@ self: capacitor: inputs: rec {
       inputs.capacitor.inputs.nixpkgs.follows = override;
     };
 
-  mapRoot = builtins.mapAttrs (key: value:
+  # clean up an flake output schema root and generate things for systems
+  mapRoot = attrs: builtins.mapAttrs (key: value:
     if capacitor.lib.elem key ["legacyPackages" "packages" "devShells" "checks" "apps" "bundlers" ]
     # hydraJobs are backward, nixosConfigurations need system differently
-    then capacitor.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (s: merge value [key s])
-    else value);
+    then capacitor.lib.genAttrs (attrs.__systems or [
+      "x86_64-linux"
+      "x86_64-darwin"
+      "aarch64-linux"
+      "aarch64-darwin"
+    ])
+      (s: merge value [key s])
+    else value) attrs;
 
   # perform multiple sanitize actions
   # remove multiple attribute names from a level of attrset
