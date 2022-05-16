@@ -5,24 +5,15 @@ rec {
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
 
   outputs = _: _.capacitor _ ({self,capacitor,auto,...}:
-  # {{{
+  # boilerplate {{{
   let
-    inherit (import ./helper.nix self capacitor inputs) callSubflakes callSubflakeWith sanitize callSubflake;
-    autoSubflakes = callSubflakes {
-        inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
-    };
-    autoSubflakesWith = override: callSubflakes {
-        inputs.capacitor.inputs.nixpkgs.follows = override;
-    };
-    merge = value: builtins.foldl' (acc: x: sanitize acc x) value;
+    inherit (import ./helper.nix self capacitor inputs) autoSubflakesWith mapRoot;
   in
-  builtins.mapAttrs (key: value:
-    if capacitor.lib.elem key ["legacyPackages" "packages" "hydraJobs" "nixosConfiguraitons" "devShells"]
-    then capacitor.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (s: merge value [key s])
-    else value)
+  mapRoot
     # }}}
   {
     packages = autoSubflakesWith "capacitor/nixpkgs/nixpkgs-unstable";
+
     legacyPackages = {
       nixpkgs = capacitor.inputs.nixpkgs;
       flox = {

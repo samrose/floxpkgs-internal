@@ -48,6 +48,28 @@ self: capacitor: inputs: rec {
    Remove levels from attrset
    Adapted from std
    */
+
+  autoSubflakes = callSubflakes {
+    inputs.capacitor.inputs.nixpkgs.follows = "capacitor/nixpkgs/nixpkgs-unstable";
+  };
+  autoSubflakesWith = override:
+    callSubflakes {
+      inputs.capacitor.inputs.nixpkgs.follows = override;
+    };
+
+  mapRoot = builtins.mapAttrs (key: value:
+    if capacitor.lib.elem key ["legacyPackages" "packages" "devShells" "checks" "apps" "bundlers" ]
+    # hydraJobs are backward, nixosConfigurations need system differently
+    then capacitor.lib.genAttrs ["x86_64-linux" "aarch64-linux"] (s: merge value [key s])
+    else value);
+
+  # perform multiple sanitize actions
+  # remove multiple attribute names from a level of attrset
+  # TODO: perform all at once in sanitize
+  merge = value: builtins.foldl' (acc: x: sanitize acc x) value;
+
+  # sanitize: attrset -> string -> attrset
+  # remove an attribute name from a level of attrset
   sanitize = let
     lib = capacitor.lib;
     recurse = depth: fragment: system:
@@ -62,7 +84,7 @@ self: capacitor: inputs: rec {
             if fragment ? ${system}
             then recurse depth fragment.${system} system
             else lib.mapAttrs (_: fragment: recurse (depth - 1) fragment system) fragment;
-          __functor = self: type: ( self.${type} or fragment);
+          __functor = self: type: (self.${type} or fragment);
         } (lib.smartType fragment);
   in
     recurse 6;
