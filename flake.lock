@@ -32,6 +32,21 @@
         "url": "ssh://git@github.com/flox/capacitor"
       }
     },
+    "catalog": {
+      "inputs": {
+        "src": "src"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-4XppQa8glA1s/DR88XDr+6SdZntrd3jr1/zDmg3J9j0=",
+        "path": "./pkgs/catalog",
+        "type": "path"
+      },
+      "original": {
+        "path": "./pkgs/catalog",
+        "type": "path"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1644229661,
@@ -49,7 +64,7 @@
     },
     "flox": {
       "inputs": {
-        "src": "src"
+        "src": "src_2"
       },
       "locked": {
         "lastModified": 1,
@@ -205,11 +220,29 @@
       "inputs": {
         "cached__nixpkgs-stable__x86_64-linux": "cached__nixpkgs-stable__x86_64-linux",
         "capacitor": "capacitor",
+        "catalog": "catalog",
         "flox": "flox",
         "tracelinks": "tracelinks"
       }
     },
     "src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1652812906,
+        "narHash": "sha256-XhiigVbzgUfeT2gXdbd2U34zFSTnWimG/wOriWuIp8A=",
+        "ref": "master",
+        "rev": "3141ce5032478e584108699b7e1704d3b79ce449",
+        "revCount": 27,
+        "type": "git",
+        "url": "ssh://git@github.com/flox/catalog"
+      },
+      "original": {
+        "ref": "master",
+        "type": "git",
+        "url": "ssh://git@github.com/flox/catalog"
+      }
+    },
+    "src_2": {
       "flake": false,
       "locked": {
         "lastModified": 1652816364,
@@ -226,7 +259,7 @@
         "url": "ssh://git@github.com/flox/flox"
       }
     },
-    "src_2": {
+    "src_3": {
       "flake": false,
       "locked": {
         "lastModified": 1647596882,
@@ -245,7 +278,7 @@
     },
     "tracelinks": {
       "inputs": {
-        "src": "src_2"
+        "src": "src_3"
       },
       "locked": {
         "lastModified": 1,

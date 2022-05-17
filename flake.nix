@@ -5,6 +5,7 @@ rec {
   # Add additional subflakes as needed
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
   inputs.flox.url = "path:./pkgs/flox";
+  inputs.catalog.url = "path:./pkgs/catalog";
 
   outputs = _:
     (_.capacitor _ ({lib,auto, ...}:
@@ -15,17 +16,16 @@ rec {
 
         legacyPackages = {pkgs, ...}: {
           nixpkgs = pkgs;
-          flox = lib.genAttrs ["stable" "staging" "unstable"] (
-            stability:
-              {}
+          flox = {}
               # support flakes approach
-              // (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}")
+              // (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-unstable")
               # support default.nix approach
-              // (auto.automaticPkgsWith inputs ./pkgs pkgs.${stability})
-          );
+              // (auto.automaticPkgsWith inputs ./pkgs pkgs.unstable)
+          ;
         };
     }))
     // {
+      /*
       hydraJobs = with _.capacitor.inputs.nixpkgs-lib;
         lib.genAttrs ["stable" "unstable" "staging"] (stability:
         # use an example to bring in all possible attrNames
@@ -35,6 +35,7 @@ rec {
           )
         )
       );
+      */
       templates = {
         python-black = {
           path = ./templates/python-black;
