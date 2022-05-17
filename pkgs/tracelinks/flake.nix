@@ -3,9 +3,11 @@
   inputs.src.flake = false;
 
   outputs = _:
-    _.capacitor _ ({lib, ...}: {
-      # start proto-derivaition
-      __proto.default = {
+    _.capacitor _ ({lib, ...}:
+      #
+      # copy proto-derivation here
+      #
+      {
         stdenv,
         help2man,
         src,
@@ -21,7 +23,5 @@
           disallowedReferences = [src.outPath];
           nativeBuildInputs = [help2man];
           makeFlags = ["PREFIX=$(out)"];
-        };
-      # End proto-derivation
-    });
+        });
 }
