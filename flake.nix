@@ -2,69 +2,55 @@ rec {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
   inputs.capacitor.inputs.root.follows = "/";
 
-  inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";
+  # Add additional subflakes as needed
+  inputs.tracelinks.url = "path:./pkgs/tracelinks";
+  inputs.flox.url = "path:./pkgs/flox";
 
-  inputs.tracelinks.url = "git+ssh://git@github.com/flox/tracelinks?ref=main";
-  inputs.tracelinks.flake = false;
+  outputs = _:
+    (_.capacitor _ ({lib,auto, ...}:
+      # Define package set structure
+      {
+        # Limit the systems to fewer or more than default by ucommenting
+        # __systems = ["x86_64-linux"];
 
-  outputs = {
-    self,
-    capacitor,
-    ...
-  } @ args:
-    capacitor args ({auto, ...}: rec {
-
-      packages = {system, pkgs', ...}: auto.automaticPkgsWith inputs ./pkgs pkgs';
-
-      legacyPackages = {system, pkgs', ...}: {
-
-        nixpkgs = capacitor.lib.recurseIntoAttrs2 pkgs';
-
-        flox = capacitor.lib.recurseIntoAttrs2 {
-          unstable = auto.automaticPkgsWith inputs ./pkgs pkgs'.unstable;
-          stable = auto.automaticPkgsWith inputs ./pkgs pkgs'.stable;
-          staging = auto.automaticPkgsWith inputs ./pkgs pkgs'.staging;
+        legacyPackages = {pkgs, ...}: {
+          nixpkgs = pkgs;
+          flox = lib.genAttrs ["stable" "staging" "unstable"] (
+            stability:
+              {}
+              # support flakes approach
+              // (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}")
+              # support default.nix approach
+              // (auto.automaticPkgsWith inputs ./pkgs pkgs.${stability})
+          );
         };
-
-        # package set with eval+built invariant
-        cached.nixpkgs.stable =
-          if system == "x86_64-linux"
-          then args.cached__nixpkgs-stable__x86_64-linux.legacyPackages.${system}
-          else {};
-
-        # Provides a search speedup, bypassing descriptions
-        search = {
-          recurseForDerivations = true;
-          nixpkgs = capacitor.lib.recurseIntoAttrs2 (
-            capacitor.lib.mapAttrsRecursiveCond
-            (path: a: (a ? element))
-            (path: value: {
-              type = "derivation";
-              name = builtins.concatStringsSep "." (capacitor.lib.init path);
-              meta.description = "";
-              version = "";
-            })
-            self.legacyPackages.x86_64-linux.nixpkgs);
-        };
-      };
-
-      # apps = auto.automaticPkgsWith inputs ./apps ;
-    }) // {
-
+    }))
+    // {
+      hydraJobs = with _.capacitor.inputs.nixpkgs-lib;
+        lib.genAttrs ["stable" "unstable" "staging"] (stability:
+        # use an example to bring in all possible attrNames
+        lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.${stability}) (attr:
+        lib.genAttrs ["x86_64-linux"] (system:
+            _.self.legacyPackages.${system}.flox.${stability}.${attr}
+          )
+        )
+      );
       templates = {
-	python-black = {
-         path = templates/python-black;
-         description = "Python Black example template";
-         };
-	python2 = {
-         path = templates/python2;
-         description = "Python 2 template";
-         };
-	python3 = {
-         path = templates/python3;
-         description = "Python 3 template";
-         };
+        python-black = {
+          path = ./templates/python-black;
+          description = "Python Black example template";
+        };
+        python2 = {
+          path = ./templates/python2;
+          description = "Python 2 template";
+        };
+        python3 = {
+          path = ./templates/python3;
+          description = "Python 3 template";
+        };
       };
+    };
 
-   };
+  # API calls
+  inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";
 }

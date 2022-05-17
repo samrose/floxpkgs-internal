@@ -1,19 +1,23 @@
 rec {
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
-  inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
-  inputs.nixpkgs.url = "github:flox/nixpkgs/unstable";
-  inputs.companypkgs.url = "git+ssh://git@github.com/flox-examples/companypkgs";
+  description = "virtual environments";
 
-  inputs.toml.url = "path:./flox.toml";
-  inputs.toml.flake = false;
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
+  inputs.capacitor.inputs.root.follows = "/";
 
-  nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
+  inputs.devshell.url = "github:numtide/devshell";
 
-  outputs = {self, capacitor, ...} @ args: capacitor args ({auto,...}: {
-    devShells = args.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-darwin"] (system: {
-      default = auto.usingWith inputs ./flox.toml (
-        args.companypkgs.legacyPackages.${system}
-      );
-    });
-  });
+  outputs = _:
+    _.capacitor _ ({lib, ...}:
+      # numtide/devshell requires an overlay to obtain mkShell {{{
+      {
+        devShells.default = args:
+          with (import _.devshell {
+            system = args.system;
+            nixpkgs = args.pkgs.unstable // {inherit lib;};
+          });
+          # }}}
+            mkShell {
+              imports = [(importTOML ./flox.toml)];
+            };
+      });
 }

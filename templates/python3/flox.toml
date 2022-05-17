@@ -20,11 +20,11 @@ name = "yourproject"
 # Add packages used in the developer shell.
 nativeBuildInputs = [
   # "inputs.gh",
-  # "inputs.jq"
+  "inputs.jq"
 ]
 
 # Add packages required by the python software being developed.
 propagatedBuildInputs = [
-  # "inputs.pythonPackages.click",
-  # "inputs.pythonPackages.requests"
+  "inputs.python3Packages.click",
+  "inputs.python3Packages.requests"
 ]

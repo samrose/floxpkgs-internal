@@ -1,18 +1,15 @@
-rec {
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
-  inputs.nixpkgs.url = "github:flox/nixpkgs/unstable";
+{
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
+  inputs.capacitor.inputs.root.follows = "/";
+
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
-  outputs = {self, ...} @ args: let
-    inherit (args.capacitor.lib.customisation args inputs) using automaticPkgs;
+  outputs = _:
+  let lib = import (_.capacitor + "/lib/customisation.nix") _.capacitor _;
   in
-    {
-      devShells = args.nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-darwin"] (
-        system:
-          using args.nixpkgs.legacyPackages.${system} {
-            default = ./flox.toml;
-          }
-      );
-    }
-    // {inherit (args) capacitor;};
+    _.capacitor _ ({auto, ...}: {
+      devShells = p: auto.using {
+        default = ./flox.toml;
+      } p.pkgs.unstable;
+    });
 }
