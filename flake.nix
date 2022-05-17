@@ -4,9 +4,10 @@ rec {
 
   # Add additional subflakes as needed
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
+  inputs.flox-src.url = "git+ssh://git@github.com/flox/flox?ref=tng";
 
   outputs = _:
-    (_.capacitor _ ({lib, ...}:
+    (_.capacitor _ ({lib,auto, ...}:
       # Define package set structure
       {
         # Limit the systems to fewer or more than default by ucommenting
@@ -20,7 +21,7 @@ rec {
               # support flakes approach
               // (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}")
               # support default.nix approach
-              // (lib.automaticPkgs ./pkgs pkgs.${stability})
+              // (auto.automaticPkgsWith inputs ./pkgs pkgs.${stability})
           );
         };
     }))
