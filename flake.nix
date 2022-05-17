@@ -25,6 +25,9 @@ rec {
         };
       })
     // {
+
+      hydraJobs.x86_64-linux = _.self.legacyPackages.x86_64-linux.flox;
+
       templates = {
         python-black = {
           path = ./templates/python-black;
