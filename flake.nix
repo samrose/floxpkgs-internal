@@ -6,7 +6,7 @@ rec {
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
 
   outputs = _:
-    _.capacitor _ ({lib, ...}:
+    (_.capacitor _ ({lib, ...}:
       # Define package set structure
       {
         # Limit the systems to fewer or more than default by ucommenting
@@ -23,11 +23,17 @@ rec {
               // (lib.automaticPkgs ./pkgs pkgs.${stability})
           );
         };
-      })
+    }))
     // {
-
-      hydraJobs.x86_64-linux = _.self.legacyPackages.x86_64-linux.flox;
-
+      hydraJobs = with _.capacitor.inputs.nixpkgs-lib;
+        lib.genAttrs ["stable" "unstable" "staging"] (stability:
+        # use an example to bring in all possible attrNames
+        lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.${stability}) (attr:
+        lib.genAttrs ["x86_64-linux"] (system:
+            _.self.legacyPackages.${system}.flox.${stability}.${attr}
+          )
+        )
+      );
       templates = {
         python-black = {
           path = ./templates/python-black;
