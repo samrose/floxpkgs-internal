@@ -4,7 +4,7 @@ rec {
 
   # Add additional subflakes as needed
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
-  inputs.flox-src.url = "git+ssh://git@github.com/flox/flox?ref=tng";
+  inputs.flox.url = "path:./pkgs/flox";
 
   outputs = _:
     (_.capacitor _ ({lib,auto, ...}:
