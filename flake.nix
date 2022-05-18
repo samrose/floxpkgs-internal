@@ -34,12 +34,16 @@ rec {
       }))
     // {
       /**/
-        hydraJobs =
+      hydraJobsStable = _.self.hydraJobs.stable;
+      hydraJobsUnstable = _.self.hydraJobs.unstable;
+      hydraJobs =
         with _.capacitor.inputs.nixpkgs-lib;
+          lib.genAttrs ["stable" "unstable" "staging"] (stability:
             # use an example to bring in all possible attrNames
             lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
             lib.genAttrs ["x86_64-linux"] (system:
-              _.self.legacyPackages.${system}.flox.unstable.${attr}
+              _.self.legacyPackages.${system}.flox.${stability}.${attr}
+          )
           )
         );
 
