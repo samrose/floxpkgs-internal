@@ -102,9 +102,9 @@ rec {
             description = "Python 3 template";
           };
         };
-      hydraJobsStable = _.self.hydraJobs.stable;
-      hydraJobsUnstable = _.self.hydraJobs.unstable;
-      hydraJobsStaging = _.self.hydraJobs.staging;
+      hydraJobsStable = _.self.hydraJobsRaw.stable;
+      hydraJobsUnstable = _.self.hydraJobsRaw.unstable;
+      hydraJobsStaging = _.self.hydraJobsRaw.staging;
       hydraJobsRaw =
         with _.capacitor.inputs.nixpkgs-lib;
           lib.genAttrs ["stable" "unstable" "staging"] (stability:
