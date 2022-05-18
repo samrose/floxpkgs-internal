@@ -81,6 +81,7 @@ rec {
             description = "Python 3 template";
           };
         };
+
         hydraJobsStable = _.self.hydraJobsRaw.stable;
         hydraJobsUnstable = _.self.hydraJobsRaw.unstable;
         hydraJobsStaging = _.self.hydraJobsRaw.staging;
@@ -89,10 +90,7 @@ rec {
             stability:
               lib.genAttrs ["x86_64-linux"] (
                 system:
-                  lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (
-                    attr:
-                      _.self.legacyPackages.${system}.flox.${stability}.${attr}
-                  )
+                    _.self.legacyPackages.${system}.flox.${stability}
               )
           );
       }))
