@@ -31,61 +31,39 @@ rec {
         # Limit the systems to fewer or more than default by ucommenting
         # __systems = ["x86_64-linux"];
 
-        legacyPackages = {self',root', pkgs, system, ...}: {
-          nixpkgs = { inherit (pkgs) stable unstable staging; };
-          flox = lib.genAttrs ["stable" "unstable" "staging"] (stability:
-            {}
-            //
+        legacyPackages = {
+          self',
+          root',
+          pkgs,
+          system,
+          ...
+        }: {
+          nixpkgs = {inherit (pkgs) stable unstable staging;};
+          flox = lib.genAttrs ["stable" "unstable" "staging"] (
+            stability: let
+              tie = (
+                lib.recursiveUpdate
+                root'.legacyPackages.nixpkgs.${stability}
+                root'.legacyPackages.flox.${stability}
+              );
+            in
+              builtins.mapAttrs (_: v: builtins.removeAttrs v ["override" "__functor" "overrideDerivation"]) (
 
-            # support flakes approach with override
-            # TODO: hide the sanitization
-            (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}" ) [ "default" "packages" system ])
 
-            # support default.nix approach
-            // (auto.automaticPkgsWith inputs ./pkgs (
-              (lib.recursiveUpdate
-              root'.legacyPackages.nixpkgs.${stability}
-              root'.legacyPackages.flox.${stability}
-              )
-              )
-              )
-
-            # bring in floxdocs using only proto-derivations
-            // ({
-                python3Packages = auto.automaticPkgsWith inputs (_.floxpkgsv1 + "/pythonPackages") pkgs.${stability}.python3Packages;
-                }
-              )
-            // (
-              {
-                floxdocs = pkgs.${stability}.callPackage ./pkgs/floxdocs/default.nix ({
-                  src = _.floxdocs;
-                  python3Packages = # root'.legacyPackages.flox.${stability}.python3Packages;
-                    (lib.recursiveUpdate
-                    root'.legacyPackages.nixpkgs.${stability}.python3Packages
-                    root'.legacyPackages.flox.${stability}.python3Packages
-                    );
-              });
-              }
-              )
-            // (
-              # TODO: why does an overridable derivation cause recursion?
-              builtins.mapAttrs (_: v:
-              builtins.removeAttrs v
-              ["override" "__functor" "overrideDerivation" ]
-              # []
-              )
+              # support default.nix approach
+              (auto.automaticPkgsWith inputs ./pkgs tie)
+              # support flakes approach with override
+              # TODO: hide the sanitization
+              // (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}") ["default" "packages" system])
+              //
               (lib.using {
-                nix-installers = _.nix-installers.outPath;
-              } (
-                  root'.legacyPackages.nixpkgs.${stability}
-                  //
-                  root'.legacyPackages.flox.${stability}
-                  ) // {
-                  pkgs = root'.legacyPackages.nixpkgs.${stability};
-                  })
-              )
-
-            );
+                  floxdocs = c: c ./pkgs/floxdocs/default.nix { src = _.floxdocs.outPath; };
+                  nix-installers = _.nix-installers + "/default.nix";
+                  python3Packages = _.floxpkgsv1 + "/pythonPackages";
+                }
+                tie)
+                )
+          );
         };
 
         templates = {
@@ -102,20 +80,20 @@ rec {
             description = "Python 3 template";
           };
         };
-      hydraJobsStable = _.self.hydraJobsRaw.stable;
-      hydraJobsUnstable = _.self.hydraJobsRaw.unstable;
-      hydraJobsStaging = _.self.hydraJobsRaw.staging;
-      hydraJobsRaw =
-        with _.capacitor.inputs.nixpkgs-lib;
-          lib.genAttrs ["stable" "unstable" "staging"] (stability:
-
-          lib.genAttrs ["x86_64-linux"] (system:
-          lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
-            _.self.legacyPackages.${system}.flox.${stability}.${attr}
-          )
-          )
-        );
-
+        hydraJobsStable = _.self.hydraJobsRaw.stable;
+        hydraJobsUnstable = _.self.hydraJobsRaw.unstable;
+        hydraJobsStaging = _.self.hydraJobsRaw.staging;
+        hydraJobsRaw = with _.capacitor.inputs.nixpkgs-lib;
+          lib.genAttrs ["stable" "unstable" "staging"] (
+            stability:
+              lib.genAttrs ["x86_64-linux"] (
+                system:
+                  lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (
+                    attr:
+                      _.self.legacyPackages.${system}.flox.${stability}.${attr}
+                  )
+              )
+          );
       }))
     // {
       /**/
