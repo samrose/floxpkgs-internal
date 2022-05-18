@@ -54,8 +54,6 @@ rec {
                 # TODO: hide the sanitization
                 // (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}") ["default" "packages" system])
                 // (lib.using
-
-
                 # External proto-derivaiton trees and overrides
                 {
                     nix-installers = _.nix-installers + "/default.nix";

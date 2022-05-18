@@ -61,7 +61,8 @@
         "src": "src"
       },
       "locked": {
-        "narHash": "sha256-G6Hg7+XwGxGJYD/VX59hpM8ObcMYmPEy24xr/YhuMyU=",
+        "lastModified": 1,
+        "narHash": "sha256-KsN0pnX1oxSS6jDzDcomJ63niY68l6UG9JvFXgzyC4Q=",
         "path": "./pkgs/catalog",
         "type": "path"
       },
@@ -120,6 +121,7 @@
         "src": "src_2"
       },
       "locked": {
+        "lastModified": 1,
         "narHash": "sha256-dM4EomVt2nqk6SHHITeSkwNcHHNEpwuwoy4+z/Fm9uw=",
         "path": "./pkgs/flox",
         "type": "path"
@@ -225,11 +227,11 @@
     "nix-installers": {
       "flake": false,
       "locked": {
-        "lastModified": 1652912085,
-        "narHash": "sha256-awjQjZYVWkgPrlk5yOLMf9LQQZwXVFJwMEzvQ08HyxU=",
+        "lastModified": 1652917051,
+        "narHash": "sha256-BwdB/YHVmk1rYzdJyzVizEndVFYty7Ji/TFxsj8Wt7w=",
         "ref": "flox-hacks",
-        "rev": "48a1b81f4ff5bf3fe06b204bba27ab037348e90a",
-        "revCount": 57,
+        "rev": "ab7c8b687df2ffcdf279a3359b4ba2c52673b663",
+        "revCount": 59,
         "type": "git",
         "url": "ssh://git@github.com/flox/nix-installers"
       },
@@ -494,11 +496,11 @@
     "src": {
       "flake": false,
       "locked": {
-        "lastModified": 1652914222,
-        "narHash": "sha256-bTLA3yVMhb2ISfm0Kg+b37A4p7rb9b5NoJNor0AWggc=",
+        "lastModified": 1652917673,
+        "narHash": "sha256-WhOu6ndrF8P4D9LDcPhRlY4amdMkMOAhqA3QOaVFgQo=",
         "ref": "master",
-        "rev": "ff04f30af204d38b510496e8b899ad4fd878003f",
-        "revCount": 28,
+        "rev": "643dcb1106adab9accae20a312146fe794d73f0a",
+        "revCount": 29,
         "type": "git",
         "url": "ssh://git@github.com/flox/catalog"
       },
@@ -547,6 +549,7 @@
         "src": "src_3"
       },
       "locked": {
+        "lastModified": 1,
         "narHash": "sha256-YbWlEEhGQdL0nNBsKw3aVPjq4dPKO4Cxs+54nx1qe20=",
         "path": "./pkgs/tracelinks",
         "type": "path"
