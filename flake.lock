@@ -21,11 +21,11 @@
         "root": []
       },
       "locked": {
-        "lastModified": 1652892145,
-        "narHash": "sha256-wYifD8E6kBuMJgRqi0EC5ijjiWJXEqhSlpXluzEJPo0=",
+        "lastModified": 1652908491,
+        "narHash": "sha256-/RCJu3iS0mcG5Ez7aW3lPYBfHfp4E/xdYR1+EQ5x1Cs=",
         "ref": "master",
-        "rev": "d502d6fd749bc1ea4280f4a5bb9edfc83098f3b8",
-        "revCount": 177,
+        "rev": "80f173d8302bf5e6ed04dd37179f547134be65c3",
+        "revCount": 178,
         "type": "git",
         "url": "ssh://git@github.com/flox/capacitor"
       },
@@ -227,11 +227,11 @@
     "nix-installers": {
       "flake": false,
       "locked": {
-        "lastModified": 1652893966,
-        "narHash": "sha256-ZlbZaMja+Iwva9/RViPfPHiU0eK8zn2wFWW7ci1aoL8=",
+        "lastModified": 1652904473,
+        "narHash": "sha256-z3Jy9xZgKgtZZsO4IQQCOKhU7E56j4x0/Bv25D7pLmo=",
         "ref": "flox-hacks",
-        "rev": "86a366f81cf875e7451a36a270c194184db3e9a9",
-        "revCount": 62,
+        "rev": "04232cb200e976192dd6a0b0c9a81da941f8a280",
+        "revCount": 56,
         "type": "git",
         "url": "ssh://git@github.com/flox/nix-installers"
       },
