@@ -5,7 +5,15 @@ rec {
   inputs.floxpkgsv1.url = "git+ssh://git@github.com/flox/floxpkgsv1";
   inputs.floxpkgsv1.flake = false;
 
-  # inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
+  inputs.floxdocs.url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
+  inputs.floxdocs.flake = false;
+
+  inputs.nix-installers.url = "git+ssh://git@github.com/flox/nix-installers?ref=flox-hacks";
+  inputs.nix-installers.flake = false;
+
+  # Recover older behavior while we remove stabilities
+  inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
+  inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
 
   # Add additional subflakes as needed
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
@@ -23,25 +31,50 @@ rec {
         # Limit the systems to fewer or more than default by ucommenting
         # __systems = ["x86_64-linux"];
 
-        legacyPackages = {pkgs, system, ...}: {
+        legacyPackages = {self',root', pkgs, system, ...}: {
           nixpkgs = pkgs;
           flox = lib.genAttrs ["stable" "unstable" "staging"] (stability:
             {}
-            # support flakes approach with override
             //
-            (lib.sanitizes
-            (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}" )
-            [ "default" "packages" system ]
-            )
+
+            # support flakes approach with override
+            # TODO: hide the sanitization
+            (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}" ) [ "default" "packages" system ])
+
             # support default.nix approach
             // (auto.automaticPkgsWith inputs ./pkgs pkgs.${stability})
-            // (
-              auto.automaticPkgsWith inputs (_.floxpkgsv1 + "/pythonPackages") pkgs.${stability}.python3Packages
-              # using pkgs rec {
-          # default = ./default.nix;
-          # python3Packages = automaticPkgs (floxpkgs + "/pythonPackages") pkgs.python3Packages;
 
+            # bring in floxdocs using only proto-derivations
+            // ({
+                python3Packages = auto.automaticPkgsWith inputs (_.floxpkgsv1 + "/pythonPackages") pkgs.${stability}.python3Packages;
+                }
               )
+            // (
+              {
+                floxdocs = pkgs.${stability}.callPackage ./pkgs/floxdocs/default.nix ({
+                  src = _.floxdocs;
+                  python3Packages = # root'.legacyPackages.flox.${stability}.python3Packages;
+                    (lib.recursiveUpdate
+                    root'.legacyPackages.nixpkgs.${stability}.python3Packages
+                    root'.legacyPackages.flox.${stability}.python3Packages
+                    );
+              });
+              }
+              )
+            // (
+              # TODO: why does an overridable derivation cause recursion?
+              builtins.mapAttrs (_: v:
+              builtins.removeAttrs v ["override" "__functor" "overrideDerivation" ]
+              )
+              (lib.using {
+                nix-installers = _.nix-installers.outPath;
+              } (
+                  lib.recursiveUpdate
+                  root'.legacyPackages.nixpkgs.${stability}
+                  root'.legacyPackages.flox.${stability}
+                ))
+              )
+
             );
         };
 
