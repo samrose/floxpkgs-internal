@@ -42,7 +42,13 @@ rec {
             (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}" ) [ "default" "packages" system ])
 
             # support default.nix approach
-            // (auto.automaticPkgsWith inputs ./pkgs pkgs.${stability})
+            // (auto.automaticPkgsWith inputs ./pkgs (
+              (lib.recursiveUpdate
+              root'.legacyPackages.nixpkgs.${stability}
+              root'.legacyPackages.flox.${stability}
+              )
+              )
+              )
 
             # bring in floxdocs using only proto-derivations
             // ({
