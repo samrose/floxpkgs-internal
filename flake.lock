@@ -38,7 +38,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-4XppQa8glA1s/DR88XDr+6SdZntrd3jr1/zDmg3J9j0=",
+        "narHash": "sha256-1vft0dqHFB8LV4YRwDrd2WJnIMJKdklByOXD0VGmS1c=",
         "path": "./pkgs/catalog",
         "type": "path"
       },
