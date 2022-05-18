@@ -18,11 +18,11 @@
         "root": []
       },
       "locked": {
-        "lastModified": 1652882864,
-        "narHash": "sha256-lL0mCFrYGHlRMuDRs7Ac1CBCSVq8/ePjp1rfy4b2mUQ=",
+        "lastModified": 1652885558,
+        "narHash": "sha256-81OGxwYZDSMsIgKLNz6/q13zrS6gxWukfCdaaBdNztU=",
         "ref": "master",
-        "rev": "7734c5d7aaf7b616747b4356c26f634bce882356",
-        "revCount": 172,
+        "rev": "01456760b7bb70aa79afecdcc6c78ecec732882f",
+        "revCount": 173,
         "type": "git",
         "url": "ssh://git@github.com/flox/capacitor"
       },

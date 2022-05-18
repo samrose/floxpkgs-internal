@@ -20,12 +20,16 @@ rec {
         # Limit the systems to fewer or more than default by ucommenting
         # __systems = ["x86_64-linux"];
 
-        legacyPackages = {pkgs, ...}: {
+        legacyPackages = {pkgs, system, ...}: {
           nixpkgs = pkgs;
           flox = lib.genAttrs ["stable" "unstable" "staging"] (stability:
             {}
             # support flakes approach with override
-            // (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}")
+            //
+            (lib.sanitizes
+            (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}" )
+            [ "default" "packages" system ]
+            )
             # support default.nix approach
             // (auto.automaticPkgsWith inputs ./pkgs pkgs.${stability})
             );
@@ -40,10 +44,9 @@ rec {
       hydraJobs =
         with _.capacitor.inputs.nixpkgs-lib;
           lib.genAttrs ["stable" "unstable" "staging"] (stability:
-            # use an example to bring in all possible attrNames
-            lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
-            lib.genAttrs ["x86_64-linux"] (system:
-              _.self.legacyPackages.${system}.flox.${stability}.${attr}
+          lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
+          lib.genAttrs ["x86_64-linux"] (system:
+            _.self.legacyPackages.${system}.flox.${stability}.${attr}
           )
           )
         );
