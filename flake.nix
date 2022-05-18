@@ -57,13 +57,12 @@ rec {
 
 
                 # External proto-derivaiton trees and overrides
-                # bikeshedding: channels.nix or flox.nix or blah.nix
                 {
-                    nix-installers = _.nix-installers;
+                    nix-installers = _.nix-installers + "/default.nix";
                     python3Packages = _.floxpkgsv1 + "/pythonPackages";
-                }
+                  }
                 # end customizations
-                  tie // {inherit inputs;})
+                  (tie // {inherit inputs;}))
               )
           );
         };
