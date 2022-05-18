@@ -48,21 +48,23 @@ rec {
               );
             in
               builtins.mapAttrs (_: v: builtins.removeAttrs v ["override" "__functor" "overrideDerivation"]) (
+                # support default.nix approach
+                (auto.automaticPkgsWith inputs ./pkgs tie)
+                # support flakes approach with override
+                # TODO: hide the sanitization
+                // (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}") ["default" "packages" system])
+                // (lib.using
 
 
-              # support default.nix approach
-              (auto.automaticPkgsWith inputs ./pkgs tie)
-              # support flakes approach with override
-              # TODO: hide the sanitization
-              // (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}") ["default" "packages" system])
-              //
-              (lib.using {
-                  floxdocs = c: c ./pkgs/floxdocs/default.nix { src = _.floxdocs.outPath; };
-                  nix-installers = _.nix-installers + "/default.nix";
-                  python3Packages = _.floxpkgsv1 + "/pythonPackages";
+                # External proto-derivaiton trees and overrides
+                # bikeshedding: channels.nix or flox.nix or blah.nix
+                {
+                    nix-installers = _.nix-installers;
+                    python3Packages = _.floxpkgsv1 + "/pythonPackages";
                 }
-                tie)
-                )
+                # end customizations
+                  tie // {inherit inputs;})
+              )
           );
         };
 
