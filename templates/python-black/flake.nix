@@ -4,6 +4,9 @@ rec {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
   inputs.capacitor.inputs.root.follows = "/";
 
+  inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
+  inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.devshell.url = "github:numtide/devshell";
 
   outputs = _:
@@ -13,7 +16,7 @@ rec {
         devShells.default = args:
           with (import _.devshell {
             system = args.system;
-            nixpkgs = args.pkgs.unstable // {inherit lib;};
+            nixpkgs = args.pkgs // {inherit lib;};
           });
           # }}}
             mkShell {

@@ -32,7 +32,7 @@ rec {
         # __systems = ["x86_64-linux"];
 
         legacyPackages = {self',root', pkgs, system, ...}: {
-          nixpkgs = pkgs;
+          nixpkgs = { inherit (pkgs) stable unstable staging; };
           flox = lib.genAttrs ["stable" "unstable" "staging"] (stability:
             {}
             //
@@ -64,15 +64,19 @@ rec {
             // (
               # TODO: why does an overridable derivation cause recursion?
               builtins.mapAttrs (_: v:
-              builtins.removeAttrs v ["override" "__functor" "overrideDerivation" ]
+              builtins.removeAttrs v
+              ["override" "__functor" "overrideDerivation" ]
+              # []
               )
               (lib.using {
                 nix-installers = _.nix-installers.outPath;
               } (
-                  lib.recursiveUpdate
                   root'.legacyPackages.nixpkgs.${stability}
+                  //
                   root'.legacyPackages.flox.${stability}
-                ))
+                  ) // {
+                  pkgs = root'.legacyPackages.nixpkgs.${stability};
+                  })
               )
 
             );
@@ -95,11 +99,12 @@ rec {
       hydraJobsStable = _.self.hydraJobs.stable;
       hydraJobsUnstable = _.self.hydraJobs.unstable;
       hydraJobsStaging = _.self.hydraJobs.staging;
-      hydraJobs =
+      hydraJobsRaw =
         with _.capacitor.inputs.nixpkgs-lib;
           lib.genAttrs ["stable" "unstable" "staging"] (stability:
-          lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
+
           lib.genAttrs ["x86_64-linux"] (system:
+          lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
             _.self.legacyPackages.${system}.flox.${stability}.${attr}
           )
           )
