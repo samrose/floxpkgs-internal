@@ -2,6 +2,9 @@ rec {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
+  inputs.floxpkgsv1.url = "git+ssh://git@github.com/flox/floxpkgsv1";
+  inputs.floxpkgsv1.flake = false;
+
   # inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
 
   # Add additional subflakes as needed
@@ -32,24 +35,15 @@ rec {
             )
             # support default.nix approach
             // (auto.automaticPkgsWith inputs ./pkgs pkgs.${stability})
+            // (
+              auto.automaticPkgsWith inputs (_.floxpkgsv1 + "/pythonPackages") pkgs.${stability}.python3Packages
+              # using pkgs rec {
+          # default = ./default.nix;
+          # python3Packages = automaticPkgs (floxpkgs + "/pythonPackages") pkgs.python3Packages;
+
+              )
             );
         };
-
-      }))
-    // {
-      /**/
-      hydraJobsStable = _.self.hydraJobs.stable;
-      hydraJobsUnstable = _.self.hydraJobs.unstable;
-      hydraJobsStaging = _.self.hydraJobs.staging;
-      hydraJobs =
-        with _.capacitor.inputs.nixpkgs-lib;
-          lib.genAttrs ["stable" "unstable" "staging"] (stability:
-          lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
-          lib.genAttrs ["x86_64-linux"] (system:
-            _.self.legacyPackages.${system}.flox.${stability}.${attr}
-          )
-          )
-        );
 
         templates = {
           python-black = {
@@ -65,6 +59,22 @@ rec {
             description = "Python 3 template";
           };
         };
+      hydraJobsStable = _.self.hydraJobs.stable;
+      hydraJobsUnstable = _.self.hydraJobs.unstable;
+      hydraJobsStaging = _.self.hydraJobs.staging;
+      hydraJobs =
+        with _.capacitor.inputs.nixpkgs-lib;
+          lib.genAttrs ["stable" "unstable" "staging"] (stability:
+          lib.genAttrs (builtins.attrNames _.self.legacyPackages.x86_64-linux.flox.unstable) (attr:
+          lib.genAttrs ["x86_64-linux"] (system:
+            _.self.legacyPackages.${system}.flox.${stability}.${attr}
+          )
+          )
+        );
+
+      }))
+    // {
+      /**/
     };
 
   # API calls

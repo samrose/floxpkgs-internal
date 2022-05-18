@@ -17,7 +17,7 @@
         stdenv.mkDerivation {
           inherit src;
           pname = "tracelinks${argument}";
-          version = "1.0.0+r${toString src.revCount}";
+          version = "1.0.0-r${toString src.revCount}";
 
           # Prevent the source from becoming a runtime dependeny
           disallowedReferences = [src.outPath];
