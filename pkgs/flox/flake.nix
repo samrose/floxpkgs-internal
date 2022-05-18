@@ -11,6 +11,6 @@
         callPackage,
         src,
         ...
-      }: callPackage src { revision = "-${toString src.revCount or "dirty"}"; }
+      }: callPackage src { revision = "-r${toString src.revCount or "dirty"}"; }
       );
 }
