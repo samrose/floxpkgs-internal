@@ -36,6 +36,7 @@ rec {
       /**/
       hydraJobsStable = _.self.hydraJobs.stable;
       hydraJobsUnstable = _.self.hydraJobs.unstable;
+      hydraJobsStaging = _.self.hydraJobs.staging;
       hydraJobs =
         with _.capacitor.inputs.nixpkgs-lib;
           lib.genAttrs ["stable" "unstable" "staging"] (stability:
