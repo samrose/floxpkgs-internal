@@ -11,7 +11,6 @@ rec {
   inputs.nix-installers.url = "git+ssh://git@github.com/flox/nix-installers?ref=flox-hacks";
   inputs.nix-installers.flake = false;
 
-  # Recover older behavior while we remove stabilities
   inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
   inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -22,12 +21,13 @@ rec {
 
   outputs = _:
     (_.capacitor _ ({
+        self,
         lib,
         auto,
         ...
       }:
       # Define package set structure
-      {
+      rec {
         # Limit the systems to fewer or more than default by ucommenting
         # __systems = ["x86_64-linux"];
 
@@ -36,34 +36,44 @@ rec {
           root',
           pkgs,
           system,
+          stability ? "unstable",
           ...
         }: {
-          nixpkgs = {inherit (pkgs) stable unstable staging;};
-          flox = lib.genAttrs ["stable" "unstable" "staging"] (
-            stability: let
+          nixpkgs = pkgs.${stability};
+          flox =
+            let
               tie = (
                 lib.recursiveUpdate
-                root'.legacyPackages.nixpkgs.${stability}
-                root'.legacyPackages.flox.${stability}
+                root'.legacyPackages.nixpkgs
+                root'.legacyPackages.flox
               );
             in
-              builtins.mapAttrs (_: v: builtins.removeAttrs v ["override" "__functor" "overrideDerivation"]) (
-                # support default.nix approach
-                (auto.automaticPkgsWith inputs ./pkgs tie)
-                # support flakes approach with override
-                # TODO: hide the sanitization
-                // (lib.sanitizes (lib.flakesWith inputs "capacitor/nixpkgs/nixpkgs-${stability}") ["default" "packages" system])
-                // (lib.using
-                # External proto-derivaiton trees and overrides
+              # support default.nix approach
+              (auto.automaticPkgsWith inputs ./pkgs tie)
+              # support flakes approach with override
+              # TODO: hide the sanitization
+              // (lib.sanitizes (lib.callSubflakesWith inputs {}) ["default" "packages" system])
+              # External proto-derivaiton trees and overrides
+              // (lib.using
                 {
-                    nix-installers = _.nix-installers + "/default.nix";
-                    python3Packages = _.floxpkgsv1 + "/pythonPackages";
-                  }
-                # end customizations
-                  (tie // {inherit inputs;}))
-              )
-          );
+                  nix-installers = _.nix-installers + "/default.nix";
+                  python3Packages = _.floxpkgsv1 + "/pythonPackages";
+                } (tie // {inherit inputs;}))
+            # end customizations
+            ;
         };
+
+        # Create output jobsets for stabilities
+        # First, re-evaluate legacyPackages with alternates
+        # Second, expose specific branches at top-level
+        hydraJobs = args:
+          lib.genAttrs ["stable" "unstable" "staging"] (
+            stability:
+              (legacyPackages (args // {inherit stability;})).flox
+          );
+        hydraJobsStable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.stable);
+        hydraJobsUnstable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.unstable);
+        hydraJobsStaging = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.staging);
 
         templates = {
           python-black = {
@@ -79,18 +89,6 @@ rec {
             description = "Python 3 template";
           };
         };
-
-        hydraJobsStable = _.self.hydraJobsRaw.stable;
-        hydraJobsUnstable = _.self.hydraJobsRaw.unstable;
-        hydraJobsStaging = _.self.hydraJobsRaw.staging;
-        hydraJobsRaw = with _.capacitor.inputs.nixpkgs-lib;
-          lib.genAttrs ["stable" "unstable" "staging"] (
-            stability:
-              lib.genAttrs ["x86_64-linux"] (
-                system:
-                    _.self.legacyPackages.${system}.flox.${stability}
-              )
-          );
       }))
     // {
       /**/
