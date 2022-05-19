@@ -64,13 +64,12 @@ rec {
         };
 
         # Create output jobsets for stabilities
-        # First, re-evaluate legacyPackages with alternates
-        # Second, expose specific branches at top-level
-        hydraJobs = args:
+        hydraJobsRaw = args:
           lib.genAttrs ["stable" "unstable" "staging"] (
             stability:
               (legacyPackages (args // {inherit stability;})).flox
           );
+        hydraJobs = a: (_.self.hydraJobsRaw a);
         hydraJobsStable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.stable);
         hydraJobsUnstable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.unstable);
         hydraJobsStaging = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.staging);
