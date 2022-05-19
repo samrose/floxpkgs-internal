@@ -169,11 +169,11 @@
     "nix-installers": {
       "flake": false,
       "locked": {
-        "lastModified": 1652961933,
-        "narHash": "sha256-dndexOx7KWSYMC1vizzuyFfxpOKe85jrAsc+Myjlk5A=",
+        "lastModified": 1652963389,
+        "narHash": "sha256-eyprxdc89SBgmz86GKH2b4tEUrkZRRZV9ydfDPGroIE=",
         "ref": "flox-hacks",
-        "rev": "e813de95f604a91f34786914f5feab873580bfdc",
-        "revCount": 62,
+        "rev": "ba85e40d5747456c16d57f78b93e818a82f28820",
+        "revCount": 63,
         "type": "git",
         "url": "ssh://git@github.com/flox/nix-installers"
       },
