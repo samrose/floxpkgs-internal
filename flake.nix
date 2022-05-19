@@ -45,20 +45,20 @@ rec {
         system,
         stability ? "unstable",
         ...
-      }: {
+      }: let
+        # Tie-the-knot recursive update required in capacitor
+        tie = lib.recursiveUpdate root'.legacyPackages.nixpkgs root'.legacyPackages.flox;
+      in {
+        # Declare my channels (projects)
         nixpkgs = pkgs.${stability};
         flox =
-          # Tie-the-knot recursive update required in capacitor
-          let
-            tie = lib.recursiveUpdate root'.legacyPackages.nixpkgs root'.legacyPackages.flox;
-          in
-            # support default.nix approach
-            (auto.automaticPkgsWith inputs ./pkgs tie)
-            # support flakes approach with override
-            # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
-            // (lib.sanitizes (lib.callSubflakesWith inputs {}) ["default" "packages" system])
-            # External proto-derivaiton trees and overrides
-            // (lib.using (import ./flox.nix {_ = _;}) (tie // {inherit inputs;}))
+          # support default.nix approach
+          (auto.automaticPkgsWith inputs ./pkgs tie)
+          # support flakes approach with override
+          # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
+          // (lib.sanitizes (lib.callSubflakesWith inputs {}) ["default" "packages" system])
+          # External proto-derivaiton trees and overrides
+          // (lib.using (import ./flox.nix {_ = _;}) (tie // {inherit inputs;}))
           # end customizations
           ;
       };
@@ -98,7 +98,7 @@ rec {
       catalog =
         (_.capacitor.lib.project _ ({...}: {
           legacyPackages = args @ {system, ...}:
-            lib.genAttrs ["flox"] (channel:
+            lib.genAttrs ["flox" "nixpkgs"] (channel:
               lib.genAttrs ["stable" "unstable" "staging"] (
                 stability:
                   (legacyPackages (args // {inherit stability;})).${channel}
