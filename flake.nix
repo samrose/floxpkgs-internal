@@ -12,6 +12,7 @@ rec {
   inputs.nix-installers.flake = false;
 
   inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
+  inputs.nixpkgs.inputs.capacitor.follows = "capacitor";
   inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
 
   # Add additional subflakes as needed
@@ -32,7 +33,6 @@ rec {
         # __systems = ["x86_64-linux"];
 
         legacyPackages = {
-          self',
           root',
           pkgs,
           system,
@@ -41,6 +41,7 @@ rec {
         }: {
           nixpkgs = pkgs.${stability};
           flox =
+            # Tie-the-knot recursive update required in capacitor
             let
               tie = (
                 lib.recursiveUpdate
@@ -51,19 +52,15 @@ rec {
               # support default.nix approach
               (auto.automaticPkgsWith inputs ./pkgs tie)
               # support flakes approach with override
-              # TODO: hide the sanitization
               // (lib.sanitizes (lib.callSubflakesWith inputs {}) ["default" "packages" system])
               # External proto-derivaiton trees and overrides
-              // (lib.using
-                {
-                  nix-installers = _.nix-installers + "/default.nix";
-                  python3Packages = _.floxpkgsv1 + "/pythonPackages";
-                } (tie // {inherit inputs;}))
+              // (lib.using (import ./flox.nix {_=_;}) (tie // {inherit inputs;}))
             # end customizations
             ;
         };
 
         # Create output jobsets for stabilities
+        # TODO: has.stabilities and re-arrange attribute names to make system last?
         hydraJobsRaw = args:
           lib.genAttrs ["stable" "unstable" "staging"] (
             stability:
@@ -88,10 +85,7 @@ rec {
             description = "Python 3 template";
           };
         };
-      }))
-    // {
-      /**/
-    };
+      }));
 
   # API calls
   inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";
