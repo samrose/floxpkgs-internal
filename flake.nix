@@ -61,10 +61,25 @@ rec {
 
         # Create output jobsets for stabilities
         # TODO: has.stabilities and re-arrange attribute names to make system last?
-        hydraJobsRaw = args:
+        hydraJobsRaw = {lib,system,pkgs,...}@args:
           lib.genAttrs ["stable" "unstable" "staging"] (
             stability:
-              (legacyPackages (args // {inherit stability;})).flox
+            let jobs =
+              (legacyPackages (args // {inherit stability;})).flox;
+            in jobs // {
+              gate = pkgs.runCommand "all-jobs" rec {
+                _hydraAggregate = true;
+                constituentList = lib.collect lib.isList (
+                  lib.mapAttrsRecursiveCond
+                    (value: !(lib.isDerivation value))
+                    (path: value: path)
+                    jobs);
+                constituents = with builtins;
+                    map (x: concatStringsSep "." ([system] ++ x)) constituentList;
+              } ''
+                touch $out
+                '';
+            }
           );
         hydraJobs = a: (_.self.hydraJobsRaw a);
         hydraJobsStable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.stable);
