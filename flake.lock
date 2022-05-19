@@ -39,7 +39,8 @@
         "src": "src"
       },
       "locked": {
-        "narHash": "sha256-KsN0pnX1oxSS6jDzDcomJ63niY68l6UG9JvFXgzyC4Q=",
+        "lastModified": 1,
+        "narHash": "sha256-G6Hg7+XwGxGJYD/VX59hpM8ObcMYmPEy24xr/YhuMyU=",
         "path": "./pkgs/catalog",
         "type": "path"
       },
@@ -83,6 +84,7 @@
         "src": "src_2"
       },
       "locked": {
+        "lastModified": 1,
         "narHash": "sha256-dM4EomVt2nqk6SHHITeSkwNcHHNEpwuwoy4+z/Fm9uw=",
         "path": "./pkgs/flox",
         "type": "path"
@@ -319,11 +321,11 @@
     "src": {
       "flake": false,
       "locked": {
-        "lastModified": 1652917673,
-        "narHash": "sha256-WhOu6ndrF8P4D9LDcPhRlY4amdMkMOAhqA3QOaVFgQo=",
+        "lastModified": 1652981669,
+        "narHash": "sha256-hG3dKk4evix92RqFaE+uXtjniUSas1hKczzTXFFZhr8=",
         "ref": "master",
-        "rev": "643dcb1106adab9accae20a312146fe794d73f0a",
-        "revCount": 29,
+        "rev": "f044435a2727ecedf043f1ee8ef95abacecf244d",
+        "revCount": 33,
         "type": "git",
         "url": "ssh://git@github.com/flox/catalog"
       },
@@ -336,11 +338,11 @@
     "src_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1652887330,
-        "narHash": "sha256-F4IlJqZ2hzVOqZAwDoRs5RKYakoZETaCRjyYXPLIQ8Y=",
+        "lastModified": 1652981914,
+        "narHash": "sha256-9dmsE4Q0EpMmuJ9Bse5McyWcZAeRPTZEh6Ib5PfAusQ=",
         "ref": "tng",
-        "rev": "ae6ade2e6c49e5a8a6a708e5673c034c14352184",
-        "revCount": 124,
+        "rev": "bfcf16ad3f053af129174a2ff7d5814c59828789",
+        "revCount": 125,
         "type": "git",
         "url": "ssh://git@github.com/flox/flox"
       },
@@ -372,6 +374,7 @@
         "src": "src_3"
       },
       "locked": {
+        "lastModified": 1,
         "narHash": "sha256-YbWlEEhGQdL0nNBsKw3aVPjq4dPKO4Cxs+54nx1qe20=",
         "path": "./pkgs/tracelinks",
         "type": "path"
