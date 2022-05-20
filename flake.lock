@@ -40,7 +40,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-G6Hg7+XwGxGJYD/VX59hpM8ObcMYmPEy24xr/YhuMyU=",
+        "narHash": "sha256-pb5rIqoQSCPyoUzb+CdmfYFOFSbABZlx7t0WB92zqak=",
         "path": "./pkgs/catalog",
         "type": "path"
       },
@@ -321,11 +321,11 @@
     "src": {
       "flake": false,
       "locked": {
-        "lastModified": 1652995229,
-        "narHash": "sha256-FghEViu5Erb/Z3n7s6bQUmhpx6CPiZFaTjVmXohU3pM=",
+        "lastModified": 1653077220,
+        "narHash": "sha256-inLDcKdzOVKTIhlwsEkOhIUy4UXQReaqW4s0zbnFeqQ=",
         "ref": "master",
-        "rev": "792b44223b6c5406f44a56d6b16376d36081b071",
-        "revCount": 35,
+        "rev": "52993eaa7f98dd10306f136a5b904cede0363959",
+        "revCount": 37,
         "type": "git",
         "url": "ssh://git@github.com/flox/catalog"
       },
