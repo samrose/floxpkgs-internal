@@ -127,6 +127,23 @@
         "url": "ssh://git@github.com/flox/floxpkgsv1"
       }
     },
+    "mini-dinstall": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1628154387,
+        "narHash": "sha256-Xb8pO+jmMCbkgd8gcamqs2kFpBuccc7xa21jQKnCy04=",
+        "ref": "main",
+        "rev": "e0a05885120fd70595fe0f5468fa77d83049081f",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/flox/mini-dinstall"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/flox/mini-dinstall"
+      }
+    },
     "nix-eval-jobs": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -243,11 +260,11 @@
     },
     "nixpkgs-staging": {
       "locked": {
-        "lastModified": 1650161686,
-        "narHash": "sha256-70ZWAlOQ9nAZ08OU6WY7n4Ij2kOO199dLfNlvO/+pf8=",
+        "lastModified": 1652794215,
+        "narHash": "sha256-erVj41IcCPDWdt8CwT60ygD+SY/uhqip3RXwiESOCVk=",
         "owner": "flox",
         "repo": "nixpkgs",
-        "rev": "1ffba9f2f683063c2b14c9f4d12c55ad5f4ed887",
+        "rev": "242efdc5a5aff8222c1152c0e4b9262bd02915b6",
         "type": "github"
       },
       "original": {
@@ -313,6 +330,7 @@
         "flox": "flox",
         "floxdocs": "floxdocs",
         "floxpkgsv1": "floxpkgsv1",
+        "mini-dinstall": "mini-dinstall",
         "nix-installers": "nix-installers",
         "nixpkgs": "nixpkgs",
         "tracelinks": "tracelinks"
