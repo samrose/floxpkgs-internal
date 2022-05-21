@@ -114,10 +114,10 @@
     "floxpkgsv1": {
       "flake": false,
       "locked": {
-        "lastModified": 1653168635,
-        "narHash": "sha256-x9CHyGffKLpC2BYECsfTdlOuleqXx98QqGS1Ymv+Xp0=",
+        "lastModified": 1653169127,
+        "narHash": "sha256-tijf4ynFz8Gr+7DfKSqrXm9yCexh4FJoY/7yj0Ytm9M=",
         "ref": "master",
-        "rev": "ab304c8c24df9cb322b907607b8dd74fc78ce2f3",
+        "rev": "04c513e14d658f460c6c9df80ae2ceba6eb9fef8",
         "revCount": 97,
         "type": "git",
         "url": "ssh://git@github.com/flox/floxpkgsv1"
