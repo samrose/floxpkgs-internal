@@ -8,6 +8,9 @@ rec {
   inputs.floxdocs.url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
   inputs.floxdocs.flake = false;
 
+  inputs."mini-dinstall".url = "git+ssh://git@github.com/flox/mini-dinstall?ref=main";
+  inputs."mini-dinstall".flake = false;
+
   inputs.nix-installers.url = "git+ssh://git@github.com/flox/nix-installers?ref=flox-hacks";
   inputs.nix-installers.flake = false;
 
