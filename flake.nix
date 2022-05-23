@@ -11,7 +11,7 @@ rec {
   inputs."mini-dinstall".url = "git+ssh://git@github.com/flox/mini-dinstall?ref=main";
   inputs."mini-dinstall".flake = false;
 
-  inputs.nix-installers.url = "git+ssh://git@github.com/flox/nix-installers?ref=flox-hacks";
+  inputs.nix-installers.url = "git+ssh://git@github.com/flox/nix-installers";
   inputs.nix-installers.flake = false;
 
   # This is a misnomer, it's is nixpkgs w/stabilties
