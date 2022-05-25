@@ -66,6 +66,8 @@ rec {
           ;
       };
 
+      apps = auto.automaticPkgs ./apps;
+
       # Create output jobsets for stabilities
       # TODO: has.stabilities and re-arrange attribute names to make system last?
       hydraJobsRaw = {
