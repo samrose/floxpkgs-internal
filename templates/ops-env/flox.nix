@@ -1,14 +1,3 @@
-/*
-curl, docker.io, python3, python3-pip, python3-venv, unzip Latest versions
-Python packages
-allure-pytest, kubernetes, pytest
-allure-pytest and pytest latest versions
-I might want to pin the kubernetes version
-Manually installation
-AWS CLI v2+
-kubectl Currently latest, but I would like to pin the version
-Helm Latest v3.x
-*/
 {
   paths = [
     curl

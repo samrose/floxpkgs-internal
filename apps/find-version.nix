@@ -1,9 +1,9 @@
-{writeShellApplication, curl, jq, name ? "find-version"}:
+{writeShellApplication, curl, coreutils, parallel, gnused, jq, name ? "find-version"}:
 {
   type = "app";
   program = (writeShellApplication {
     inherit name;
-    runtimeInputs = [ curl jq ];
+    runtimeInputs = [ curl jq coreutils parallel gnused ];
     text = ''
 attr="$1"
 
@@ -29,6 +29,18 @@ if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
         | jq '.[].id' -cr \
         | parallel -n1 curl --silent -H "'Accept: application/json'" "$hydra/build/{}" | jq -cr \
         > "$tmpDir/$attr.$system.json"
+fi
+
+if [ -v AS_LIST ]; then
+jq \
+    '
+    select(.nixname|
+           capture("(?<name>.*)-(?<version>[^a-zA-Z].*)")|
+           .version
+           )
+    ' "$tmpDir/$attr.$system.json" \
+    | jq -s 'sort_by(.stoptime)|.[]|[.nixname,.job]|@tsv' -cr | sort -u | sed -e "s/.$system$//"
+    exit 0
 fi
 
 # Extract name-version from nixname and match the regex provided by user
