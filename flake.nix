@@ -121,6 +121,14 @@ rec {
           path = ./templates/python-black;
           description = "Python Black example template";
         };
+        python-black-devshell = {
+          path = ./templates/python-black-devshell;
+          description = "Python Black example template using devshell";
+        };
+        ops-env = {
+          path = ./templates/ops-env;
+          description = "Template using specific versions";
+        };
         python2 = {
           path = ./templates/python2;
           description = "Python 2 template";
