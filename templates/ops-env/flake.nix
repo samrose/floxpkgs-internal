@@ -36,7 +36,7 @@ rec {
               name = "wrapper";
               paths = [
                 (
-                  pkgs.buildEnv (data // {name = "fromData";})
+                  pkgs.buildEnv (builtins.removeAttrs (data // {name = "fromData";}) ["postShellHook"])
                 )
               ];
               postBuild = let
@@ -57,6 +57,8 @@ rec {
                     ) split)}
                   flox profile wipe-history --profile "$ROOT/.flox" >/dev/null 2>/dev/null
                   export PATH="$ROOT/.flox/bin:@DEVSHELL_DIR@/bin:$PATH"
+
+                  ${data.postShellHook or ""}
 
                 '';
               in "substitute ${envBash}/env.bash $out/env.bash --subst-var-by DEVSHELL_DIR $out";

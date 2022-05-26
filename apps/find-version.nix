@@ -17,9 +17,9 @@ mkdir -p "$tmpDir"
 
 substituter="''${substituter:-https://beta.floxdev.com}"
 hydra="''${hydra:-https://storehouse.beta.floxdev.com}"
-url="github:flox/nixpkgs"
+url="''${url:-github:flox/nixpkgs}"
 project="nixpkgs"
-jobset="stable"
+jobset="''${jobset:-stable}"
 # assumption is that the cache is availble and configured
 
 
