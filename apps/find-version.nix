@@ -27,7 +27,7 @@ jobset="''${jobset:-stable}"
 if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
     curl -H 'Accept: application/json' "$hydra/job/$project/$jobset/$attr.$system"/closure-sizes -L \
         | jq '.[].id' -cr \
-        | parallel -n1 curl --silent -H "'Accept: application/json'" "$hydra/build/{}" | jq -cr \
+        | parallel --will-cite -n1 curl --silent -H "'Accept: application/json'" "$hydra/build/{}" | jq -cr \
         > "$tmpDir/$attr.$system.json"
 fi
 
