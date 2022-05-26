@@ -1,4 +1,4 @@
-{writeShellApplication, curl, coreutils, parallel, gnused, jq, name ? "find-version"}:
+{writeShellApplication, curl, coreutils, parallel, gnused, jq, glibcLocales, name ? "find-version"}:
 {
   type = "app";
   program = (writeShellApplication {
@@ -23,6 +23,7 @@ jobset="''${jobset:-stable}"
 # assumption is that the cache is availble and configured
 
 
+export LOCALE_ARCHIVE_2_27="${glibcLocales}/lib/locale/locale-archive"
 # Find all versions built for current system
 if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
     curl -H 'Accept: application/json' "$hydra/job/$project/$jobset/$attr.$system"/closure-sizes -L \
