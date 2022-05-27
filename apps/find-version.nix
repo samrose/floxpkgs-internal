@@ -33,14 +33,16 @@ if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
 fi
 
 if [ -v AS_LIST ]; then
-jq \
+jq --arg version "^$version" \
     '
     select(.nixname|
            capture("(?<name>.*)-(?<version>[^a-zA-Z].*)")|
            .version
+           |match($version) !=[]
            )
+           | select(.finished == 1)
     ' "$tmpDir/$attr.$system.json" \
-    | jq -s 'sort_by(.stoptime)|.[]|[.nixname,.job]|@tsv' -cr | sort -u | sed -e "s/.$system$//"
+    | jq -s 'sort_by(.stoptime)|.[]|[(.buildproducts|to_entries[0].value.path),.nixname]|@tsv' -cr | sort -k2 -u | sed -e "s/.$system$//" | column -t
     exit 0
 fi
 
@@ -61,7 +63,7 @@ out=$(jq --arg version "^$version" \
 eval=$(echo "$out" | jq '.jobsetevals|sort|.[-1]' -cr)
 
 # Obtain evaluation information
-if [ -v REFRESH ] || [ ! -f "$tmpDir/eval.$eval.json" ]; then
+if [ ! -f "$tmpDir/eval.$eval.json" ]; then
     curl --silent -H 'Accept: application/json' "$hydra/eval/$eval" -L > "$tmpDir/eval.$eval.json"
 fi
 # Obtain nixpkgs revision
