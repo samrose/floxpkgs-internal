@@ -8,8 +8,8 @@ rec {
   # TODO: using specific revision to bypass mach-nix warning of too new nixpkgs
   #inputs.mach-nix.url = "github:DavHau/mach-nix";
   inputs.mach-nix.url = "github:bjornfor/mach-nix/adapt-to-make-binary-wrapper";
-  inputs.mach-nix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-  inputs.nixpkgs-unstable.url = "git+ssh://git@github.com/flox/nixpkgs-flox?rev=f5eced6769aaff5658695c281f3831856dbebbc9";
+  inputs.mach-nix.inputs.nixpkgs.follows = "nixpkgs-unstable-old";
+  inputs.nixpkgs-unstable-old.url = "git+ssh://git@github.com/flox/nixpkgs-flox?rev=f5eced6769aaff5658695c281f3831856dbebbc9";
   inputs.mach-nix.inputs.pypi-deps-db.follows = "pypi-deps-db";
   inputs.pypi-deps-db.url = "github:DavHau/pypi-deps-db";
   inputs.pypi-deps-db.flake = false;
@@ -56,7 +56,7 @@ rec {
                   self.devShells.${system}.default.passthru.paths;
                 split = map (x: builtins.concatStringsSep " " (lib.strings.splitString "@" x)) versioned;
                 envBash = writeTextDir "env.bash" ''
-                  ROOT=$(git rev-parse --show-toplevel || echo $HOME/.config/flox/ )
+                  ROOT=$(git rev-parse --show-toplevel 2>/dev/null || echo $HOME/.config/flox/ )
                   if compgen -G "$ROOT/.flox-${name}"* >/dev/null; then
                     rm "$ROOT/.flox-${name}"*
                   fi
