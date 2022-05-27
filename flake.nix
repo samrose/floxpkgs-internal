@@ -23,8 +23,9 @@ rec {
   inputs.tracelinks.url = "path:./pkgs/tracelinks";
   inputs.flox.url = "path:./pkgs/flox";
   inputs.catalog.url = "path:./pkgs/catalog";
-
   inputs.ops-env.url = "path:./templates/ops-env";
+
+  nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
   outputs = _: (_.capacitor _ ({
       self,
