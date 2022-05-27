@@ -24,6 +24,8 @@ rec {
   inputs.flox.url = "path:./pkgs/flox";
   inputs.catalog.url = "path:./pkgs/catalog";
 
+  inputs.ops-env.url = "path:./templates/ops-env";
+
   outputs = _: (_.capacitor _ ({
       self,
       lib,
@@ -59,7 +61,7 @@ rec {
           (auto.automaticPkgsWith inputs ./pkgs tie)
           # support flakes approach with override
           # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
-          // (lib.sanitizes (lib.callSubflakesWith inputs {}) ["default" "packages" system])
+          // (lib.sanitizes (lib.callSubflakesWith inputs {}) ["pins" "default" "packages" system])
           # External proto-derivaiton trees and overrides
           // (lib.using (import ./flox.nix {_ = _;}) (tie // {inherit inputs;}))
           # end customizations
@@ -115,6 +117,12 @@ rec {
       hydraJobsStable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.stable);
       hydraJobsUnstable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.unstable);
       hydraJobsStaging = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.staging);
+
+      devShells = {system,root',...}: let
+        tie = lib.recursiveUpdate root'.legacyPackages.nixpkgs root'.legacyPackages.flox;
+      in {
+         ops-env = ((lib.flakes lib _.self _.self).subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
+      };
 
       templates = {
         python-black = {

@@ -118,8 +118,8 @@ rec {
       __pins = [
         (builtins.getFlake "github:flox/nixpkgs/90705c89fbad69c4c971fabf2b1edd8c7875b5d6").legacyPackages.x86_64-linux.kubernetes-helm
       ];
-      # TODO: Due to a limitation in nix-editor, unable to add a new nested attrset value.
-      # Instead using a list as a workaround, then fixing it
+      # # TODO: Due to a limitation in nix-editor, unable to add a new nested attrset value.
+      # # Instead using a list as a workaround, then fixing it
       pins = builtins.listToAttrs (map (x: {
           name = builtins.replaceStrings ["."] ["_"] x.name;
           value = x;
