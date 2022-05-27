@@ -125,7 +125,7 @@ rec {
          ops-env = ((lib.flakes lib _.self _.self).subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
       };
 
-      lib = {
+      lib = _.capacitor.lib // {
         flox-env = import ./lib/flox-env.nix;
         vscode = import ./lib/vscode.nix;
       };

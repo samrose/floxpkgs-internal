@@ -1,5 +1,8 @@
 rec {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
+  inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
+  inputs.nixpkgs.inputs.capacitor.follows = "capacitor";
+  inputs.capacitor.inputs.nixpkgs.follows = "nixpkgs";
   inputs.capacitor.inputs.root.follows = "/";
 
   inputs.devshell.url = "github:numtide/devshell";
@@ -36,10 +39,11 @@ rec {
         tie = {
           inherit pkgs;
           mach = _.mach-nix.lib.${system};
+          vscodeLib = _.floxpkgs.lib.vscode;
         };
       in {
         default = with pkgs; let
-          data = builtins.scopedImport (tie.pkgs // tie.mach) ./flox.nix;
+          data = builtins.scopedImport (tie.pkgs // tie.mach // tie) ./flox.nix;
         in
           (devshell.legacyPackages.${system}.mkNakedShell rec {
             name = "ops-env";
