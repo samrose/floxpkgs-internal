@@ -57,7 +57,9 @@ rec {
                 split = map (x: builtins.concatStringsSep " " (lib.strings.splitString "@" x)) versioned;
                 envBash = writeTextDir "env.bash" ''
                   ROOT=$(git rev-parse --show-toplevel || echo $HOME/.config/flox/ )
-                  rm "$ROOT/.flox-${name}"*
+                  if compgen -G "$ROOT/.flox-${name}"* >/dev/null; then
+                    rm "$ROOT/.flox-${name}"*
+                  fi
                   ${builtins.concatStringsSep "\n" (map (
                       x: ''
                         echo Searching: "${x}"
