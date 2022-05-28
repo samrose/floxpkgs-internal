@@ -40,7 +40,7 @@
   postShellHook = ''
     # Show versions with a bit of color
     echo
-    LC_ALL=C.UTF-8 parallel --will-cite 'flox path-info $(readlink -f $(which {})) | cut -d- -f2- ' ::: curl docker unzip aws kubectl python3 helm |
+    LC_ALL=en_US.UTF-8 parallel --will-cite 'flox path-info $(readlink -f $(which {})) | cut -d- -f2- ' ::: curl docker unzip aws kubectl python3 helm |
        grep -P --colour=always '(?:^|(?<=[-]))[0-9.]*|$'
   '';
 }
