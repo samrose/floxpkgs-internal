@@ -18,12 +18,12 @@ mkdir -p "$tmpDir"
 substituter="''${substituter:-https://beta.floxdev.com}"
 hydra="''${hydra:-https://storehouse.beta.floxdev.com}"
 url="''${url:-github:flox/nixpkgs}"
-project="nixpkgs"
+project="''${project:-nixpkgs}"
 jobset="''${jobset:-stable}"
 # assumption is that the cache is availble and configured
 
 
-export LC_ALL=C.UTF-8
+export LC_ALL=en_US.UTF-8
 # Find all versions built for current system
 if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
     curl -H 'Accept: application/json' "$hydra/job/$project/$jobset/$attr.$system"/closure-sizes -L \
