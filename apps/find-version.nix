@@ -15,11 +15,19 @@ system=$(nix show-config | sed -n 's/system = \(.*\)$/\1/p')
 tmpDir="$HOME/.cache/flox/versions"
 mkdir -p "$tmpDir"
 
-substituter="''${substituter:-https://beta.floxdev.com}"
-hydra="''${hydra:-https://storehouse.beta.floxdev.com}"
-url="''${url:-github:flox/nixpkgs}"
+# Removing for better aarch64 support and more versions
+# substituter="''${substituter:-https://beta.floxdev.com}"
+# hydra="''${hydra:-https://storehouse.beta.floxdev.com}"
+# url="''${url:-github:flox/nixpkgs}"
+# project="''${project:-nixpkgs}"
+# jobset="''${jobset:-stable}"
+
+substituter="''${substituter:-https://cache.nixos.org}"
+hydra="''${hydra:-https://hydra.nixos.org}"
+url="''${url:-github:NixOS/nixpkgs}"
 project="''${project:-nixpkgs}"
-jobset="''${jobset:-stable}"
+jobset="''${jobset:-trunk}"
+
 # assumption is that the cache is availble and configured
 
 
