@@ -43,17 +43,37 @@ rec {
         };
       in {
         default = with pkgs; let
-          data = builtins.scopedImport (tie.pkgs // tie.mach // tie) ./flox.nix;
+          # data = builtins.scopedImport (tie.pkgs // tie.mach // tie) ./flox.nix;
+          data = (_.capacitor.lib.custom {}).processTOML ./flox.toml {
+            pkgs=tie.pkgs;
+            floxEnv = {name,programs,...}: let
+              paths =
+                    let attrs = builtins.removeAttrs programs ["postShellHook" "python" "vscode"];
+                    handler = {
+                      python = _.mach-nix.lib.${system}.mkPython programs.python;
+                      vscode = _.floxpkgs.lib.vscode.configuredVscode
+                              pkgs
+                              programs.vscode
+                              ( builtins.fromJSON (builtins.readFile ./flox-env.lock)).vscode
+                            ;
+                      # insert excpetions here
+                      __functor = self: key: attr: self.${key} or (
+                        if attr?version
+                        then "${key}@${attr.version}"
+                        else pkgs.${key});
+                    };
+                    in lib.mapAttrsToList handler programs;
+            in
+            (buildEnv {inherit name paths;} ) // { passthru.paths = paths;};
+          };
+        calledFloxEnv = data.func data.attrs;
         in
           (devshell.legacyPackages.${system}.mkNakedShell rec {
             name = "ops-env";
             profile = buildEnv {
               name = "wrapper";
-              paths = [
-                (
-                  pkgs.buildEnv (builtins.removeAttrs (data // {name = "fromData";}) ["postShellHook"])
-                )
-              ];
+              paths = [ calledFloxEnv ];
+
               postBuild = let
                 versioned =
                   builtins.filter (x: builtins.isString x && !builtins.hasContext x)
@@ -76,13 +96,13 @@ rec {
                   flox profile wipe-history --profile "$ROOT/.flox-${name}" >/dev/null 2>/dev/null
                   export PATH="$ROOT/.flox-${name}/bin:@DEVSHELL_DIR@/bin:$PATH"
 
-                  ${data.postShellHook or ""}
+                  ${data.attrs.postShellHook or ""}
 
                 '';
               in "substitute ${envBash}/env.bash $out/env.bash --subst-var-by DEVSHELL_DIR $out";
             };
           })
-          // {passthru = data;};
+          // {passthru.paths = calledFloxEnv.passthru.paths;};
       };
 
       apps = {

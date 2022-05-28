@@ -62,14 +62,15 @@ rec {
           (auto.automaticPkgsWith inputs ./pkgs tie)
           # support flakes approach with override
           # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
-          // (lib.sanitizes (lib.callSubflakesWith inputs {}) ["pins" "default" "packages" system])
+          // (lib.sanitizes (auto.callSubflakesWith inputs {}) ["pins" "default" "packages" system])
           # External proto-derivaiton trees and overrides
-          // (lib.using (import ./flox.nix {_ = _;}) (tie // {inherit inputs;}))
+          // (auto.usingWith inputs (import ./flox.nix {_ = _;}) tie
+          )
           # end customizations
           ;
       };
 
-      apps = auto.automaticPkgs ./apps;
+      apps = {pkgs,...}: auto.automaticPkgsWith inputs ./apps;
 
       # Create output jobsets for stabilities
       # TODO: has.stabilities and re-arrange attribute names to make system last?
@@ -122,7 +123,7 @@ rec {
       devShells = {system,root',...}: let
         tie = lib.recursiveUpdate root'.legacyPackages.nixpkgs root'.legacyPackages.flox;
       in {
-         ops-env = ((lib.flakes lib _.self _.self).subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
+         ops-env = (auto.subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
       };
 
       lib = _.capacitor.lib // {
