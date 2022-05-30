@@ -23,7 +23,7 @@
       "locked": {
         "lastModified": 1653698336,
         "narHash": "sha256-KAU5xvm9+XjRmcDq4HrCPhGZWl04whYKT+NEDAXsT+I=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "528cbc844243e456f286772e30ebc2ccc946d9ec",
         "revCount": 192,
         "type": "git",
@@ -63,7 +63,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-pb5rIqoQSCPyoUzb+CdmfYFOFSbABZlx7t0WB92zqak=",
+        "narHash": "sha256-n+4E7lZ3K3+DjTNDrubBHA9++wo1/qLqVA7gzUdKCCo=",
         "path": "./pkgs/catalog",
         "type": "path"
       },
@@ -78,11 +78,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1653308769,
-        "narHash": "sha256-9bylbRkrmaUiYYjcVLd0JyvqpKveOUw5q2mBf2+pR0c=",
+        "lastModified": 1653917170,
+        "narHash": "sha256-FyxOnEE/V4PNEcMU62ikY4FfYPo349MOhMM97HS0XEo=",
         "owner": "numtide",
         "repo": "devshell",
-        "rev": "a00abaeb902ff568f9542d4b6f335e3a4db5c548",
+        "rev": "fc7a3e3adde9bbcab68af6d1e3c6eb738e296a92",
         "type": "github"
       },
       "original": {
@@ -245,11 +245,11 @@
     "floxdocs": {
       "flake": false,
       "locked": {
-        "lastModified": 1652381882,
-        "narHash": "sha256-yNEkfwhOO+Fi9ckD0bXKwBNzB9k7r7vMqUfY1FyI7R8=",
+        "lastModified": 1653933560,
+        "narHash": "sha256-d/E8lEoxU0AepFWmDi29zomGtDYGiWmLQzi2S+TgLxo=",
         "ref": "tng",
-        "rev": "fc72636b1a0b2c5c41f118430948d2468bd794f0",
-        "revCount": 420,
+        "rev": "9c93ce6a73e3e653c84b5a9938afe0181e6536cb",
+        "revCount": 421,
         "type": "git",
         "url": "ssh://git@github.com/flox/floxdocs"
       },
@@ -264,7 +264,7 @@
       "locked": {
         "lastModified": 1653171999,
         "narHash": "sha256-GjZtU/ZPcFe7V907g3AzZF9OFCFZ4rrykm3GuLL1aGg=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "f43d6d801fdfe8bee11ca8a9da5251b37b1d693b",
         "revCount": 97,
         "type": "git",
@@ -461,7 +461,7 @@
       "locked": {
         "lastModified": 1653596786,
         "narHash": "sha256-r1J4wbOJMJ+p6hEPBeoGXib33JQmZwz0iLjOQmZDqxI=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "df864995ce6fe854164795b14c5faebb3363e6da",
         "revCount": 80,
         "type": "git",
@@ -486,7 +486,7 @@
       "locked": {
         "lastModified": 1653662031,
         "narHash": "sha256-ZXd7b0ONTkrgFjsqd1fDOTPXvTh1qJZVhRPY+jVlFKQ=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "ddaa59fbf6764610f25802cff122fbf40a23fad8",
         "revCount": 57,
         "type": "git",
@@ -926,7 +926,7 @@
       "locked": {
         "lastModified": 1653662031,
         "narHash": "sha256-ZXd7b0ONTkrgFjsqd1fDOTPXvTh1qJZVhRPY+jVlFKQ=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "ddaa59fbf6764610f25802cff122fbf40a23fad8",
         "revCount": 57,
         "type": "git",
@@ -996,11 +996,11 @@
     "pypi-deps-db": {
       "flake": false,
       "locked": {
-        "lastModified": 1653683585,
-        "narHash": "sha256-a+p0epx5F4l5LtvOKzmLJpJqMtXSHTlPlIukwhnt79w=",
+        "lastModified": 1653899617,
+        "narHash": "sha256-YzvKXRieu6iUcqMgp9e4K/EhfvUc6E8pJexKL8rpEYM=",
         "owner": "DavHau",
         "repo": "pypi-deps-db",
-        "rev": "32d4b79ce5b6a596d48afc182b7e16f70c8a0145",
+        "rev": "2b217edb1671f10acdde72195292ccbf62f8bbb7",
         "type": "github"
       },
       "original": {
