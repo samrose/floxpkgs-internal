@@ -13,11 +13,15 @@ rec {
   inputs.mach-nix.url = "github:bjornfor/mach-nix/adapt-to-make-binary-wrapper";
   inputs.mach-nix.inputs.nixpkgs.follows = "nixpkgs-unstable-old";
   inputs.nixpkgs-unstable-old.url = "git+ssh://git@github.com/flox/nixpkgs-flox?rev=f5eced6769aaff5658695c281f3831856dbebbc9";
+  inputs.nixpkgs-unstable-old.inputs.capacitor.follows = "capacitor";
   inputs.mach-nix.inputs.pypi-deps-db.follows = "pypi-deps-db";
   inputs.pypi-deps-db.url = "github:DavHau/pypi-deps-db";
   inputs.pypi-deps-db.flake = false;
 
   inputs.floxpkgs.url = "git+ssh://git@github.com/flox/floxpkgs";
+  inputs.floxpkgs.inputs.capacitor.follows = "capacitor";
+  inputs.floxpkgs.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.floxpkgs.inputs.ops-env.follows = "/";
   inputs.nix-editor.url = "github:vlinkz/nix-editor";
 
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
@@ -151,4 +155,13 @@ rec {
         self.__pins);
       # Auto-managed ^^^^^^
     });
+
+    # Storing the extensions
+    inputs.vscode-pylint.url = "https://ms-python.gallery.vsassets.io/_apis/public/gallery/publisher/ms-python/extension/pylint/2022.1.11441003/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage";
+    inputs.vscode-pylint.flake = false;
+    # inputs.vscode-pylint.narHash = "sha256-rGq72APAph3+J+ggyyEBO3YokdVAS4CTxqRGc/aiwKY=";
+    inputs.vscode-pylint.type = "file";
+
+
+    # "https://${publisher}.gallery.vsassets.io/_apis/public/gallery/publisher/${publisher}/extension/${name}/${version}/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage";
 }

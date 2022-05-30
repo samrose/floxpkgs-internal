@@ -26,6 +26,7 @@ rec {
   inputs.ops-env.url = "path:./templates/ops-env";
   inputs.ops-env.inputs.capacitor.follows = "capacitor";
   inputs.ops-env.inputs.floxpkgs.follows = "/";
+  inputs.ops-env.inputs.nixpkgs.follows = "nixpkgs";
 
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
