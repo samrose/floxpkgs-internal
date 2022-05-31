@@ -1,0 +1,13 @@
+diff --git a/apt-pkg/deb/debsystem.cc b/apt-pkg/deb/debsystem.cc
+index c9c6a7e..85b39c5 100644
+--- a/apt-pkg/deb/debsystem.cc
++++ b/apt-pkg/deb/debsystem.cc
+@@ -327,6 +327,8 @@ signed debSystem::Score(Configuration const &Cnf)
+       Score += 10;
+    if (FileExists("/etc/debian_version") == true)
+       Score += 10;
++   if (getenv("DEBIAN_SYSTEM") != NULL)
++      Score += 10;
+    return Score;
+ }
+ 									/*}}}*/
