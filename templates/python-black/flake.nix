@@ -7,6 +7,6 @@ rec {
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
   outputs = _: _.capacitor _ ({auto,...}: {
-    devShells.default = auto.usingWith inputs ./flox.toml;
+    devShells.default = {system,...}: auto.usingWith inputs ./flox.toml _.nixpkgs.legacyPackages.${system}.stable;
   });
 }
