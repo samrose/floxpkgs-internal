@@ -2,9 +2,6 @@ rec {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
-  inputs.floxpkgsv1.url = "git+ssh://git@github.com/flox/floxpkgsv1";
-  inputs.floxpkgsv1.flake = false;
-
   inputs.floxdocs.url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
   inputs.floxdocs.flake = false;
 

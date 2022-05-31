@@ -206,22 +206,6 @@
         "url": "ssh://git@github.com/flox/floxdocs"
       }
     },
-    "floxpkgsv1": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1653171999,
-        "narHash": "sha256-GjZtU/ZPcFe7V907g3AzZF9OFCFZ4rrykm3GuLL1aGg=",
-        "ref": "refs/heads/master",
-        "rev": "f43d6d801fdfe8bee11ca8a9da5251b37b1d693b",
-        "revCount": 97,
-        "type": "git",
-        "url": "ssh://git@github.com/flox/floxpkgsv1"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/flox/floxpkgsv1"
-      }
-    },
     "mach-nix": {
       "inputs": {
         "flake-utils": "flake-utils_4",
@@ -703,7 +687,6 @@
         "catalog": "catalog",
         "flox": "flox",
         "floxdocs": "floxdocs",
-        "floxpkgsv1": "floxpkgsv1",
         "mini-dinstall": "mini-dinstall",
         "nix-installers": "nix-installers",
         "nixpkgs": "nixpkgs",
