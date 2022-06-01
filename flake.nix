@@ -25,6 +25,15 @@ rec {
   inputs.ops-env.inputs.floxpkgs.follows = "/";
   inputs.ops-env.inputs.nixpkgs.follows = "nixpkgs";
 
+  # Used for ops-env library functions. TODO: move to capacitor?
+  inputs.devshell.url = "github:numtide/devshell";
+  inputs.mach-nix.url = "github:DavHau/mach-nix";
+  inputs.mach-nix.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.mach-nix.inputs.pypi-deps-db.follows = "pypi-deps-db";
+  inputs.pypi-deps-db.url = "github:DavHau/pypi-deps-db";
+  inputs.pypi-deps-db.flake = false;
+  inputs.nix-editor.url = "github:vlinkz/nix-editor";
+
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
   outputs = _: (_.capacitor _ ({
@@ -129,6 +138,9 @@ rec {
       lib = _.capacitor.lib // {
         flox-env = import ./lib/flox-env.nix;
         vscode = import ./lib/vscode.nix;
+        mkNakedShell = import ./lib/mkNakedShell.nix;
+        mkFloxShell = import ./lib/mkFloxShell.nix self _;
+        mkUpdateVersions = import ./lib/update-versions.nix _;
       };
 
       templates = {
