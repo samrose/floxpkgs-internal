@@ -28,6 +28,8 @@ self: {
           } | flox eval --file - --apply builtins.fromJSON)
           # Reset pins
           # TODO: detect if in the correct dir
+          echo "storing:"
+          echo "$res"
           nix-editor flake.nix "outputs.__pins.vscode-extensions" -v "$res" | sponge flake.nix
           alejandra -q flake.nix
         '';
