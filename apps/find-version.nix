@@ -33,7 +33,7 @@ jobset="''${jobset:-trunk}"
 
 export LC_ALL=en_US.UTF-8
 # Find all versions built for current system
-if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
+if [ -v REFRESH -o ! -f "$tmpDir/$attr.$system.json" ]; then
     curl -H 'Accept: application/json' "$hydra/job/$project/$jobset/$attr.$system"/closure-sizes -L \
         | jq '.[].id' -cr \
         | parallel --will-cite -n1 curl --silent -H "'Accept: application/json'" "$hydra/build/{}" | jq -cr \
