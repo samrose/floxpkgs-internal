@@ -1,20 +1,18 @@
-self: _: toml: lock: pins: {pkgs, ...}: let
+_: toml: lock: pins: {pkgs, ...}: let
   data =
-    self.lib.flox-env {
+    _.self.lib.flox-env {
       inherit (_) mach-nix;
-      floxpkgs-lib = self.lib;
-      capacitor-lib = _.capacitor.lib;
-      lib = _.capacitor.inputs.nixpkgs-lib.lib;
+      lib = _.self.lib;
     }
     pkgs
     toml
     lock;
 in
-  self.lib.mkNakedShell {
+  _.self.lib.mkNakedShell {
     inherit (_) devshell;
     inherit data;
     inherit pkgs;
     inherit pins;
-    floxpkgs = self;
-    lib = self.lib;
+    floxpkgs = _.self;
+    lib = _.self.lib;
   }

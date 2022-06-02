@@ -1,6 +1,5 @@
 rec {
-  # inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
-  inputs.capacitor.url = "path:/home/tom/flox/capacitor";
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
   inputs.floxdocs.url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
@@ -131,17 +130,13 @@ rec {
           flox-env = import ./lib/flox-env.nix;
           vscode = import ./lib/vscode.nix;
           mkNakedShell = import ./lib/mkNakedShell.nix;
-          mkFloxShell = import ./lib/mkFloxShell.nix self _;
+          mkFloxShell = import ./lib/mkFloxShell.nix _;
           mkUpdateVersions = import ./lib/update-versions.nix _;
         };
 
-        templates = builtins.mapAttrs (k: v: {
-          path = v.path;
-          description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
-        }) (_.capacitor.lib.dirToAttrs ./templates {});
-
+      templates = builtins.mapAttrs (k: v: {
+        path = v.path;
+        description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
+      }) (_.capacitor.lib.dirToAttrs ./templates {});
     }));
-
-  # API calls
-  inputs.cached__nixpkgs-stable__x86_64-linux.url = "https://hydra.floxsdlc.com/channels/nixpkgs/stable/x86_64-linux.tar.gz";
 }
