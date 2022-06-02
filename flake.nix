@@ -47,52 +47,45 @@ rec {
       # Limit the systems to fewer or more than default by ucommenting
       # __systems = ["x86_64-linux"];
 
-      packages = args @ {
-        system,
-        stability ? "unstable",
-        ...
-      }:
-        (legacyPackages (args // {inherit stability;})).flox;
+      packages = args: (legacyPackages args).flox;
 
       legacyPackages = {
-        root',
         pkgs,
         system,
         stability ? "unstable",
         ...
-      }: let
-        # Tie-the-knot recursive update required in capacitor
-        tie = lib.recursiveUpdate root'.legacyPackages.nixpkgs root'.legacyPackages.flox;
-      in {
+      }: rec {
         # Declare my channels (projects)
         nixpkgs = pkgs.${stability};
         flox =
           # support default.nix approach
-          (auto.automaticPkgsWith inputs ./pkgs tie)
+          (auto.automaticPkgsWith inputs ./pkgs nixpkgs)
           # support flakes approach with override
           # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
-          // (lib.sanitizes (auto.callSubflakesWith inputs {}) ["pins" "default" "packages" system])
+          // (lib.sanitizes (auto.callSubflakesWith inputs "path:./pkgs" {}) ["pins" "default" "packages" system])
           # External proto-derivaiton trees and overrides
-          // (auto.usingWith inputs (import ./flox.nix {_ = _;}) tie
+          // (
+            auto.usingWith inputs (import ./flox.nix {_ = _;}) nixpkgs
           )
           # end customizations
           ;
       };
 
-      apps = {pkgs,...}: auto.automaticPkgsWith inputs ./apps;
+      apps = {pkgs, ...}: auto.automaticPkgsWith inputs ./apps;
 
       # Create output jobsets for stabilities
       # TODO: has.stabilities and re-arrange attribute names to make system last?
-      hydraJobsRaw = {
-        lib,
-        system,
-        pkgs,
-        ...
-      } @ args:
-        lib.genAttrs ["stable" "unstable" "staging"] (
-          stability: let
-            jobs =
-              (legacyPackages (args // {inherit stability;})).flox;
+      hydraJobsRaw = lib.genAttrs ["stable" "unstable" "staging"] (stability:
+        lib.genAttrs ["x86_64-linux"] (
+          system: let
+            args = {
+              inherit lib system;
+              root' = _.capacitor.lib.sanitize _.capacitor.inputs.root system;
+              pkgs = _.nixpkgs.legacyPackages.${system};
+              inherit stability;
+            };
+            jobs = (legacyPackages args).flox;
+            pkgs = (legacyPackages args).nixpkgs;
           in
             jobs
             // {
@@ -111,7 +104,10 @@ rec {
                   touch $out
                 '';
             }
-        );
+        ));
+      hydraJobsStable = self.hydraJobsRaw.stable;
+      hydraJobsUnstable = self.hydraJobsRaw.unstable;
+      hydraJobsStaging = self.hydraJobsRaw.staging;
 
       catalog =
         (_.capacitor.lib.project _ ({...}: {
@@ -124,24 +120,25 @@ rec {
         }))
         .legacyPackages;
 
-      hydraJobs = a: (_.self.hydraJobsRaw a);
-      hydraJobsStable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.stable);
-      hydraJobsUnstable = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.unstable);
-      hydraJobsStaging = lib.genAttrs ["x86_64-linux"] (system: self.hydraJobs.${system}.staging);
-
-      devShells = {system,root',...}: let
+      devShells = {
+        system,
+        root',
+        ...
+      }: let
         tie = lib.recursiveUpdate root'.legacyPackages.nixpkgs root'.legacyPackages.flox;
       in {
-         ops-env = (auto.subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
+        ops-env = (auto.subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
       };
 
-      lib = _.capacitor.lib // {
-        flox-env = import ./lib/flox-env.nix;
-        vscode = import ./lib/vscode.nix;
-        mkNakedShell = import ./lib/mkNakedShell.nix;
-        mkFloxShell = import ./lib/mkFloxShell.nix self _;
-        mkUpdateVersions = import ./lib/update-versions.nix _;
-      };
+      lib =
+        _.capacitor.lib
+        // {
+          flox-env = import ./lib/flox-env.nix;
+          vscode = import ./lib/vscode.nix;
+          mkNakedShell = import ./lib/mkNakedShell.nix;
+          mkFloxShell = import ./lib/mkFloxShell.nix self _;
+          mkUpdateVersions = import ./lib/update-versions.nix _;
+        };
 
       templates = {
         python-black = {
