@@ -1,5 +1,5 @@
 rec {
-  description = "virtual environments";
+  description = "Python Black example template using devshell";
 
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
   inputs.capacitor.inputs.root.follows = "/";

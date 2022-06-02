@@ -1,4 +1,6 @@
 rec {
+  description = "Template using specific versions";
+
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 

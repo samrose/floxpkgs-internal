@@ -1,5 +1,6 @@
 rec {
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
+  # inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
+  inputs.capacitor.url = "path:/home/tom/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
   inputs.floxdocs.url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
@@ -120,13 +121,7 @@ rec {
         }))
         .legacyPackages;
 
-      devShells = {
-        system,
-        root',
-        ...
-      }: let
-        tie = lib.recursiveUpdate root'.legacyPackages.nixpkgs root'.legacyPackages.flox;
-      in {
+      devShells = {system, ...}: {
         ops-env = (auto.subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
       };
 
@@ -140,28 +135,11 @@ rec {
           mkUpdateVersions = import ./lib/update-versions.nix _;
         };
 
-      templates = {
-        python-black = {
-          path = ./templates/python-black;
-          description = "Python Black example template";
-        };
-        python-black-devshell = {
-          path = ./templates/python-black-devshell;
-          description = "Python Black example template using devshell";
-        };
-        ops-env = {
-          path = ./templates/ops-env;
-          description = "Template using specific versions";
-        };
-        python2 = {
-          path = ./templates/python2;
-          description = "Python 2 template";
-        };
-        python3 = {
-          path = ./templates/python3;
-          description = "Python 3 template";
-        };
-      };
+        templates = builtins.mapAttrs (k: v: {
+          path = v.path;
+          description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
+        }) (_.capacitor.lib.dirToAttrs ./templates {});
+
     }));
 
   # API calls
