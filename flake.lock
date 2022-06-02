@@ -496,7 +496,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-PNmtwSP/iN9bnkRkqWVJjFptFcYDl0+ZrSCyli6JNPw=",
+        "narHash": "sha256-M0FlXhloihbmzxU1DA3rjtwpTc5vKbluP/3ay7ip1BU=",
         "path": "./templates/ops-env",
         "type": "path"
       },
@@ -509,11 +509,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-L7qx3q382C5mAByw3AHeBRw43HVIwrH7PqH2jVtAGDs=",
-        "path": "./.flox",
+        "path": "/nix/store/rzpswfdq35w88d391v8q3ln4qsfrfhxq-source/.flox",
         "type": "path"
       },
       "original": {
-        "path": "./.flox",
+        "path": "/nix/store/rzpswfdq35w88d391v8q3ln4qsfrfhxq-source/.flox",
         "type": "path"
       }
     },

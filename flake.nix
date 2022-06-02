@@ -56,19 +56,25 @@ rec {
         ...
       }: rec {
         # Declare my channels (projects)
-        nixpkgs = pkgs.${stability};
-        flox =
-          # support default.nix approach
-          (auto.automaticPkgsWith inputs ./pkgs (lib.recursiveUpdate nixpkgs flox))
-          # support flakes approach with override
-          # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
-          // (lib.sanitizes (auto.callSubflakesWith inputs "path:./pkgs" {}) ["pins" "default" "packages" system])
-          # External proto-derivaiton trees and overrides
-          // (
-            auto.usingWith inputs (import ./flox.nix {_ = _;}) (lib.recursiveUpdate nixpkgs flox)
-          )
-          # end customizations
-          ;
+        nixpkgs = catalog.nixpkgs.${stability};
+        flox = catalog.flox.${stability};
+        catalog = _.capacitor.lib.recurseIntoAttrs2 rec {
+          nixpkgs = lib.genAttrs ["stable" "unstable" "staging"] (
+            stability:
+              pkgs.${stability}
+          );
+          flox = lib.genAttrs ["stable" "unstable" "staging"] (stability:
+            # support default.nix approach
+              (auto.automaticPkgsWith inputs ./pkgs (lib.recursiveUpdate nixpkgs.${stability} flox.${stability}))
+              # support flakes approach with override
+              # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
+              // (lib.sanitizes (auto.callSubflakesWith inputs "path:./pkgs" {}) ["pins" "default" "packages" system])
+              # External proto-derivaiton trees and overrides
+              // (
+                auto.usingWith inputs (import ./flox.nix {_ = _;}) (lib.recursiveUpdate nixpkgs.${stability} flox.${stability})
+                # end customizations
+              ));
+        };
       };
 
       apps = {pkgs, ...}: auto.automaticPkgsWith inputs ./apps;
@@ -109,19 +115,8 @@ rec {
       hydraJobsUnstable = self.hydraJobsRaw.unstable;
       hydraJobsStaging = self.hydraJobsRaw.staging;
 
-      catalog =
-        (_.capacitor.lib.project _ ({...}: {
-          legacyPackages = args @ {system, ...}:
-            lib.genAttrs ["flox" "nixpkgs"] (channel:
-              lib.genAttrs ["stable" "unstable" "staging"] (
-                stability:
-                  (legacyPackages (args // {inherit stability;})).${channel}
-              ));
-        }))
-        .legacyPackages;
-
-      devShells = {system, ...}: {
-        ops-env = (auto.subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
+      devShells = {system,...}: {
+        ops-env = (lib.sanitizes (auto.callSubflakesWith inputs "path:./templates" {}) ["devShells" "default" "packages" "packages" "apps" system]).ops-env;
       };
 
       lib =

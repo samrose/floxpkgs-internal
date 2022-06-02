@@ -12,7 +12,11 @@ rec {
   inputs.floxpkgs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.floxpkgs.inputs.ops-env.follows = "/";
 
-  inputs.pins.url = "path:./.flox";
+  # TODO: preferred method below would only need this. (https://github.com/NixOS/nix/issues/5790)
+  # inputs.floxpkgs.url = "git+ssh://git@github.com/flox/floxpkgs";
+  # inputs.floxpkgs.inputs.capacitor.inputs.root.follows = "/";
+
+  inputs.pins.url = "./.flox";
 
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
