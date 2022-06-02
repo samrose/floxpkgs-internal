@@ -1,4 +1,5 @@
 rec {
+  description = "Python 2 template";
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.nixpkgs.url = "github:flox/nixpkgs/unstable";
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";

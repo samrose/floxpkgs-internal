@@ -1,4 +1,5 @@
 {
+  description = "Python 3 template";
   inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
   inputs.capacitor.inputs.root.follows = "/";
 
