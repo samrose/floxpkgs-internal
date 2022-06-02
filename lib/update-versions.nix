@@ -19,16 +19,17 @@ self: {
           split = map (x: builtins.concatStringsSep " " (lib.strings.splitString "@" x)) versioned;
         in ''
           # Reset pins
-          nix-editor .flox/flake.nix "outputs.__pins" -v "[]" | sponge .flox/flake.nix
+          # TODO: detect if in the correct dir
+          nix-editor flake.nix "outputs.__pins.versions" -v "[]" | sponge flake.nix
           ${builtins.concatStringsSep "\n" (map (
               x: ''
                 res=$(AS_FLAKEREF=1 flox run floxpkgs#find-version ${x})
                 echo adding "${x} as $res"
-                nix-editor .flox/flake.nix "outputs.__pins" -a "(builtins.getFlake \"''${res%%\#*}\").''${res##*#}" | sponge .flox/flake.nix
-                alejandra -q .flox/flake.nix
+                nix-editor flake.nix "outputs.__pins.versions" -a "(builtins.getFlake \"''${res%%\#*}\").''${res##*#}" | sponge flake.nix
               ''
             )
             split)}
+          alejandra -q flake.nix
         '';
       })
       + "/bin/update-versions";

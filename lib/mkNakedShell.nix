@@ -13,7 +13,7 @@ in
   name = "ops-env";
   profile = pkgs.buildEnv {
     name = "wrapper";
-    paths = [calledFloxEnv] ++ (builtins.attrValues pins);
+    paths = [calledFloxEnv] ++ (builtins.attrValues pins.versions);
 
     postBuild = let
       versioned =
