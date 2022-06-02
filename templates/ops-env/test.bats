@@ -1,4 +1,5 @@
 #!/usr/bin/env bats
+# to run these tests, first run 'flox develop'
 setup() {
   export NOOP="NOOP"    
 }
