@@ -59,13 +59,13 @@ rec {
         nixpkgs = pkgs.${stability};
         flox =
           # support default.nix approach
-          (auto.automaticPkgsWith inputs ./pkgs nixpkgs)
+          (auto.automaticPkgsWith inputs ./pkgs (lib.recursiveUpdate nixpkgs flox))
           # support flakes approach with override
           # searches in "inputs" for a url with "path:./" and call the flake with the root's lock
           // (lib.sanitizes (auto.callSubflakesWith inputs "path:./pkgs" {}) ["pins" "default" "packages" system])
           # External proto-derivaiton trees and overrides
           // (
-            auto.usingWith inputs (import ./flox.nix {_ = _;}) nixpkgs
+            auto.usingWith inputs (import ./flox.nix {_ = _;}) (lib.recursiveUpdate nixpkgs flox)
           )
           # end customizations
           ;
