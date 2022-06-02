@@ -33,7 +33,7 @@ jobset="''${jobset:-trunk}"
 
 export LC_ALL=en_US.UTF-8
 # Find all versions built for current system
-if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
+if [ -v REFRESH -o ! -f "$tmpDir/$attr.$system.json" ]; then
     curl -H 'Accept: application/json' "$hydra/job/$project/$jobset/$attr.$system"/closure-sizes -L \
         | jq '.[].id' -cr \
         | parallel --will-cite -n1 curl --silent -H "'Accept: application/json'" "$hydra/build/{}" | jq -cr \
@@ -41,34 +41,32 @@ if [ -v REFRESH ] || [ ! -f "$tmpDir/$attr.$system.json" ]; then
 fi
 
 if [ -v AS_LIST ]; then
-jq --arg version "^$version" \
-    '
-    select(.nixname|
-           capture("(?<name>.*)-(?<version>[^a-zA-Z].*)")|
-           .version
-           |match($version) !=[]
-           )
-           | select(.finished == 1)
-    ' "$tmpDir/$attr.$system.json" \
-    | jq -s 'sort_by(.stoptime)|.[]|[(.buildproducts|to_entries[0].value.path),.nixname]|@tsv' -cr | sort -k2 -u | sed -e "s/.$system$//" | column -t
+    jq -cr -s --arg version "^$version" '
+      map(select(has("timestamp") and .finished == 1))
+    | map(select(.nixname|capture("(?<name>.*)-(?<version>[^a-zA-Z].*)")|.version|match($version)!=[]))
+    | sort_by(.timestamp)
+    | reverse
+    | unique_by(.nixname)
+    | .[]
+    | [(.buildproducts|to_entries[0].value.path),.nixname]
+    | @tsv
+    ' "$tmpDir/$attr.$system.json"
     exit 0
 fi
 
 # Extract name-version from nixname and match the regex provided by user
-out=$(jq --arg version "^$version" \
-    '
-    select(.nixname|
-           capture("(?<name>.*)-(?<version>[^a-zA-Z].*)")|
-           .version|
-           match($version) !=[])
-    ' "$tmpDir/$attr.$system.json" \
-    | jq -s 'sort_by(.stoptime)|
-    .[-1]' -cr)
+out=$(jq -cr -s --arg version "^$version" '
+      map(select(has("timestamp") and .finished == 1))
+    | map(select(.nixname|capture("(?<name>.*)-(?<version>[^a-zA-Z].*)")|.version|match($version)!=[]))
+    | sort_by(.timestamp)
+    | reverse
+    | .[0]
+    ' "$tmpDir/$attr.$system.json")
 
 # ASSUMPTIONS:
 # last id is latest
 # Find latest result
-eval=$(echo "$out" | jq '.jobsetevals|sort|.[-1]' -cr)
+eval=$(echo "$out" | jq -cr '.jobsetevals|sort|.[-1]')
 
 # Obtain evaluation information
 if [ ! -f "$tmpDir/eval.$eval.json" ]; then
@@ -77,7 +75,7 @@ fi
 # Obtain nixpkgs revision
 rev=$(jq -cr .jobsetevalinputs.nixpkgs.revision "$tmpDir/eval.$eval.json")
 
-job=$(echo "$out" | jq '.job' -cr)
+job=$(echo "$out" | jq -cr '.job')
 # ASSUMPTIONS:
 # standard hydraJobs conversion to legacyPackages
 attr="legacyPackages.$system.''${job%%".$system"}"
@@ -88,7 +86,7 @@ if [ -v AS_FLAKEREF ]; then
     printf "%s/%s#%s" "$url" "$rev" "$attr"
     exit 0
 fi
-cat <<EOF | jq
+cat <<EOF | jq .
 {"elements":[
 {
     "active": true,
