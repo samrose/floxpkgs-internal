@@ -1,7 +1,7 @@
 {
   mach-nix,
   lib,
-}: pkgs: toml: lock: let
+}: pkgs: toml: pins: let
   tie = {
     inherit pkgs;
     mach = mach-nix.lib.${pkgs.system};
@@ -22,7 +22,8 @@
             lib.vscode.configuredVscode
             pkgs
             programs.vscode
-            (builtins.fromJSON (builtins.readFile lock)).vscode;
+            #(builtins.fromJSON (builtins.readFile lock)).vscode;
+            (builtins.attrValues pins.vscode-extensions);
           # insert excpetions here
           __functor = self: key: attr:
             self.${key}

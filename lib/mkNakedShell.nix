@@ -44,4 +44,7 @@ in
     in "substitute ${envBash}/env.bash $out/env.bash --subst-var-by DEVSHELL_DIR $out";
   };
 })
-// {passthru.paths = calledFloxEnv.passthru.paths;}
+// {
+  passthru.paths = calledFloxEnv.passthru.paths;
+  passthru.data = data;
+}

@@ -1,4 +1,4 @@
-_: toml: lock: pins: {pkgs, ...}: let
+_: toml: pins: {pkgs, ...}: let
   data =
     _.self.lib.flox-env {
       inherit (_) mach-nix;
@@ -6,7 +6,7 @@ _: toml: lock: pins: {pkgs, ...}: let
     }
     pkgs
     toml
-    lock;
+    pins;
 in
   _.self.lib.mkNakedShell {
     inherit (_) devshell;

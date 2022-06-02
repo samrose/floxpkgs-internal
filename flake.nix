@@ -127,6 +127,7 @@ rec {
           mkNakedShell = import ./lib/mkNakedShell.nix;
           mkFloxShell = import ./lib/mkFloxShell.nix _;
           mkUpdateVersions = import ./lib/update-versions.nix _;
+          mkUpdateExtensions = import ./lib/update-extensions.nix _;
         };
 
       templates = builtins.mapAttrs (k: v: {
