@@ -136,7 +136,7 @@ rec {
 
       templates = builtins.mapAttrs (k: v: {
         path = v.path;
-        description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
+        description = (import "${v.path}/flake.nix").description or "no description provided in ${v.path}/flake.nix";
       }) (_.capacitor.lib.dirToAttrs ./templates {});
     }));
 }
