@@ -8,14 +8,18 @@
       "locked": {
         "dir": "capacitor",
         "lastModified": 1654298542,
-        "narHash": "sha256-6hXmgV5NAeiRqnAYoeZUAkKP4WTVwr1Ca7C2OTJc4tk=",
+        "narHash": "sha256-/tdg6mZTLgMAlC88oNgbxIXtUaZxuqDNE9Oj+ehdDvg=",
+        "ref": "main",
+        "rev": "2581d7448bb05ff71f4c09c12d8ba926fbcf170b",
+        "revCount": 11,
         "type": "git",
-        "url": "file:///Volumes/Projects/Flox/tests/minicapacitor?dir=capacitor"
+        "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
       },
       "original": {
-        "dir": "minicapacitor",
+        "dir": "capacitor",
+        "ref": "main",
         "type": "git",
-        "url": "ssh://git@github.com/flox/minicapacitor?dir=minicapacitor"
+        "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
       }
     },
     "catalog": {

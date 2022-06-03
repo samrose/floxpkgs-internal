@@ -1,5 +1,5 @@
 {
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/minicapacitor?dir=minicapacitor";
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/minicapacitor?ref=main&dir=capacitor";
   inputs.capacitor.inputs.root.follows = "/";
   inputs.inputs.url = "path:./inputs";
   inputs.inputs.inputs.capacitor.follows = "capacitor";
