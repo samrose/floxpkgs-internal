@@ -21,6 +21,7 @@ rec {
   inputs.flox.url = "path:./pkgs/flox";
   inputs.catalog.url = "path:./pkgs/catalog";
   inputs.ops-env.url = "path:./templates/ops-env";
+
   inputs.ops-env.inputs.capacitor.follows = "capacitor";
   inputs.ops-env.inputs.floxpkgs.follows = "/";
   inputs.ops-env.inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +33,7 @@ rec {
   inputs.mach-nix.inputs.pypi-deps-db.follows = "pypi-deps-db";
   inputs.pypi-deps-db.url = "github:DavHau/pypi-deps-db";
   inputs.pypi-deps-db.flake = false;
-  inputs.nix-editor.url = "github:vlinkz/nix-editor";
+  inputs.nix-editor.url = "path:./pkgs/nix-editor";
 
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
@@ -77,7 +78,13 @@ rec {
         };
       };
 
-      apps = {pkgs, ...}: auto.automaticPkgsWith inputs ./apps;
+      apps = {system,...}: let
+        pkgsMerged = lib.recursiveUpdate
+        self.legacyPackages.${system}.nixpkgs
+        self.legacyPackages.${system}.flox
+        ;
+          in
+          auto.automaticPkgsWith inputs ./apps pkgsMerged;
 
       # Create output jobsets for stabilities
       # TODO: has.stabilities and re-arrange attribute names to make system last?
@@ -133,6 +140,6 @@ rec {
       templates = builtins.mapAttrs (k: v: {
         path = v.path;
         description = (import "${v.path}/flake.nix").description or "no description provided in ${v.path}/flake.nix";
-      }) (_.capacitor.lib.dirToAttrs ./templates {});
+      }) ( _.capacitor.lib.dirToAttrs ./templates {});
     }));
 }

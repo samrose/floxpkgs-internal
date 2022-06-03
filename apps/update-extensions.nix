@@ -1,14 +1,15 @@
-self: {
-  pkgs,
-  system,
+{
+  nix-editor,
+  moreutils,
+  alejandra,
+  writeShellApplication,
   ...
 }: {
-  update-extensions = {
     type = "app";
     program =
-      (pkgs.writeShellApplication {
+      (writeShellApplication {
         name = "update-extensions";
-        runtimeInputs = [self.nix-editor.packages.${system}.nixeditor pkgs.moreutils pkgs.alejandra];
+        runtimeInputs = [nix-editor moreutils alejandra];
         text = ''
           wd="$1"
           cd "$wd"
@@ -26,12 +27,12 @@ self: {
           res=$({
           echo "'''"
           # shellcheck disable=SC2086
-          ${../apps/generate_extensions.sh} $raw_extensions | jq -s
+          ${./generate_extensions.sh} $raw_extensions | jq -s
           echo "'''"
           } | flox eval --file - --apply builtins.fromJSON)
           # Reset pins
           # TODO: detect if in the correct dir
-          echo "storing:"
+          echo "storing into '$PWD/flake.nix':"
           echo "$res"
           if [ ! -v DRY_RUN ]; then
             nix-editor flake.nix "outputs.__pins.vscode-extensions" -v "$res" | sponge flake.nix
@@ -42,5 +43,4 @@ self: {
         '';
       })
       + "/bin/update-extensions";
-  };
 }
