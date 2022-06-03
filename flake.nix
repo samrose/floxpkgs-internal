@@ -2,6 +2,7 @@
   inputs.capacitor.url = "git+ssh://git@github.com/flox/minicapacitor?dir=minicapacitor";
   inputs.capacitor.inputs.root.follows = "/";
   inputs.inputs.url = "path:./inputs";
+  inputs.inputs.inputs.capacitor.follows = "capacitor";
 
   # Used for ops-env library functions. TODO: move to capacitor?
   # inputs.devshell.url = "github:numtide/devshell";
@@ -114,6 +115,7 @@
 
   inputs.pkgs.url = "path:./pkgs";
   inputs.pkgs.inputs.capacitor.follows = "capacitor";
+  inputs.pkgs.inputs.inputs.follows = "inputs";
 
   # inputs.ops-env.url = "path:../templates/ops-env";
   # inputs.ops-env.inputs.capacitor.follows = "capacitor";
@@ -136,7 +138,7 @@
         staging = inputs.nixpkgs-staging;
         default = stable;
       }
-
+      has.systems ["x86_64-linux"]
       has.projectsFromInputs
 
       {
@@ -242,12 +244,12 @@
           vscode = import ./lib/vscode.nix;
         };
 
-        templates = builtins.mapAttrs
-          (k: v: {
-            path = v.path;
-            description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
-          })
-          (capacitor.lib.dirToAttrs ./templates { });
+        # templates = builtins.mapAttrs
+        #   (k: v: {
+        #     path = v.path;
+        #     description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
+        #   })
+        #   (capacitor.lib.dirToAttrs ./templates { });
       }
   );
 

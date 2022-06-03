@@ -3,26 +3,27 @@
   inputs.src.flake = false;
 
   outputs = { capacitor, ... } @ args:
-    capacitor args (_: {
+    capacitor args ({auto,...}: {
       #
       # copy proto-derivation here
       #
       packages =
-        { stdenv
+        auto.callPackage ({ 
+          stdenv
         , help2man
         , src
         , argument ? ""
-        , ...
+        , withRev
         }:
         stdenv.mkDerivation {
           inherit src;
           pname = "tracelinks${argument}";
-          version = "1.0.0-r${toString src.revCount}";
+          version = withRev "1.0.0";
 
           # Prevent the source from becoming a runtime dependeny
           disallowedReferences = [ src.outPath ];
           nativeBuildInputs = [ help2man ];
           makeFlags = [ "PREFIX=$(out)" ];
-        };
+        }) {};
     });
 }
