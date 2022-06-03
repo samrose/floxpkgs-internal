@@ -14,7 +14,6 @@
       ...
     }: let
       paths = let
-        attrs = builtins.removeAttrs programs ["postShellHook" "python" "vscode"];
         handler = {
           python = mach-nix.lib.${pkgs.system}.mkPython programs.python;
           vscode =
