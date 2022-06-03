@@ -46,5 +46,7 @@ in
 })
 // {
   passthru.paths = calledFloxEnv.passthru.paths;
+  passthru.programs = calledFloxEnv.passthru.programs;
   passthru.data = data;
+  passthru.pins = pins;
 }

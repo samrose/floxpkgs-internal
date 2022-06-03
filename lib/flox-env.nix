@@ -35,7 +35,11 @@
         name = "flox-env";
         inherit paths;
       })
-      // {passthru.paths = paths;};
+      // {
+        passthru = {
+          inherit programs paths;
+        };
+      };
   };
 in
   data

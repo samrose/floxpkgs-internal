@@ -27,7 +27,8 @@ rec {
       # AUTO-MANAGED AFTER THIS POINT ##################################
       # AUTO-MANAGED AFTER THIS POINT ##################################
       __pins.versions = [
-        (builtins.getFlake "github:NixOS/nixpkgs/4080fdcc788253bca716d559e952ccfb873ebf11").legacyPackages.x86_64-linux.kubernetes-helm
+        (builtins.getFlake "github:NixOS/nixpkgs/43cc623340ac0723fb73c1bce244bb6d791c5bb9").legacyPackages.x86_64-linux.curl
+        (builtins.getFlake "github:NixOS/nixpkgs/4d922730369d1c468cc4ef5b2fc30fd4200530e0").legacyPackages.x86_64-linux.kubernetes-helm
       ];
       __pins.vscode-extensions = [
         {

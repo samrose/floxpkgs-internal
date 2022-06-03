@@ -14,8 +14,7 @@ echo
 vscode = { extensions = ["ms-python.python", "ms-python.pylint"] }
 kubernetes-helm = { version = "3.7" }
 
-bats = {}
-curl = {}
+curl = { version = "7.7" }
 docker = {}
 unzip = {}
 awscli2 = {}
