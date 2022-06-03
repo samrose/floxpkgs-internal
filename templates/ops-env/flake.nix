@@ -7,8 +7,7 @@ rec {
   inputs.nixpkgs.url = "git+ssh://git@github.com/flox/nixpkgs-flox";
   inputs.nixpkgs.inputs.capacitor.follows = "capacitor";
 
-  # inputs.floxpkgs.url = "git+ssh://git@github.com/flox/floxpkgs";
-  inputs.floxpkgs.url = "/home/tom/flox/floxpkgs";
+  inputs.floxpkgs.url = "git+ssh://git@github.com/flox/floxpkgs";
   inputs.floxpkgs.inputs.capacitor.follows = "capacitor";
   inputs.floxpkgs.inputs.nixpkgs.follows = "nixpkgs";
   inputs.floxpkgs.inputs.ops-env.follows = "/";
