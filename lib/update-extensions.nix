@@ -1,9 +1,6 @@
 self: {
   pkgs,
   system,
-  lib,
-  self',
-  root',
   ...
 }: {
   update-extensions = {
@@ -12,18 +9,20 @@ self: {
       (pkgs.writeShellApplication {
         name = "update-extensions";
         runtimeInputs = [self.nix-editor.packages.${system}.nixeditor pkgs.moreutils pkgs.alejandra];
-        text = let
-          extensions = root'.devShells.default.passthru.data.attrs.programs.vscode.extensions;
-          split = map (x: builtins.concatStringsSep "." (lib.strings.splitString "." x)) extensions;
-          libVscode = (import ../lib/vscode.nix);
-        in ''
+        text = ''
           wd="$1"
           cd "$wd"
+          if [ -v DEBUG ]; then set -x; fi
           raw_extensions=$(flox eval .#devShells.x86_64-linux.default.passthru.data.attrs.programs --json | jq '
             .vscode.extensions|
             select(.!=null)|
             .[]
           ' -cr)
+          if [ -z "$raw_extensions" ]; then
+            echo no extensions >&2
+            exit 0
+          fi
+
           res=$({
           echo "'''"
           # shellcheck disable=SC2086

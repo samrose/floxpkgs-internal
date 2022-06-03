@@ -1,9 +1,6 @@
 self: {
   pkgs,
   system,
-  lib,
-  self',
-  root',
   ...
 }: {
   update-versions = {
@@ -12,15 +9,10 @@ self: {
       (pkgs.writeShellApplication {
         name = "update-versions";
         runtimeInputs = [self.nix-editor.packages.${system}.nixeditor pkgs.moreutils pkgs.alejandra];
-        text = let
-          versioned =
-            builtins.filter (x: builtins.isString x && !builtins.hasContext x)
-            # self-inspection of the paths we are interested in
-            root'.devShells.default.passthru.paths;
-          split = map (x: builtins.concatStringsSep " " (lib.strings.splitString "@" x)) versioned;
-        in ''
+        text = ''
           wd="$1"
           cd "$wd"
+          if [ -v DEBUG ]; then set -x; fi
           # System should not matter here
           raw_versions=$(flox eval .#devShells.x86_64-linux.default.passthru.data.attrs --json | jq '
             .programs|
@@ -32,8 +24,16 @@ self: {
           if [ ! -v DRY_RUN ]; then
             nix-editor flake.nix "outputs.__pins.versions" -v "[]" | sponge flake.nix
           else
+            echo "$raw_versions"
             echo "dry run" >&2
+            exit 0
           fi
+
+          if [ -z "$raw_versions" ]; then
+            echo no versions >&2
+            exit 0
+          fi
+
           # TODO: do resolution in parallel
           while read -r line; do
               # shellcheck disable=SC2086
