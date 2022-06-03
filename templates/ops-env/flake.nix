@@ -38,7 +38,7 @@ rec {
           v))
       _.self.__pins;
       __pins.versions = [
-        (builtins.getFlake "github:NixOS/nixpkgs/4080fdcc788253bca716d559e952ccfb873ebf11").legacyPackages.x86_64-linux.kubernetes-helm
+        (builtins.getFlake "github:NixOS/nixpkgs/90705c89fbad69c4c971fabf2b1edd8c7875b5d6").legacyPackages.x86_64-linux.kubernetes-helm
       ];
       __pins.vscode-extensions = [
         {
