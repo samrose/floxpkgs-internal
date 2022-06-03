@@ -20,23 +20,25 @@ rec {
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
   outputs = _:
-    _.capacitor _ ({
-      self,
-      floxpkgs,
-      ...
-    }: {
+    _.capacitor _ ({floxpkgs, ...}: {
       devShells.default = floxpkgs.lib.mkFloxShell ./flox.toml _.self.__pins;
       apps = a:
         (floxpkgs.lib.mkUpdateVersions a)
         // (floxpkgs.lib.mkUpdateExtensions a);
 
-      # AUTO-MANAGED
-      # AUTO-MANAGED
-      # AUTO-MANAGED
+      # AUTO-MANAGED AFTER THIS POINT ##################################
+      # AUTO-MANAGED AFTER THIS POINT ##################################
+      # AUTO-MANAGED AFTER THIS POINT ##################################
       __pins.versions = [
         (builtins.getFlake "github:NixOS/nixpkgs/90705c89fbad69c4c971fabf2b1edd8c7875b5d6").legacyPackages.x86_64-linux.kubernetes-helm
       ];
       __pins.vscode-extensions = [
+        {
+          name = "python";
+          publisher = "ms-python";
+          sha256 = "0dxlqyhcfmb0bqbny633g0hwcq5ac7nz5rrq1c795bs3pimm8p20";
+          version = "2022.7.11541009";
+        }
         {
           name = "pylint";
           publisher = "ms-python";
@@ -44,8 +46,5 @@ rec {
           version = "2022.1.11541003";
         }
       ];
-      # AUTO-MANAGED
-      # AUTO-MANAGED
-      # AUTO-MANAGED
     });
 }

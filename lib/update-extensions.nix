@@ -19,13 +19,15 @@ self: {
         in ''
           wd="$1"
           cd "$wd"
+          raw_extensions=$(flox eval .#devShells.x86_64-linux.default.passthru.data.attrs.programs --json | jq '
+            .vscode.extensions|
+            select(.!=null)|
+            .[]
+          ' -cr)
           res=$({
           echo "'''"
-          echo "["
-          ${../apps/generate_extensions.sh} ${
-            toString (libVscode.marketplaceExtensionStrs pkgs extensions)
-          }
-          echo "]"
+          # shellcheck disable=SC2086
+          ${../apps/generate_extensions.sh} $raw_extensions | jq -s
           echo "'''"
           } | flox eval --file - --apply builtins.fromJSON)
           # Reset pins

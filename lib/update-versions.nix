@@ -21,24 +21,29 @@ self: {
         in ''
           wd="$1"
           cd "$wd"
-          # Reset pins
-          # TODO: detect if in the correct dir
+          # System should not matter here
+          raw_versions=$(flox eval .#devShells.x86_64-linux.default.passthru.data.attrs --json | jq '
+            .programs|
+            to_entries|
+            map(select(.value|has("version")))|
+            .[]|
+            [.key,.value.version]|@tsv
+          ' -cr)
           if [ ! -v DRY_RUN ]; then
             nix-editor flake.nix "outputs.__pins.versions" -v "[]" | sponge flake.nix
           else
             echo "dry run" >&2
           fi
-          ${builtins.concatStringsSep "\n" (map (
-              x: ''
-                res=$(AS_FLAKEREF=1 flox run floxpkgs#find-version ${x})
-                echo adding "${x} as $res"
-                # shellcheck disable=SC2086
-                if [ ! -v DRY_RUN ]; then
-                  nix-editor flake.nix "outputs.__pins.versions" -a "(builtins.getFlake \"''${res%%\#*}\").''${res##*#}" | sponge flake.nix
-                fi
-              ''
-            )
-            split)}
+          # TODO: do resolution in parallel
+          while read -r line; do
+              # shellcheck disable=SC2086
+              res=$(AS_FLAKEREF=1 flox run floxpkgs#find-version $line)
+              echo "adding $line as $res to $PWD/flake.nix"
+              # shellcheck disable=SC2086
+              if [ ! -v DRY_RUN ]; then
+                nix-editor flake.nix "outputs.__pins.versions" -a "(builtins.getFlake \"''${res%%\#*}\").''${res##*#}" | sponge flake.nix
+              fi
+          done < <(echo "$raw_versions")
           alejandra -q flake.nix
         '';
       })
