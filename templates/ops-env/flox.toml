@@ -2,7 +2,6 @@
 pkgs = {}
 
 [floxEnv]
-name = "ops-env"
 postShellHook = '''
 # Show versions with a bit of color
 echo

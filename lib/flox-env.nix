@@ -10,7 +10,6 @@
   data = (lib.custom {}).processTOML toml {
     pkgs = tie.pkgs;
     floxEnv = {
-      name,
       programs,
       ...
     }: let
@@ -23,7 +22,7 @@
             pkgs
             programs.vscode
             #(builtins.fromJSON (builtins.readFile lock)).vscode;
-            (builtins.attrValues pins.vscode-extensions);
+            pins.vscode-extensions;
           # insert excpetions here
           __functor = self: key: attr:
             self.${key}
@@ -36,7 +35,7 @@
       in
         lib.mapAttrsToList handler programs;
     in
-      (pkgs.buildEnv {inherit name paths;}) // {passthru.paths = paths;};
+      (pkgs.buildEnv {name="flox-env"; inherit paths;}) // {passthru.paths = paths;};
   };
 in
   data

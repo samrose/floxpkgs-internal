@@ -17,6 +17,8 @@ self: {
           split = map (x: builtins.concatStringsSep "." (lib.strings.splitString "." x)) extensions;
           libVscode = (import ../lib/vscode.nix);
         in ''
+          wd="$1"
+          cd "$wd"
           res=$({
           echo "'''"
           echo "["
@@ -30,8 +32,12 @@ self: {
           # TODO: detect if in the correct dir
           echo "storing:"
           echo "$res"
-          nix-editor flake.nix "outputs.__pins.vscode-extensions" -v "$res" | sponge flake.nix
-          alejandra -q flake.nix
+          if [ ! -v DRY_RUN ]; then
+            nix-editor flake.nix "outputs.__pins.vscode-extensions" -v "$res" | sponge flake.nix
+            alejandra -q flake.nix
+          else
+            echo "dry run" >&2
+          fi
         '';
       })
       + "/bin/update-extensions";
