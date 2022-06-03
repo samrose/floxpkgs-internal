@@ -1,7 +1,6 @@
 {
   writeShellApplication,
   nix-editor,
-  moreutils,
   alejandra,
   dasel,
   ...
@@ -10,7 +9,7 @@
     program =
       (writeShellApplication {
         name = "update-extensions";
-        runtimeInputs = [nix-editor moreutils alejandra dasel];
+        runtimeInputs = [nix-editor alejandra dasel];
         text = ''
           wd="$1"
           cd "$wd"
@@ -37,7 +36,7 @@
           echo "storing into '$PWD/flake.nix':"
           echo "$res"
           if [ ! -v DRY_RUN ]; then
-            nix-editor flake.nix "outputs.__pins.vscode-extensions" -v "$res" | sponge flake.nix
+            nix-editor flake.nix "outputs.__pins.vscode-extensions" -v "$res" -o flake.nix
             alejandra -q flake.nix
           else
             echo "dry run" >&2

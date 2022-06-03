@@ -1,7 +1,6 @@
 {
   writeShellApplication,
   nix-editor,
-  moreutils,
   alejandra,
   dasel,
   ...
@@ -10,7 +9,7 @@
   program =
     (writeShellApplication {
       name = "update-versions";
-      runtimeInputs = [nix-editor moreutils alejandra dasel];
+      runtimeInputs = [nix-editor alejandra dasel];
       text = ''
         wd="$1"
         cd "$wd"
@@ -25,7 +24,7 @@
           [.key,.value.version]|@tsv
         ' -cr)
         if [ ! -v DRY_RUN ]; then
-          nix-editor flake.nix "outputs.__pins.versions" -v "[]" | sponge flake.nix
+          nix-editor flake.nix "outputs.__pins.versions" -v "[]" -o flake.nix
         else
           echo "$raw_versions"
           echo "dry run" >&2
@@ -44,7 +43,7 @@
             echo "adding $line as $res to $PWD/flake.nix"
             # shellcheck disable=SC2086
             if [ ! -v DRY_RUN ]; then
-              nix-editor flake.nix "outputs.__pins.versions" -a "(builtins.getFlake \"''${res%%\#*}\").''${res##*#}" | sponge flake.nix
+              nix-editor flake.nix "outputs.__pins.versions" -a "(builtins.getFlake \"''${res%%\#*}\").''${res##*#} " -o flake.nix
             fi
         done < <(echo "$raw_versions")
         alejandra -q flake.nix
