@@ -1,21 +1,23 @@
 {
+  writeShellApplication,
   nix-editor,
   moreutils,
   alejandra,
-  writeShellApplication,
+  dasel,
   ...
 }: {
     type = "app";
     program =
       (writeShellApplication {
         name = "update-extensions";
-        runtimeInputs = [nix-editor moreutils alejandra];
+        runtimeInputs = [nix-editor moreutils alejandra dasel];
         text = ''
           wd="$1"
           cd "$wd"
           if [ -v DEBUG ]; then set -x; fi
-          raw_extensions=$(flox eval .#devShells.x86_64-linux.default.passthru.data.attrs.programs --json | jq '
-            .vscode.extensions|
+          raw_extensions=$(
+            dasel -f flox.toml -w json | jq '
+            .floxEnv.programs.vscode.extensions|
             select(.!=null)|
             .[]
           ' -cr)
