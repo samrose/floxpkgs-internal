@@ -1,16 +1,27 @@
 { flox, nix-installers, runCommand }:
 let
   inherit (flox) version;
+  removeStorePathAndHash = p: with builtins;
+    let
+      prefixLen = (stringLength storeDir) + 34;
+    in
+      substring prefixLen ((stringLength p) - prefixLen) p;
 
 in runCommand "flox-installers.${version}" { } ''
   mkdir -p $out/nix-support
-  cp ${nix-installers.deb.outPath} $out/flox-${version}.deb
-  cp ${nix-installers.rpm.outPath} $out/flox-${version}.rpm
-  cp ${nix-installers.pacman.outPath} $out/flox-${version}.pacman
-  cp ${nix-installers.tarball.outPath} $out/flox-${version}.tarball
+  cp ${nix-installers.deb.outPath} \
+    $out/${removeStorePathAndHash nix-installers.deb.outPath}
+  cp ${nix-installers.rpm.outPath} \
+    $out/${removeStorePathAndHash nix-installers.rpm.outPath}
+  cp ${nix-installers.pacman.outPath} \
+    $out/${removeStorePathAndHash nix-installers.pacman.outPath}
+  cp ${nix-installers.tarball.outPath} \
+    $out/${removeStorePathAndHash nix-installers.tarball.outPath}
   touch $out/nix-support/hydra-build-products
-  echo "file binary-dist \"$out/flox-${version}.deb\"" >> $out/nix-support/hydra-build-products
-  echo "file binary-dist \"$out/flox-${version}.rpm\"" >> $out/nix-support/hydra-build-products
-  echo "file binary-dist \"$out/flox-${version}.pacman\"" >> $out/nix-support/hydra-build-products
-  echo "file binary-dist \"$out/flox-${version}.tarball\"" >> $out/nix-support/hydra-build-products
+  echo <<EOF >> $out/nix-support/hydra-build-products
+  file binary-dist "$out/${removeStorePathAndHash nix-installers.deb.outPath}"
+  file binary-dist "$out/${removeStorePathAndHash nix-installers.deb.outPath}"
+  file binary-dist "$out/${removeStorePathAndHash nix-installers.deb.outPath}"
+  file binary-dist "$out/${removeStorePathAndHash nix-installers.deb.outPath}"
+  EOF
 ''
