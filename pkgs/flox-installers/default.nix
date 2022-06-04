@@ -18,8 +18,7 @@ in runCommand "flox-installers.${version}" { } ''
     $out/${removeStorePathAndHash nix-installers.pacman.outPath}
   cp ${nix-installers.tarball.outPath} \
     $out/${removeStorePathAndHash nix-installers.tarball.outPath}
-  touch $out/nix-support/hydra-build-products
-  echo <<EOF >> $out/nix-support/hydra-build-products
+  cat <<EOF > $out/nix-support/hydra-build-products
   file binary-dist "$out/${removeStorePathAndHash nix-installers.deb.outPath}"
   file binary-dist "$out/${removeStorePathAndHash nix-installers.rpm.outPath}"
   file binary-dist "$out/${removeStorePathAndHash nix-installers.pacman.outPath}"
