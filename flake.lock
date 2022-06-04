@@ -7,11 +7,11 @@
       },
       "locked": {
         "dir": "capacitor",
-        "lastModified": 1654298542,
-        "narHash": "sha256-/tdg6mZTLgMAlC88oNgbxIXtUaZxuqDNE9Oj+ehdDvg=",
+        "lastModified": 1654359846,
+        "narHash": "sha256-OSn0lxnTBoMLlvCRxWMLjjSdXtZEr+jFmpbNGWBYSYI=",
         "ref": "main",
-        "rev": "2581d7448bb05ff71f4c09c12d8ba926fbcf170b",
-        "revCount": 11,
+        "rev": "24c2926edb5f839b393c802aada4ab82dec947f8",
+        "revCount": 13,
         "type": "git",
         "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
       },
@@ -97,50 +97,10 @@
         "url": "ssh://git@github.com/flox/mini-dinstall"
       }
     },
-    "floxpkgsv1": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1653171999,
-        "narHash": "sha256-GjZtU/ZPcFe7V907g3AzZF9OFCFZ4rrykm3GuLL1aGg=",
-        "ref": "master",
-        "rev": "f43d6d801fdfe8bee11ca8a9da5251b37b1d693b",
-        "revCount": 97,
-        "type": "git",
-        "url": "ssh://git@github.com/flox/floxpkgsv1"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/flox/floxpkgsv1"
-      }
-    },
-    "inputs": {
-      "inputs": {
-        "capacitor": [
-          "capacitor"
-        ],
-        "flox/floxdocs/tng": "flox/floxdocs/tng",
-        "flox/mini-dinstall": "flox/mini-dinstall",
-        "floxpkgsv1": "floxpkgsv1",
-        "nix-installers": "nix-installers",
-        "nixpkgs-stable": "nixpkgs-stable",
-        "nixpkgs-staging": "nixpkgs-staging",
-        "nixpkgs-unstable": "nixpkgs-unstable"
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-CbQOrF5kznPEABD+XYTbI01ItNkNEZOO+Qf8FQLnUP0=",
-        "path": "./inputs",
-        "type": "path"
-      },
-      "original": {
-        "path": "./inputs",
-        "type": "path"
-      }
-    },
     "nix-installers": {
       "inputs": {
         "capacitor": [
-          "inputs",
+          "pkgs",
           "capacitor"
         ]
       },
@@ -174,11 +134,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1652991527,
-        "narHash": "sha256-NdALP3KwHM73hyUDj+PEBg58Gs5EZhvpqKpouZnF1Ro=",
+        "lastModified": 1653060744,
+        "narHash": "sha256-kfRusllRumpt33J1hPV+CeCCylCXEU7e0gn2/cIM7cY=",
         "owner": "flox",
         "repo": "nixpkgs",
-        "rev": "90705c89fbad69c4c971fabf2b1edd8c7875b5d6",
+        "rev": "dfd82985c273aac6eced03625f454b334daae2e8",
         "type": "github"
       },
       "original": {
@@ -227,14 +187,14 @@
         ],
         "catalog": "catalog",
         "flox": "flox",
-        "inputs": [
-          "inputs"
-        ],
+        "flox/floxdocs/tng": "flox/floxdocs/tng",
+        "flox/mini-dinstall": "flox/mini-dinstall",
+        "nix-installers": "nix-installers",
         "tracelinks": "tracelinks"
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-KzxLBeDuaDels6cq1j5PLzcGnzCJ83tVXouD5qoQb5M=",
+        "narHash": "sha256-9B6XW/Y+q7FFiHbaXqp8dEKbJAGcuE1xUztMXNBNqwQ=",
         "path": "./pkgs",
         "type": "path"
       },
@@ -246,7 +206,9 @@
     "root": {
       "inputs": {
         "capacitor": "capacitor",
-        "inputs": "inputs",
+        "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs-staging": "nixpkgs-staging",
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "pkgs": "pkgs"
       }
     },

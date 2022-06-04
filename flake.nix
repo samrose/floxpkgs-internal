@@ -1,8 +1,11 @@
 {
   inputs.capacitor.url = "git+ssh://git@github.com/flox/minicapacitor?ref=main&dir=capacitor";
   inputs.capacitor.inputs.root.follows = "/";
-  inputs.inputs.url = "path:./inputs";
-  inputs.inputs.inputs.capacitor.follows = "capacitor";
+
+  inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
+  inputs.nixpkgs-unstable.url = "github:flox/nixpkgs/unstable";
+  inputs.nixpkgs-staging.url = "github:flox/nixpkgs/staging";
+
 
   # Used for ops-env library functions. TODO: move to capacitor?
   # inputs.devshell.url = "github:numtide/devshell";
@@ -115,7 +118,6 @@
 
   inputs.pkgs.url = "path:./pkgs";
   inputs.pkgs.inputs.capacitor.follows = "capacitor";
-  inputs.pkgs.inputs.inputs.follows = "inputs";
 
   # inputs.ops-env.url = "path:../templates/ops-env";
   # inputs.ops-env.inputs.capacitor.follows = "capacitor";
@@ -124,8 +126,7 @@
 
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
 
-  outputs = { capacitor, inputs, ... } @ args: capacitor args ({ self
-                                                               , lib
+  outputs = { capacitor, ... } @ args: capacitor args ({  lib
                                                                , auto
                                                                , has
                                                                , ...
@@ -133,20 +134,18 @@
 
     has.stabilities
       rec {
-        stable = inputs.nixpkgs-stable;
-        unstable = inputs.nixpkgs-unstable;
-        staging = inputs.nixpkgs-staging;
+        stable = args.nixpkgs-stable;
+        unstable = args.nixpkgs-unstable;
+        staging = args.nixpkgs-staging;
         default = stable;
       }
       has.systems ["x86_64-linux"]
-      has.projectsFromInputs
-
       {
-        # __reflect = {
-        #   projects = {
-        #     pkgs = args.pkgs;
-        #   };
-        # };
+        __reflect = {
+          projects = {
+            pkgs = auto.callSubflake "pkgs" {};
+          };
+        };
 
         # Define package set structure
         # rec {
