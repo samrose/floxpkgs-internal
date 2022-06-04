@@ -298,11 +298,11 @@
     "nix-installers": {
       "flake": false,
       "locked": {
-        "lastModified": 1654344091,
-        "narHash": "sha256-JY9QYPhcoT3SwvO8dNyFewgZ+EweIJp4IRGYioJ/iK8=",
+        "lastModified": 1654345783,
+        "narHash": "sha256-1xw3pBQb7tRZTPXI4irJ49iKMpK8o5m1XnQCNojU+uw=",
         "ref": "master",
-        "rev": "9d82bc7f156a885ce2ca6f2735625d2786bd589c",
-        "revCount": 88,
+        "rev": "9228a403eb91db56c33d5ce8bd23cd2025c9aac6",
+        "revCount": 89,
         "type": "git",
         "url": "ssh://git@github.com/flox/nix-installers"
       },
