@@ -8,7 +8,7 @@
   inputs.catalog.url = "path:./catalog";
   inputs.catalog.inputs.capacitor.follows = "capacitor";
 
-  inputs.flox.url = "github:flox/flox/minicapacitor";
+  inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=minicapacitor";
   inputs.flox.inputs.capacitor.follows = "capacitor";
 
   inputs."flox/floxdocs/tng".url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
