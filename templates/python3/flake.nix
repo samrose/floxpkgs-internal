@@ -1,6 +1,6 @@
 {
   description = "Python 3 template";
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor?ref=ysndr";
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
   inputs.nixpkgs.follows = "capacitor/nixpkgs";
   nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
@@ -11,6 +11,6 @@
     _.capacitor _ ({auto, ...}: {
       devShells = p: auto.using {
         default = ./flox.toml;
-      } p.pkgs.unstable;
+      } p.pkgs;
     });
 }
