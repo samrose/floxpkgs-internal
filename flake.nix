@@ -89,7 +89,7 @@ rec {
       # Create output jobsets for stabilities
       # TODO: has.stabilities and re-arrange attribute names to make system last?
       hydraJobsRaw = lib.genAttrs ["stable" "unstable" "staging"] (stability:
-        lib.genAttrs ["x86_64-linux"] (
+        let a = (lib.genAttrs ["x86_64-linux"] (
           system: let
             args = {
               inherit lib system;
@@ -117,7 +117,7 @@ rec {
                   touch $out
                 '';
             }
-        ));
+        )); in a // lib.over a);
       hydraJobsStable = self.hydraJobsRaw.stable;
       hydraJobsUnstable = self.hydraJobsRaw.unstable;
       hydraJobsStaging = self.hydraJobsRaw.staging;
