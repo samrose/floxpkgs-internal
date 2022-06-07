@@ -7,11 +7,11 @@
       },
       "locked": {
         "dir": "capacitor",
-        "lastModified": 1654610011,
-        "narHash": "sha256-X8fuqhaZ/7gEndrGNApVgxCtQpZVKhj8liWs2RAaSB4=",
+        "lastModified": 1654622747,
+        "narHash": "sha256-JfYpqSWc0OwFFD3oQdwuLinIlU4w1JY2RbCOJPYonPQ=",
         "ref": "main",
-        "rev": "f61d8a4758150197872502c3dd06d6ca05917b73",
-        "revCount": 18,
+        "rev": "e8b20948802e11c2742c4233719ce2f3a5638813",
+        "revCount": 21,
         "type": "git",
         "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
       },
@@ -66,11 +66,11 @@
     "flox/floxdocs/tng": {
       "flake": false,
       "locked": {
-        "lastModified": 1654525651,
-        "narHash": "sha256-GbPtExHU7a+x4OizO0RIku0YftX08qxxXNWrYTxMcnw=",
+        "lastModified": 1654615698,
+        "narHash": "sha256-gM/TjThja/rJ12qDPKzk1Ziu2JB6Akq89/RkK+QhKrU=",
         "ref": "tng",
-        "rev": "52670857c8ed8d84afbd18b7f8a8f83c91b54b03",
-        "revCount": 443,
+        "rev": "c85292b9fbed462a70bb80979c3cdf2946d2f48b",
+        "revCount": 445,
         "type": "git",
         "url": "ssh://git@github.com/flox/floxdocs"
       },
@@ -194,7 +194,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-6VnKhHXUK6UR5EuoEPULD3biNEv8AuKwjXXofWIvSE0=",
+        "narHash": "sha256-lhrTWBWxbrUk0izeZtqgIogpYfxC37BC7fAlU3cDvOE=",
         "path": "./pkgs",
         "type": "path"
       },
