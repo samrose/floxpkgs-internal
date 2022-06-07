@@ -7,11 +7,11 @@
       },
       "locked": {
         "dir": "capacitor",
-        "lastModified": 1654359846,
-        "narHash": "sha256-OSn0lxnTBoMLlvCRxWMLjjSdXtZEr+jFmpbNGWBYSYI=",
+        "lastModified": 1654610011,
+        "narHash": "sha256-X8fuqhaZ/7gEndrGNApVgxCtQpZVKhj8liWs2RAaSB4=",
         "ref": "main",
-        "rev": "24c2926edb5f839b393c802aada4ab82dec947f8",
-        "revCount": 13,
+        "rev": "f61d8a4758150197872502c3dd06d6ca05917b73",
+        "revCount": 18,
         "type": "git",
         "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
       },
@@ -51,26 +51,26 @@
       "locked": {
         "lastModified": 1654164190,
         "narHash": "sha256-BDhzhpOdSxJ0NsEEUNOacmXV6TgMGoG2pdnu3YnVgfU=",
-        "owner": "flox",
-        "repo": "flox",
+        "ref": "minicapacitor",
         "rev": "03290a3b2e6efe3c13142a522d75bf73d7ab768e",
-        "type": "github"
+        "revCount": 135,
+        "type": "git",
+        "url": "ssh://git@github.com/flox/flox"
       },
       "original": {
-        "owner": "flox",
         "ref": "minicapacitor",
-        "repo": "flox",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/flox/flox"
       }
     },
     "flox/floxdocs/tng": {
       "flake": false,
       "locked": {
-        "lastModified": 1654265239,
-        "narHash": "sha256-ClSZ4wZWClN5NN6iwpr1dxFJXYLJsZf3ptQr3SJHlnM=",
+        "lastModified": 1654525651,
+        "narHash": "sha256-GbPtExHU7a+x4OizO0RIku0YftX08qxxXNWrYTxMcnw=",
         "ref": "tng",
-        "rev": "204245d1d279344cfb744c7de0ef27c0d808b31e",
-        "revCount": 442,
+        "rev": "52670857c8ed8d84afbd18b7f8a8f83c91b54b03",
+        "revCount": 443,
         "type": "git",
         "url": "ssh://git@github.com/flox/floxdocs"
       },
@@ -105,10 +105,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1654244340,
+        "lastModified": 1654602065,
         "narHash": "sha256-AVDL9Yy/jrAwsrmdsDBKfBQg2kJL/qeaY7KnhupwgHo=",
         "ref": "minicapacitor",
-        "rev": "dea90e0bb9e5223569dd4eb7b52f730787acfaca",
+        "rev": "6d03d5b44921965c47e181e16af79d4f01ddc1e9",
         "revCount": 68,
         "type": "git",
         "url": "ssh://git@github.com/flox/nix-installers"
@@ -194,7 +194,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-9B6XW/Y+q7FFiHbaXqp8dEKbJAGcuE1xUztMXNBNqwQ=",
+        "narHash": "sha256-6VnKhHXUK6UR5EuoEPULD3biNEv8AuKwjXXofWIvSE0=",
         "path": "./pkgs",
         "type": "path"
       },
