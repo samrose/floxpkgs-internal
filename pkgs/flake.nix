@@ -22,28 +22,20 @@
 
 
   outputs = {capacitor, nix-installers, ...} @ args : capacitor args ({lib, has, auto,...}:
-    
-    has.projects {
-      catalog = auto.callSubflake "catalog" {};
-      tracelinks = auto.callSubflake "tracelinks" {};
-      flox = args.flox;
-    }
 
-    has.localPkgs ./.
+    # has.localPkgs ./.
     # has.includes { inherit (inputs) nix-installers; }
     {
-      # packages = auto.automaticPkgs ./.;
-      packages = {
-
-        hello = auto.callPackage ({hello}: hello ) {};
-        foo = auto.callPackage ({flox}: flox ) {};
-        bar = auto.callPackage ({foo}: foo) {};
-
-      }
-      // nix-installers.protoPackages;
+      packages = auto.localPkgs ./.;
 
       __reflect.subflakePath = "pkgs";
-      # __reflect.projects.nix-installers = inputs.nix-installers;
+      __reflect.adopted = [
+        nix-installers
+      ];
+      __reflect.projects = {
+        flox = args.flox;
+      };
+
     }
    
   );
