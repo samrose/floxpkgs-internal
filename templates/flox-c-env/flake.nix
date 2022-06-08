@@ -30,18 +30,6 @@ rec {
         (builtins.getFlake "github:NixOS/nixpkgs/43cc623340ac0723fb73c1bce244bb6d791c5bb9").legacyPackages.x86_64-linux.curl
       ];
       __pins.vscode-extensions = [
-        {
-          name = "python";
-          publisher = "ms-python";
-          sha256 = "1pfmvg93z3i6rmqfb4dkgswkjj1y8px36jwfkdpkzykrzdhv0l9b";
-          version = "2022.7.11591004";
-        }
-        {
-          name = "pylint";
-          publisher = "ms-python";
-          sha256 = "1z9qng63wqyb2namxlvw5wjrhc6v7y8gg4ipwrb3dqs50f8n0nnj";
-          version = "2022.1.11581003";
-        }
       ];
     });
 }

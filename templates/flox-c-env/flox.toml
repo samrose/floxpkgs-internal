@@ -1,6 +1,4 @@
 [floxEnv.programs]
-vscode = { extensions = ["ms-python.python", "ms-python.pylint"] }
-
 bats = {}
 curl = { version = "7.7" }
 unzip = {}
