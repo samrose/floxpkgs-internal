@@ -1,6 +1,3 @@
-[inputs]
-pkgs = {}
-
 [floxEnv]
 postShellHook = '''
 # Show versions with a bit of color
