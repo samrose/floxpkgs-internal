@@ -9,7 +9,7 @@
     program =
       (writeShellApplication {
         name = "update-extensions";
-        runtimeInputs = [nix-editor alejandra dasel];
+        runtimeInputs = [nix-editor alejandra dasel jq];
         text = ''
           wd="$1"
           cd "$wd"
