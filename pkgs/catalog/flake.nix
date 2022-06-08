@@ -6,14 +6,14 @@
 
     packages =
       auto.callPackage ({ buildGoModule
-      , src
+      , inputs
       , withRev
       , ...
       }:
       buildGoModule rec {
         pname = "catalog";
         version = withRev "1.0.0";
-        inherit src;
+        src = inputs.src;
         vendorSha256 = "sha256-3/7jk7SoxBndIoDmXToPwpYUffTXraQOAMzymPhsBZk=";
       }) {};
   });
