@@ -11,17 +11,17 @@
         auto.callPackage ({ 
           stdenv
         , help2man
-        , src
+        , inputs
         , argument ? ""
         , withRev
         }:
         stdenv.mkDerivation {
-          inherit src;
+          src = inputs.src;
           pname = "tracelinks${argument}";
           version = withRev "1.0.0";
 
           # Prevent the source from becoming a runtime dependeny
-          disallowedReferences = [ src.outPath ];
+          disallowedReferences = [ inputs.src.outPath ];
           nativeBuildInputs = [ help2man ];
           makeFlags = [ "PREFIX=$(out)" ];
         }) {};
