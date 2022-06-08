@@ -3,6 +3,7 @@
   nix-editor,
   alejandra,
   dasel,
+  jq,
   ...
 }: {
   type = "app";
