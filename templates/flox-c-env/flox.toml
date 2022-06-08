@@ -1,0 +1,23 @@
+[inputs]
+pkgs = {}
+
+
+[floxEnv.programs]
+vscode = { extensions = ["ms-python.python", "ms-python.pylint"] }
+
+bats = {}
+curl = { version = "7.7" }
+unzip = {}
+gnugrep = {}
+which = {}
+coreutils = {}
+gnumake = {}
+
+[floxEnv.programs.python]
+python = "python39"
+requirements = '''
+    pip
+    allure-pytest==2.9.45
+    kubernetes
+    pytest
+'''
