@@ -8,6 +8,9 @@
   inputs.catalog.url = "path:./catalog";
   inputs.catalog.inputs.capacitor.follows = "capacitor";
 
+  inputs."nix-editor".url = "path:./nix-editor";
+  inputs."nix-editor".inputs.capacitor.follows = "capacitor";
+
   inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=minicapacitor";
   inputs.flox.inputs.capacitor.follows = "capacitor";
 

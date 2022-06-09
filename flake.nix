@@ -238,15 +238,15 @@
         #      ops-env = (auto.subflake "templates/ops-env" "ops-env" {} {}).devShells.${system}.default;
         #   };
 
-         lib =
-            _.capacitor.lib
+        lib =
+          capacitor.lib
             // {
               flox-env = import ./lib/flox-env.nix;
               vscode = import ./lib/vscode.nix;
               mkNakedShell = import ./lib/mkNakedShell.nix;
-              mkFloxShell = import ./lib/mkFloxShell.nix _;
-              mkUpdateVersions = import ./lib/update-versions.nix _;
-              mkUpdateExtensions = import ./lib/update-extensions.nix _;
+              mkFloxShell = import ./lib/mkFloxShell.nix args;
+              mkUpdateVersions = import ./lib/update-versions.nix args;
+              mkUpdateExtensions = import ./lib/update-extensions.nix args;
             };
 
         templates = builtins.mapAttrs
