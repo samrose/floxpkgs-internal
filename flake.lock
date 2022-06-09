@@ -7,11 +7,11 @@
       },
       "locked": {
         "dir": "capacitor",
-        "lastModified": 1654723065,
-        "narHash": "sha256-7VoM6ImwwpqjFfJLv0algxqEfFq7UKGrQj10I7K+LiI=",
+        "lastModified": 1654782243,
+        "narHash": "sha256-ee8UruUNvtusWmaRTokegIVzcejvwvPDlRvrlwZtgcQ=",
         "ref": "main",
-        "rev": "3f02223f910ecc228241577e1771251ed18ce49f",
-        "revCount": 38,
+        "rev": "11f8991fb4a88638cf367aab6530b661381d7c8e",
+        "revCount": 42,
         "type": "git",
         "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
       },
@@ -105,10 +105,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1654602065,
-        "narHash": "sha256-AVDL9Yy/jrAwsrmdsDBKfBQg2kJL/qeaY7KnhupwgHo=",
+        "lastModified": 1654777689,
+        "narHash": "sha256-b0/2GKeoFRv5WWkvJAS2bsa4M78SeVA8SDSliNfguLk=",
         "ref": "minicapacitor",
-        "rev": "6d03d5b44921965c47e181e16af79d4f01ddc1e9",
+        "rev": "430b74719c8e0671674616e2655e0707d325f2f1",
         "revCount": 68,
         "type": "git",
         "url": "ssh://git@github.com/flox/nix-installers"
@@ -238,12 +238,12 @@
         "rev": "22d985d2757f1834ee51d3dadc93908c9cfc9ab3",
         "revCount": 5,
         "type": "git",
-        "url": "ssh://git@github.com/flox/tracelinks"
+        "url": "ssh://git@github.com/flox/traceinks"
       },
       "original": {
         "ref": "main",
         "type": "git",
-        "url": "ssh://git@github.com/flox/tracelinks"
+        "url": "ssh://git@github.com/flox/traceinks"
       }
     },
     "tracelinks": {
