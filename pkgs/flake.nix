@@ -21,17 +21,21 @@
   inputs.nix-installers.inputs.capacitor.follows = "capacitor";
 
 
-  outputs = {capacitor, nix-installers, ...} @ args : capacitor args ({lib, has, auto,...}:
+  outputs = {capacitor, ...} @ args : capacitor args ({lib, has, auto,...}:
 
     # has.localPkgs ./.
     # has.includes { inherit (inputs) nix-installers; }
     {
-      packages = auto.localPkgs ./.;
+
+      packages = (auto.localPkgs ./.) // {
+        flox = { self',... }: self'.legacyPackages.__projects.flox.default;
+      };
+        
 
       __reflect.subflakePath = "pkgs";
-      __reflect.adopted = [
-        nix-installers
-      ];
+      __reflect.adopted = {
+        inherit (args) nix-installers;
+      };
       __reflect.projects = {
         flox = args.flox;
       };
