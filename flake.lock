@@ -7,11 +7,11 @@
       },
       "locked": {
         "dir": "capacitor",
-        "lastModified": 1654782243,
-        "narHash": "sha256-ee8UruUNvtusWmaRTokegIVzcejvwvPDlRvrlwZtgcQ=",
+        "lastModified": 1654784436,
+        "narHash": "sha256-naP0ff6JQCg51GQZhT76a+M89avJbXf++Lue7qAl9iw=",
         "ref": "main",
-        "rev": "11f8991fb4a88638cf367aab6530b661381d7c8e",
-        "revCount": 42,
+        "rev": "f86d54e87ccdd8634e47c93111c99fdc840c282a",
+        "revCount": 43,
         "type": "git",
         "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
       },
