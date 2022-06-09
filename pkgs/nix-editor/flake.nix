@@ -3,6 +3,6 @@
 
   outputs = _:
   _.capacitor _ ({lib, ...}: {
-    packages.default = {system, inputs,...}: inputs.src.outputs.packages.${system}.nixeditor;
+    packages.default = {system, inputs,...}: inputs.src.packages.${system}.nixeditor;
   });
 }
