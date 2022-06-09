@@ -8,6 +8,16 @@
 , zlib
 }:
 
+let
+  apt' = apt.overrideAttrs (oldAttrs: {
+    patches = (oldAttrs.patches or []) ++ [ ./apt-force-debian-system.patch ];
+    preBuild = (oldAttrs.preBuild or "") + ''
+      # Our use of -isystem breaks this build. Convert to -I instead.
+      export NIX_CFLAGS_COMPILE=`echo $NIX_CFLAGS_COMPILE | sed 's/isystem /I/g'`
+    '';
+  });
+
+in
 buildPythonPackage rec {
   pname = "python-apt";
   version = "2.1.3";
@@ -26,7 +36,7 @@ buildPythonPackage rec {
   # apt_pkg.Error: E:Unable to determine a suitable packaging system type
   doCheck = false;
 
-  propagatedBuildInputs = [ apt pythonPackages.distutils_extra ];
+  propagatedBuildInputs = [ apt' pythonPackages.distutils_extra ];
 
   meta = with lib; {
     description = "apt_pkg";

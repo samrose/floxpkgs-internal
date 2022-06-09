@@ -8,12 +8,13 @@
   ...
 }:
 let calledFloxEnv = data.func data.attrs;
+    finalPaths = [calledFloxEnv] ++ pins.versions;
 in
 (devshell.legacyPackages.${pkgs.system}.mkNakedShell rec {
   name = "ops-env";
   profile = pkgs.buildEnv {
     name = "wrapper";
-    paths = [calledFloxEnv] ++ (builtins.attrValues pins);
+    paths = finalPaths;
 
     postBuild = let
       versioned =
@@ -44,4 +45,9 @@ in
     in "substitute ${envBash}/env.bash $out/env.bash --subst-var-by DEVSHELL_DIR $out";
   };
 })
-// {passthru.paths = calledFloxEnv.passthru.paths;}
+// {
+  passthru.paths = finalPaths;
+  passthru.programs = calledFloxEnv.passthru.programs;
+  passthru.data = data;
+  passthru.pins = pins;
+}

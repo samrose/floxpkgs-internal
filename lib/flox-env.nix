@@ -1,7 +1,7 @@
 {
   mach-nix,
   lib,
-}: pkgs: toml: lock: let
+}: pkgs: toml: pins: let
   tie = {
     inherit pkgs;
     mach = mach-nix.lib.${pkgs.system};
@@ -9,20 +9,16 @@
   };
   data = (lib.custom {}).processTOML toml {
     pkgs = tie.pkgs;
-    floxEnv = {
-      name,
-      programs,
-      ...
-    }: let
+    floxEnv = {programs, ...}: let
       paths = let
-        attrs = builtins.removeAttrs programs ["postShellHook" "python" "vscode"];
         handler = {
           python = mach-nix.lib.${pkgs.system}.mkPython programs.python;
           vscode =
             lib.vscode.configuredVscode
             pkgs
             programs.vscode
-            (builtins.fromJSON (builtins.readFile lock)).vscode;
+            pins.vscode-extensions;
+
           # insert excpetions here
           __functor = self: key: attr:
             self.${key}
@@ -35,7 +31,15 @@
       in
         lib.mapAttrsToList handler programs;
     in
-      (pkgs.buildEnv {inherit name paths;}) // {passthru.paths = paths;};
+      (pkgs.buildEnv {
+        name = "flox-env";
+        inherit paths;
+      })
+      // {
+        passthru = {
+          inherit programs paths;
+        };
+      };
   };
 in
   data
