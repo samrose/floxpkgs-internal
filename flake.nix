@@ -243,12 +243,12 @@
           vscode = import ./lib/vscode.nix;
         };
 
-        # templates = builtins.mapAttrs
-        #   (k: v: {
-        #     path = v.path;
-        #     description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
-        #   })
-        #   (capacitor.lib.dirToAttrs ./templates { });
+        templates = builtins.mapAttrs
+          (k: v: {
+            path = v.path;
+            description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
+          })
+          (capacitor.lib.dirToAttrs ./templates { });
       }
   );
 
