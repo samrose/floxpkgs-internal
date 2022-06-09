@@ -1,5 +1,6 @@
 #!/usr/bin/env bats
-# to run these tests, first run 'flox develop'
+# to run these tests, first run 'flox develop' in the context of 
+# the templates/ops-env template
 setup() {
   export NOOP="NOOP"    
 }
