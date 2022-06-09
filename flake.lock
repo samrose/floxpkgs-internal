@@ -489,7 +489,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-bwLk92FuWLaBP3GgvmDpjSza5+LFnM6lxDIoHvA/DIY=",
+        "narHash": "sha256-viEy50mCXTs7v4W87ZUe1SdsYUih2x9fOVauuqPC548=",
         "path": "./templates/ops-env",
         "type": "path"
       },
