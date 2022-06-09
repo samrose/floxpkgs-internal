@@ -12,7 +12,7 @@
       "locked": {
         "lastModified": 1654714187,
         "narHash": "sha256-g83SFsD4Bqxd3d8mZy6sscVtg2NnqFik3DpOicDOEv4=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "c42d5d378a7d9f4bced0e5061c2c81debcd64518",
         "revCount": 197,
         "type": "git",
@@ -489,7 +489,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-/LD6Gl8M947pePjaDynxoyen6+y0odvPfTiHuXgRTU0=",
+        "narHash": "sha256-bwLk92FuWLaBP3GgvmDpjSza5+LFnM6lxDIoHvA/DIY=",
         "path": "./templates/ops-env",
         "type": "path"
       },
@@ -501,11 +501,11 @@
     "pypi-deps-db": {
       "flake": false,
       "locked": {
-        "lastModified": 1654677412,
-        "narHash": "sha256-b8MZ5Qu4QSmr3k4/d4vJ9YXD/Po141TYNw2JxX2BBFA=",
+        "lastModified": 1654764333,
+        "narHash": "sha256-OmzBbqIlVXKiaeClKLCYTg+butpU8f1TU34H1vf2sWM=",
         "owner": "DavHau",
         "repo": "pypi-deps-db",
-        "rev": "96f4c340b49c56b2bf6b139474d2cf202accb2eb",
+        "rev": "31405ed38566d3189ad77532ad5fe5911fef300f",
         "type": "github"
       },
       "original": {
@@ -551,11 +551,11 @@
     "src_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1654708500,
-        "narHash": "sha256-YYmTIywUPCMeiwFB3EndabbbDYUFI1qYqfdmJFk7/aI=",
+        "lastModified": 1654785353,
+        "narHash": "sha256-beRWEtvGMwM5hteEb8kYfNWvtuh6ga5fAj4hxHyXqkQ=",
         "ref": "tng",
-        "rev": "cdc90e07b50842b12064f83764d49b1ce5ce053e",
-        "revCount": 155,
+        "rev": "66ea3d48659ba6f426def07a4f0b87eb119be941",
+        "revCount": 156,
         "type": "git",
         "url": "ssh://git@github.com/flox/flox"
       },
