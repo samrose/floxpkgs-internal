@@ -48,7 +48,7 @@ rec {
       # Limit the systems to fewer or more than default by ucommenting
       # __systems = ["x86_64-linux"];
 
-      packages = args: (legacyPackages args).flox;
+      # packages = args: (legacyPackages args).flox;
 
       legacyPackages = {
         pkgs,
@@ -122,9 +122,9 @@ rec {
       hydraJobsUnstable = self.hydraJobsRaw.unstable;
       hydraJobsStaging = self.hydraJobsRaw.staging;
 
-      devShells = {system,...}: {
-        ops-env = (lib.sanitizes (auto.callSubflakesWith inputs "path:./templates" {}) ["devShells" "default" "packages" "packages" "apps" system]).ops-env;
-      };
+      # devShells = {system,...}: {
+      #   ops-env = (lib.sanitizes (auto.callSubflakesWith inputs "path:./templates" {}) ["devShells" "default" "packages" "packages" "apps" system]).ops-env;
+      # };
 
       lib =
         _.capacitor.lib

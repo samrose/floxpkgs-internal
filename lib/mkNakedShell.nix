@@ -50,4 +50,5 @@ in
   passthru.programs = calledFloxEnv.passthru.programs;
   passthru.data = data;
   passthru.pins = pins;
+  passthru.python = calledFloxEnv.passthru.python;
 }

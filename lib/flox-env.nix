@@ -10,9 +10,10 @@
   data = (lib.custom {}).processTOML toml {
     pkgs = tie.pkgs;
     floxEnv = {programs, ...}: let
+      python = mach-nix.lib.${pkgs.system}.mkPython programs.python;
       paths = let
         handler = {
-          python = mach-nix.lib.${pkgs.system}.mkPython programs.python;
+          python = python;
           vscode =
             lib.vscode.configuredVscode
             pkgs
@@ -38,6 +39,7 @@
       // {
         passthru = {
           inherit programs paths;
+          python.expr = python.expr;
         };
       };
   };
