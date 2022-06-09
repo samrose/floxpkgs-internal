@@ -1,5 +1,6 @@
 rec {
-  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
+  #inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
+  inputs.capacitor.url = "/home/tom/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
   inputs.floxdocs.url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
@@ -122,9 +123,9 @@ rec {
       hydraJobsUnstable = self.hydraJobsRaw.unstable;
       hydraJobsStaging = self.hydraJobsRaw.staging;
 
-      # devShells = {system,...}: {
-      #   ops-env = (lib.sanitizes (auto.callSubflakesWith inputs "path:./templates" {}) ["devShells" "default" "packages" "packages" "apps" system]).ops-env;
-      # };
+      devShells = {system,...}: {
+        ops-env = (lib.sanitizes (auto.callSubflakesWith inputs "path:./templates" {}) ["devShells" "default" "packages" "packages" "apps" system]).ops-env;
+      };
 
       lib =
         _.capacitor.lib
