@@ -1,6 +1,5 @@
 #!/usr/bin/env bats
-# to run these tests, first run 'flox develop' in the context of 
-# the templates/ops-env template
+# to run these tests, first run 'flox develop'
 setup() {
   export NOOP="NOOP"    
 }
@@ -10,30 +9,12 @@ setup() {
   [[ "${lines[0]}" =~ "for more information" ]]
 }
 
-@test "test docker" {
-  run docker -v
-  [[ "${lines[0]}" =~ "Docker version" ]]
-}
 
 @test "test by unzip" {
   run unzip
   [[ "${lines[0]}" =~ "by Info-ZIP" ]]
 }
 
-@test "test by kubectl" {
-  run kubectl --help
-  [[ "${lines[0]}" =~ "kubectl controls the Kubernetes cluster manager." ]]
-}
-
-@test "test awscli2" {
-  run aws --version
-  [[ "${lines[0]}" =~ "aws-cli/2" ]]
-}
-
-@test "test GNU parallel" {
-  run parallel --help
-  [[ "${lines[0]}" =~ "Usage:" ]]
-}
 
 @test "test GNUgrep" {
   run grep --help
@@ -67,16 +48,16 @@ setup() {
 }
 
 
-@test "test by python kubernetes" {
-  run python -c "import kubernetes;print(kubernetes)"
-  [[ "${lines[0]}" =~ "<module 'kubernetes' from '/nix/store" ]]
-}
-
-@test " test vscode extensions" {
+@test "test vscode extensions" {
   
   run code --list-extensions
   [[ "$output" =~ "ms-python.pylint" ]]
   [[ "$output" =~ "ms-python.python" ]]
   [[ "$status" -eq 0 ]]
 
+}
+
+@test "flox search" {
+  run flox search "kubectl Kubernetes"
+  [[ "$output" =~ "Kubernetes" ]]
 }
