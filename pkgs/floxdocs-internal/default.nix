@@ -28,7 +28,7 @@ stdenv.mkDerivation {
 	pythonPackages.setuptools
   ];
   nativeBuildInputs = [ asciinema-scenario entr m4 mkdocs which ];
-  makeFlags = [ "DOCTYPE=external" ];
+  makeFlags = [ "DOCTYPE=internal" ];
   buildFlags = [ "build" ];
   installPhase = ''
     cp -R build/site $out
