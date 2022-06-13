@@ -46,7 +46,6 @@ rec {
     # Define package set structure
     rec {
       # Limit the systems to fewer or more than default by ucommenting
-      __systems = ["x86_64-linux"];
 
       #packages = args: (legacyPackages args).flox;
 
