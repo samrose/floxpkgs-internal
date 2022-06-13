@@ -1,5 +1,6 @@
 rec {
   #inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
+
   inputs.capacitor.url = "/home/tom/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
@@ -36,7 +37,7 @@ rec {
   inputs.pypi-deps-db.flake = false;
   inputs.nix-editor.url = "path:./pkgs/nix-editor";
 
-  nixConfig.bash-prompt = "[flox]\\e\[38;5;172mλ \\e\[m";
+  nixConfig.bash-prompt = "[flox] \\[\\033[38;5;172m\\]λ \\[\\033[0m\\]";
 
   outputs = _: (_.capacitor _ ({
       self,
@@ -47,9 +48,9 @@ rec {
     # Define package set structure
     rec {
       # Limit the systems to fewer or more than default by ucommenting
-      # __systems = ["x86_64-linux"];
+      __systems = ["x86_64-linux"];
 
-      # packages = args: (legacyPackages args).flox;
+      #packages = args: (legacyPackages args).flox;
 
       legacyPackages = {
         pkgs,
@@ -123,8 +124,10 @@ rec {
       hydraJobsUnstable = self.hydraJobsRaw.unstable;
       hydraJobsStaging = self.hydraJobsRaw.staging;
 
+
+
       devShells = {system,...}: {
-        ops-env = (lib.sanitizes (auto.callSubflakesWith inputs "path:./templates" {}) ["devShells" "default" "packages" "packages" "apps" system]).ops-env;
+        ops-env = (lib.sanitizes (auto.callSubflakesWith inputs "path:./templates" {}) ["devShells" "default" "packages" "legacyPackages" "apps" system]).ops-env;
       };
 
       lib =

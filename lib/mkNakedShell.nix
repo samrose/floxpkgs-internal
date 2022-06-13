@@ -50,8 +50,22 @@ in
       builtins.filter (x: !(builtins.isString x && !builtins.hasContext x))
       (calledFloxEnv.passthru.paths ++ pins.versions);
     passthru.pure-paths =
-      builtins.filter (x: !(builtins.isString x && !builtins.hasContext x))
-      (calledFloxEnv.passthru.paths);
+      let paths = builtins.filter (x: !(builtins.isString x && !builtins.hasContext x))
+                  (calledFloxEnv.passthru.paths);
+      in
+      map  (drv:
+        {
+          storePaths = lib.attrValues (lib.genAttrs drv.outputs (output: builtins.unsafeDiscardStringContext drv.${output}.outPath));
+        } // (if drv?attribute_path
+        then {
+          active = true;
+          attrPath = builtins.concatStringsSep "." ([pkgs.system] ++ drv.attribute_path);
+          originalUrl = null;
+          url = null;
+        }
+        else {}
+        ))
+        paths;
     passthru.programs = calledFloxEnv.passthru.programs;
     passthru.data = data;
     passthru.pins = pins;
