@@ -1,7 +1,5 @@
 rec {
-  #inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
-
-  inputs.capacitor.url = "/home/tom/flox/capacitor";
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/capacitor";
   inputs.capacitor.inputs.root.follows = "/";
 
   inputs.floxdocs.url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
