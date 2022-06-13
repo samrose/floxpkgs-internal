@@ -14,7 +14,7 @@
       "locked": {
         "lastModified": 1655124817,
         "narHash": "sha256-v6puO/7RhlknD+5+9XYgOCMpTI9BrZSpCNTTLSwa4mU=",
-        "ref": "refs/heads/master",
+        "ref": "master",
         "rev": "e76ff4977fb8239423187ae9975ac7cdaa183492",
         "revCount": 198,
         "type": "git",
@@ -65,11 +65,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1653917170,
-        "narHash": "sha256-FyxOnEE/V4PNEcMU62ikY4FfYPo349MOhMM97HS0XEo=",
+        "lastModified": 1654858401,
+        "narHash": "sha256-53bw34DtVJ2bnF6WEwy6Tym+qY0pNEiEwARUlvmTZjs=",
         "owner": "numtide",
         "repo": "devshell",
-        "rev": "fc7a3e3adde9bbcab68af6d1e3c6eb738e296a92",
+        "rev": "f55e05c6d3bbe9acc7363bc8fc739518b2f02976",
         "type": "github"
       },
       "original": {
@@ -217,11 +217,11 @@
     "floxdocs": {
       "flake": false,
       "locked": {
-        "lastModified": 1654615698,
-        "narHash": "sha256-gM/TjThja/rJ12qDPKzk1Ziu2JB6Akq89/RkK+QhKrU=",
+        "lastModified": 1655133337,
+        "narHash": "sha256-urNxWkP5gYABNJKK0JpOpj2Wlei42ytHaQQzYFuL7Pw=",
         "ref": "tng",
-        "rev": "c85292b9fbed462a70bb80979c3cdf2946d2f48b",
-        "revCount": 445,
+        "rev": "6a47a1443ee335772bd5d90764c0345c4bfdbb60",
+        "revCount": 447,
         "type": "git",
         "url": "ssh://git@github.com/flox/floxdocs"
       },
@@ -591,7 +591,7 @@
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-viEy50mCXTs7v4W87ZUe1SdsYUih2x9fOVauuqPC548=",
+        "narHash": "sha256-1TJCXv3SKTFgBGoQ8br+GN1asOT5Rv1NJCrHeYQh/U0=",
         "path": "./templates/ops-env",
         "type": "path"
       },
@@ -619,11 +619,11 @@
     "pypi-deps-db_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1654764333,
-        "narHash": "sha256-OmzBbqIlVXKiaeClKLCYTg+butpU8f1TU34H1vf2sWM=",
+        "lastModified": 1655108655,
+        "narHash": "sha256-2DpW5krq+PzvyohOnC+YPwLSd9hpkVlzxeh2Xb+BqDQ=",
         "owner": "DavHau",
         "repo": "pypi-deps-db",
-        "rev": "31405ed38566d3189ad77532ad5fe5911fef300f",
+        "rev": "a66d3139aa049d5fd2ae551e023c984058f24809",
         "type": "github"
       },
       "original": {
