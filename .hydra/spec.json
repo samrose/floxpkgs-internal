@@ -13,7 +13,7 @@
   "hidden": true,
   "inputs": {
     "nixexpr": {
-      "value": "ssh://git@github.com/flox/floxpkgs declarative-hydra",
+      "value": "ssh://git@github.com/flox/floxpkgs master",
       "type": "git"
     },
     "pulls": {
