@@ -36,8 +36,8 @@
       lib.recursiveUpdate
       {
         packages = (auto.localPkgs context "pkgs/");
-        lib = (auto.localX "lib" context "lib/");
-        apps = (auto.localX "apps" context "apps/");
+        lib = (auto.localXWith {} "lib" context "lib/");
+        apps = (auto.localXWith {} "apps" context "apps/");
 
         templates = builtins.mapAttrs
           (k: v: {
