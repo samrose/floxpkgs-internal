@@ -1,0 +1,3 @@
+env:
+  FLOXBOT_KEY: ENCRYPTED[FLOXBOT_KEY]
+trigger_type: manual
