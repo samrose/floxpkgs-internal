@@ -1,0 +1,26 @@
+{
+  "enabled": 1,
+  "hidden": false,
+  "description": "",
+  "nixexprinput": "nixexpr",
+  "nixexprpath": "./.hydra/declarative.nix",
+  "checkinterval": 60,
+  "schedulingshares": 100,
+  "enableemail": false,
+  "emailoverride": "",
+  "keepnr": 3,
+  "type": 0,
+  "hidden": true,
+  "inputs": {
+    "nixexpr": {
+      "value": "ssh://git@github.com/flox/floxpkgs declarative-hydra",
+      "type": "git"
+    },
+    "pulls": {
+      "type": "githubpulls",
+      "value": "flox floxpkgs",
+      "emailresponsible": false
+    }
+  }
+}
+
