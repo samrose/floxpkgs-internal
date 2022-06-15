@@ -7,8 +7,8 @@
         "root": []
       },
       "locked": {
-        "lastModified": 1655283280,
-        "narHash": "sha256-9UstY8drOcMZGMim/vlwGw333ASJvMzlSfPSs+rMS7w=",
+        "lastModified": 1655288170,
+        "narHash": "sha256-DMKpgcojNj8kVY58yQzU5ij9B5qjBIb8JMl62BfsdkY=",
         "type": "git",
         "url": "file:///Volumes/Projects/Flox/tests/minicapacitor/capacitor"
       },
@@ -224,11 +224,11 @@
     },
     "nixpkgs-staging": {
       "locked": {
-        "lastModified": 1653060744,
-        "narHash": "sha256-kfRusllRumpt33J1hPV+CeCCylCXEU7e0gn2/cIM7cY=",
+        "lastModified": 1654682581,
+        "narHash": "sha256-Jb1PQCwKgwdNAp907eR5zPzuxV+kRroA3UIxUxCMJ9s=",
         "owner": "flox",
         "repo": "nixpkgs",
-        "rev": "dfd82985c273aac6eced03625f454b334daae2e8",
+        "rev": "e0169d7a9d324afebf5679551407756c77af8930",
         "type": "github"
       },
       "original": {

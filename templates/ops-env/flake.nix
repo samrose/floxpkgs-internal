@@ -20,7 +20,7 @@ rec {
 
   outputs = _:
     _.capacitor _ ({floxpkgs, ...}: {
-      devShells.default = floxpkgs.lib.mkFloxShell ./flox.toml _.self.__pins;
+      devShells.default = _.capacitor.lib.mkFloxShell _ ./flox.toml _.self.__pins;
       apps = floxpkgs.apps;
 
       # AUTO-MANAGED AFTER THIS POINT ##################################
