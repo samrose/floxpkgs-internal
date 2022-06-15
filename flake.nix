@@ -1,7 +1,6 @@
 {
-  inputs.capacitor.url = "/Volumes/Projects/Flox/tests/minicapacitor/capacitor";
-  # inputs.capacitor.url = "git+ssh://git@github.com/flox/minicapacitor?ref=main&dir=capacitor";
 
+  inputs.capacitor.url = "git+ssh://git@github.com/flox/minicapacitor?ref=main";
   inputs.capacitor.inputs.root.follows = "/";
 
   inputs.nixpkgs-stable.url = "github:flox/nixpkgs/stable";
