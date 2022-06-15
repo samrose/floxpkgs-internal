@@ -7,11 +7,11 @@
         "root": []
       },
       "locked": {
-        "lastModified": 1655301574,
-        "narHash": "sha256-oH8qZAdCKcQJjYIPq0lsEm2d/ehDIsuWcOMD1FKTqng=",
+        "lastModified": 1655303510,
+        "narHash": "sha256-UI5pKryZmltqYlXUlOhBSE/KpUIfNbjY5CGQyOgT6ac=",
         "ref": "main",
-        "rev": "92e5eb89f12652b551595fa7c618da21c086d702",
-        "revCount": 62,
+        "rev": "735f91a14b0e1bab32cb20f8038425d398919fe8",
+        "revCount": 64,
         "type": "git",
         "url": "ssh://git@github.com/flox/minicapacitor"
       },
@@ -244,11 +244,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1654682581,
-        "narHash": "sha256-Jb1PQCwKgwdNAp907eR5zPzuxV+kRroA3UIxUxCMJ9s=",
+        "lastModified": 1655221618,
+        "narHash": "sha256-ht8HRFthDKzYt+il+sGgkBwrv+Ex2l8jdGVpsrPfFME=",
         "owner": "flox",
         "repo": "nixpkgs",
-        "rev": "e0169d7a9d324afebf5679551407756c77af8930",
+        "rev": "6616de389ed55fba6eeba60377fc04732d5a207c",
         "type": "github"
       },
       "original": {
