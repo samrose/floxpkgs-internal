@@ -3,29 +3,23 @@
     "capacitor": {
       "inputs": {
         "nixpkgs": "nixpkgs",
+        "nixpkgs-lib": "nixpkgs-lib",
         "root": []
       },
       "locked": {
-        "dir": "capacitor",
-        "lastModified": 1654784436,
-        "narHash": "sha256-naP0ff6JQCg51GQZhT76a+M89avJbXf++Lue7qAl9iw=",
-        "ref": "main",
-        "rev": "f86d54e87ccdd8634e47c93111c99fdc840c282a",
-        "revCount": 43,
+        "lastModified": 1655283280,
+        "narHash": "sha256-9UstY8drOcMZGMim/vlwGw333ASJvMzlSfPSs+rMS7w=",
         "type": "git",
-        "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
+        "url": "file:///Volumes/Projects/Flox/tests/minicapacitor/capacitor"
       },
       "original": {
-        "dir": "capacitor",
-        "ref": "main",
         "type": "git",
-        "url": "ssh://git@github.com/flox/minicapacitor?dir=capacitor"
+        "url": "file:///Volumes/Projects/Flox/tests/minicapacitor/capacitor"
       }
     },
     "catalog": {
       "inputs": {
         "capacitor": [
-          "pkgs",
           "capacitor"
         ],
         "src": "src"
@@ -33,11 +27,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-d0d+9F05ZHiAkAVM23g7E74s4nSqvGuS6HjsXzYGHrs=",
-        "path": "./catalog",
+        "path": "./pkgs/catalog",
         "type": "path"
       },
       "original": {
-        "path": "./catalog",
+        "path": "./pkgs/catalog",
         "type": "path"
       }
     },
@@ -75,7 +69,6 @@
     "flox": {
       "inputs": {
         "capacitor": [
-          "pkgs",
           "capacitor"
         ]
       },
@@ -97,11 +90,11 @@
     "flox/floxdocs/tng": {
       "flake": false,
       "locked": {
-        "lastModified": 1654615698,
-        "narHash": "sha256-gM/TjThja/rJ12qDPKzk1Ziu2JB6Akq89/RkK+QhKrU=",
+        "lastModified": 1655133337,
+        "narHash": "sha256-urNxWkP5gYABNJKK0JpOpj2Wlei42ytHaQQzYFuL7Pw=",
         "ref": "tng",
-        "rev": "c85292b9fbed462a70bb80979c3cdf2946d2f48b",
-        "revCount": 445,
+        "rev": "6a47a1443ee335772bd5d90764c0345c4bfdbb60",
+        "revCount": 447,
         "type": "git",
         "url": "ssh://git@github.com/flox/floxdocs"
       },
@@ -148,23 +141,25 @@
     },
     "nix-editor": {
       "inputs": {
+        "capacitor": [
+          "capacitor"
+        ],
         "src": "src_2"
       },
       "locked": {
         "lastModified": 1,
-        "narHash": "sha256-kguTg57swdDIMKqa9VGPqfZ8HbdM8iZASKRHxgAKdEs=",
-        "path": "./nix-editor",
+        "narHash": "sha256-WmUDGFzT1j7a6YeHPlOhNHY3rXp1VkdMzOINMzv8o8M=",
+        "path": "./pkgs/nix-editor",
         "type": "path"
       },
       "original": {
-        "path": "./nix-editor",
+        "path": "./pkgs/nix-editor",
         "type": "path"
       }
     },
     "nix-installers": {
       "inputs": {
         "capacitor": [
-          "pkgs",
           "capacitor"
         ]
       },
@@ -194,6 +189,21 @@
       "original": {
         "id": "nixpkgs",
         "type": "indirect"
+      }
+    },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1654995002,
+        "narHash": "sha256-yOLQjbMusB0FooWSl7P9YQzoopez3doLAkeNQAEVaGk=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "8f09bff20b363b80213186156168126674990368",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
       }
     },
     "nixpkgs-stable": {
@@ -274,37 +284,19 @@
         "type": "github"
       }
     },
-    "pkgs": {
+    "root": {
       "inputs": {
-        "capacitor": [
-          "capacitor"
-        ],
+        "capacitor": "capacitor",
         "catalog": "catalog",
         "flox": "flox",
         "flox/floxdocs/tng": "flox/floxdocs/tng",
         "flox/mini-dinstall": "flox/mini-dinstall",
         "nix-editor": "nix-editor",
         "nix-installers": "nix-installers",
-        "tracelinks": "tracelinks"
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-cX/unxtT9cfo6TATNvrcUagLw+fl/6myucJvop9SwqY=",
-        "path": "./pkgs",
-        "type": "path"
-      },
-      "original": {
-        "path": "./pkgs",
-        "type": "path"
-      }
-    },
-    "root": {
-      "inputs": {
-        "capacitor": "capacitor",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-staging": "nixpkgs-staging",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "pkgs": "pkgs"
+        "tracelinks": "tracelinks"
       }
     },
     "src": {
@@ -365,7 +357,6 @@
     "tracelinks": {
       "inputs": {
         "capacitor": [
-          "pkgs",
           "capacitor"
         ],
         "src": "src_3"
@@ -373,11 +364,11 @@
       "locked": {
         "lastModified": 1,
         "narHash": "sha256-5Km/ONrCmKt5Sc0d725lRbATlq1wWNckJop8gXBx0yo=",
-        "path": "./tracelinks",
+        "path": "./pkgs/tracelinks",
         "type": "path"
       },
       "original": {
-        "path": "./tracelinks",
+        "path": "./pkgs/tracelinks",
         "type": "path"
       }
     }
