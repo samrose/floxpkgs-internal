@@ -3,15 +3,14 @@
     "capacitor": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "nixpkgs-lib": "nixpkgs-lib",
         "root": []
       },
       "locked": {
-        "lastModified": 1655303510,
-        "narHash": "sha256-UI5pKryZmltqYlXUlOhBSE/KpUIfNbjY5CGQyOgT6ac=",
+        "lastModified": 1655391808,
+        "narHash": "sha256-Qqy6gGBwwX7bn1ke8axH7UvLfIXLna3kZJVpJ9LpqWA=",
         "ref": "main",
-        "rev": "735f91a14b0e1bab32cb20f8038425d398919fe8",
-        "revCount": 64,
+        "rev": "e6ec32a2af2313e706ba8aefe79e04fbeb07d418",
+        "revCount": 73,
         "type": "git",
         "url": "ssh://git@github.com/flox/minicapacitor"
       },
@@ -184,29 +183,17 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1652739558,
-        "narHash": "sha256-znGkjGugajqF/sFS+H4+ENmGTaVPFE0uu1JjQZJLEaQ=",
-        "path": "/nix/store/s5vidnfp9kl1lqg3yriilizfiz07i57n-source",
-        "rev": "ff691ed9ba21528c1b4e034f36a04027e4522c58",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs-lib": {
-      "locked": {
-        "lastModified": 1654995002,
-        "narHash": "sha256-yOLQjbMusB0FooWSl7P9YQzoopez3doLAkeNQAEVaGk=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "8f09bff20b363b80213186156168126674990368",
+        "lastModified": 1653060744,
+        "narHash": "sha256-kfRusllRumpt33J1hPV+CeCCylCXEU7e0gn2/cIM7cY=",
+        "owner": "flox",
+        "repo": "nixpkgs",
+        "rev": "dfd82985c273aac6eced03625f454b334daae2e8",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
+        "owner": "flox",
+        "ref": "stable",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
