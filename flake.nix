@@ -83,7 +83,7 @@ rec {
         self.legacyPackages.${system}.flox
         ;
           in
-          auto.automaticPkgsWith inputs ./apps pkgsMerged;
+          auto.automaticPkgsWith inputs ./apps (lib.recursiveUpdate { inherit lib; } pkgsMerged);
 
       # Create output jobsets for stabilities
       # TODO: has.stabilities and re-arrange attribute names to make system last?
@@ -136,6 +136,7 @@ rec {
           mkFloxShell = import ./lib/mkFloxShell.nix _;
           mkUpdateVersions = import ./lib/update-versions.nix _;
           mkUpdateExtensions = import ./lib/update-extensions.nix _;
+          test-installer = import ./lib/test-installer.nix;
         };
 
       templates = builtins.mapAttrs (k: v: {
