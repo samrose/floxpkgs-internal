@@ -1,6 +1,5 @@
-{
+{lib}: {
   mach-nix,
-  lib,
 }: pkgs: toml: pins: let
   tie = {
     inherit pkgs;
