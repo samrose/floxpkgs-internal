@@ -9,13 +9,13 @@ let
       enabled = 1;
       hidden = true;
       description = "PR ${num}: ${info.title}";
-      checkinterval = 30;
+      checkinterval = 120;
       schedulingshares = 20;
       enableemail = false;
       emailoverride = "";
       keepnr = 1;
       type = 1;
-      flake = "git+ssh://git@github.com/flox/floxpkgs?ref=${info.head.ref}";
+      flake = "git+ssh://git@github.com/flox/floxpkgs-internal?ref=${info.head.ref}";
       flakeattr = "hydraJobsStable";
     };
   }
@@ -30,7 +30,7 @@ let
     keepnr = 3;
     hidden = false;
     type = 1;
-    flake = "git+ssh://git@github.com/flox/floxpkgs?ref=${branch}";
+    flake = "git+ssh://git@github.com/flox/floxpkgs-internal?ref=${branch}";
     flakeattr = "hydraJobs${stability}";
   };
 
