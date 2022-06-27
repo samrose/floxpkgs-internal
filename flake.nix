@@ -11,7 +11,7 @@
   # Add additional subflakes as needed
 
 
-  inputs."flox/tracelinks".url = "github:flox/tracelinks";
+  inputs."flox/tracelinks".url = "git+ssh://git@github.com/flox/tracelinks?ref=main";
   inputs."flox/tracelinks".flake = false;
 
   inputs."flox/floxdocs/tng".url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
@@ -23,7 +23,7 @@
   inputs.nix-installers.url = "git+ssh://git@github.com/flox/nix-installers?ref=minicapacitor";
   inputs.nix-installers.inputs.capacitor.follows = "capacitor";
 
-  inputs.catalog.url = "github:flox/catalog/minicapacitor";
+  inputs.catalog.url = "git+ssh://git@github.com/flox/catalog?ref=minicapacitor";
   inputs.catalog.inputs.capacitor.follows = "capacitor";
 
   inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=minicapacitor";

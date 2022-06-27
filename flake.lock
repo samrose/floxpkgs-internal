@@ -29,16 +29,16 @@
       "locked": {
         "lastModified": 1656346798,
         "narHash": "sha256-pTQfBh+pbC0EMGUtQ5mzwgwQaLaPstqjUNXCBkP6wqk=",
-        "owner": "flox",
-        "repo": "catalog",
+        "ref": "minicapacitor",
         "rev": "56d90274695e5bd7f804c351771be3b7315e44bf",
-        "type": "github"
+        "revCount": 48,
+        "type": "git",
+        "url": "ssh://git@github.com/flox/catalog"
       },
       "original": {
-        "owner": "flox",
         "ref": "minicapacitor",
-        "repo": "catalog",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/flox/catalog"
       }
     },
     "flake-compat": {
@@ -132,15 +132,16 @@
       "locked": {
         "lastModified": 1647596882,
         "narHash": "sha256-RdD0fUS1XT03T4XSp4abxb8AOkQUEy93I86xBkks/Tc=",
-        "owner": "flox",
-        "repo": "tracelinks",
+        "ref": "main",
         "rev": "22d985d2757f1834ee51d3dadc93908c9cfc9ab3",
-        "type": "github"
+        "revCount": 5,
+        "type": "git",
+        "url": "ssh://git@github.com/flox/tracelinks"
       },
       "original": {
-        "owner": "flox",
-        "repo": "tracelinks",
-        "type": "github"
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/flox/tracelinks"
       }
     },
     "naersk": {
