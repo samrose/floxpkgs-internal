@@ -1,6 +1,7 @@
-context @ { inputs, ... }: {
+context @ { lib,  inputs, ... }: {
   packages = {
-    flox = { self', ... }: self'.legacyPackages.__projects.flox.default;
+    nixeditor = { inputs, ... }: inputs.nix-editor.packages.nixeditor;
+    flox = { inputs, ... }: inputs.flox.legacyPackages.default;
   };
 
   __reflect = {
@@ -15,11 +16,11 @@ context @ { inputs, ... }: {
     systems = [ "x86_64-linux" ];
 
     adopted = {
-      inherit (inputs) nix-installers;
+      inherit (inputs) flox nix-installers;
     };
 
     projects = {
-      flox = inputs.flox;
+      inherit (inputs)  nix-editor catalog;
     };
 
   };

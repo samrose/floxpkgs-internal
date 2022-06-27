@@ -8,18 +8,11 @@
   inputs.nixpkgs-staging.url = "github:flox/nixpkgs/staging";
 
 
-  # # Add additional subflakes as needed
-  inputs.tracelinks.url = "path:./pkgs/tracelinks";
-  inputs.tracelinks.inputs.capacitor.follows = "capacitor";
+  # Add additional subflakes as needed
 
-  inputs.catalog.url = "path:./pkgs/catalog";
-  inputs.catalog.inputs.capacitor.follows = "capacitor";
 
-  inputs."nix-editor".url = "path:./pkgs/nix-editor";
-  inputs."nix-editor".inputs.capacitor.follows = "capacitor";
-
-  inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=minicapacitor";
-  inputs.flox.inputs.capacitor.follows = "capacitor";
+  inputs."flox/tracelinks".url = "github:flox/tracelinks";
+  inputs."flox/tracelinks".flake = false;
 
   inputs."flox/floxdocs/tng".url = "git+ssh://git@github.com/flox/floxdocs?ref=tng";
   inputs."flox/floxdocs/tng".flake = false;
@@ -30,10 +23,21 @@
   inputs.nix-installers.url = "git+ssh://git@github.com/flox/nix-installers?ref=minicapacitor";
   inputs.nix-installers.inputs.capacitor.follows = "capacitor";
 
+  inputs.catalog.url = "github:flox/catalog/minicapacitor";
+  inputs.catalog.inputs.capacitor.follows = "capacitor";
 
-  outputs = {capacitor, ...} @ args : capacitor args (context @ {has, lib,auto,...}:
+  inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=minicapacitor";
+  inputs.flox.inputs.capacitor.follows = "capacitor";
+
+  # Third Party
+
+  inputs.nix-editor.url = "github:vlinkz/nix-editor";
+
+
+
+  outputs = {capacitor, ...} @ args : capacitor args (context @ {has,lib,auto,...}:
       
-      lib.recursiveUpdate
+      capacitor.inputs.nixpkgs.lib.recursiveUpdate
       {
         packages = (auto.localPkgs context "pkgs/");
         lib = (auto.localResources"lib" context "lib/");
