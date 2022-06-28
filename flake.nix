@@ -136,6 +136,7 @@ rec {
           mkFloxShell = import ./lib/mkFloxShell.nix _;
           mkUpdateVersions = import ./lib/update-versions.nix _;
           mkUpdateExtensions = import ./lib/update-extensions.nix _;
+          test-installer = import ./lib/test-installer.nix;
         };
 
       templates = builtins.mapAttrs (k: v: {
