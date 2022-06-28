@@ -17,7 +17,6 @@ def main(ctx):
 		    "region": "us-east-1"
                 }
             },
-            instructions=[script(bootstrap_deb()),
-               script("nix run .#test-deb")]
+            instructions=[script(bootstrap_deb())]
         ),
     ]
