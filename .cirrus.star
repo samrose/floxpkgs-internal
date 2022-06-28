@@ -11,8 +11,10 @@ def main(ctx):
         task(
             "test_install_ubuntu",
             instance= {
-                "compute_engine_instance": {
-                    "image_project": "ec2_instance",
+                "ec2_instance": {
+                    "image": "ami-08d4ac5b634553e16",
+		    "type": "t2.micro",
+		    "region": "us-east-1"
                 }
             },
             instructions=[script(bootstrap_deb()),
