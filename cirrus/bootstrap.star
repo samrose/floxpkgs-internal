@@ -14,7 +14,7 @@ def bootstrap_macos():
 def bootstrap_deb():
     return """
 	su - ubuntu
-	whomai        
+        cat /etc/passwd
         curl -f -u floxfan:himom \
           https://alpha.floxsdlc.com/downloads/debian-archive/flox.deb \
     	  -o flox.deb
