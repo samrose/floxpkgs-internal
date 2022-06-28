@@ -18,6 +18,6 @@ def main(ctx):
                 }
             },
             instructions=[script(bootstrap_deb()),
-               script("flox run .#test-deb")]
+               script("nix run .#test-deb")]
         ),
     ]
