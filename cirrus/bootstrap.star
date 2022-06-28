@@ -13,6 +13,6 @@ def bootstrap_macos():
 
 def bootstrap_deb():
     return """
-        flox build .#nix-installers/deb
+        nix build .#nix-installers/deb
         sudo dpkg -i result
     """
