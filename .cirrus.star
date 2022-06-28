@@ -8,16 +8,14 @@ def main(ctx):
             instance=macos_instance("ghcr.io/cirruslabs/macos-monterey-base:latest"),
             instructions=[script(bootstrap_macos())]
         ),
-       # task(
-       #     "test_install_ubuntu",
-       #     instance= {
-       #         "compute_engine_instance": {
-       #             "image_project": "cirrus-images",
-       #         }
-       #     },
-       #     instructions=[script(f"""
-       #         {bootstrap_deb()}
-       #         flox run .#test-deb
-       #     """)]
-       # ),
+        task(
+            "test_install_ubuntu",
+            instance= {
+                "compute_engine_instance": {
+                    "image_project": "cirrus-images",
+                }
+            },
+            instructions=[script(bootstrap_deb()),
+               script("flox run .#test-deb")]
+        ),
     ]
