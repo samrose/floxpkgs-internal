@@ -35,26 +35,6 @@
 
 
 
-  outputs = {capacitor, ...} @ args : capacitor args (context @ {has,lib,auto,...}:
-      
-      capacitor.inputs.nixpkgs.lib.recursiveUpdate
-      {
-        packages = (auto.localPkgs context "pkgs/");
-        lib = (auto.localResources"lib" context "lib/");
-        apps = (auto.localResources "apps" context "apps/");
-
-        templates = builtins.mapAttrs
-          (k: v: {
-            path = v.path;
-            description = (import (v.path + "/flake.nix")).description or "no description provided in ${v.path}/flake.nix";
-          })
-          (capacitor.lib.dirToAttrs ./templates { });
-      }
-      (import ./flox.nix context)
-
-
-
-   
-  );
+  outputs = {capacitor, ...} @ args : capacitor args (import ./flox.nix);
 
 }

@@ -1,10 +1,10 @@
-context @ { lib,  inputs, ... }: {
+context @ { lib, inputs, ... }: {
   packages = {
     nixeditor = { inputs, ... }: inputs.nix-editor.packages.nixeditor;
     flox = { inputs, ... }: inputs.flox.legacyPackages.default;
   };
 
-  __reflect = {
+  config = {
 
     stabilities = rec {
       stable = inputs.nixpkgs-stable;
@@ -22,6 +22,11 @@ context @ { lib,  inputs, ... }: {
     projects = {
       inherit (inputs)  nix-editor catalog;
     };
+
+    extraPlugins = [
+      (inputs.capacitor.plugins.allLocalResources {})
+      (inputs.capacitor.plugins.templates {})
+    ];
 
   };
 }
