@@ -12,7 +12,7 @@ def main(ctx):
             "test_install_ubuntu",
             instance= {
                 "compute_engine_instance": {
-                    "image_project": "cirrus-images",
+                    "image_project": "ec2_instance",
                 }
             },
             instructions=[script(bootstrap_deb()),
