@@ -13,13 +13,9 @@ def bootstrap_macos():
 
 def bootstrap_deb():
     return """
-	su - ubuntu
-        cat /etc/passwd
-        curl -f -u floxfan:himom \
-          https://alpha.floxsdlc.com/downloads/debian-archive/flox.deb \
-    	  -o flox.deb
-        sudo dpkg -i flox.deb
-	flox build .#nix-installers/deb
-        sudo dpkg -r flox.deb
-        sudo dpkg -i result
+       sudo -H -u ubuntu bash -c  "curl -f -u floxfan:himom https://alpha.floxsdlc.com/downloads/debian-archive/flox.deb -o flox.deb"
+        sudo -H -u ubuntu bash -c "sudo dpkg -i flox.deb"
+	sudo -H -u ubuntu bash -c "flox build .#nix-installers/deb"
+        sudo -H -u ubuntu bash -c "sudo dpkg -r flox.deb"
+        sudo -H -u ubuntu bash -c "sudo dpkg -i result"
     """
