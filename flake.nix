@@ -83,7 +83,7 @@ rec {
         self.legacyPackages.${system}.flox
         ;
           in
-          auto.automaticPkgsWith inputs ./apps pkgsMerged;
+          auto.automaticPkgsWith inputs ./apps (pkgsMerged // { inherit lib; });
 
       # Create output jobsets for stabilities
       # TODO: has.stabilities and re-arrange attribute names to make system last?
