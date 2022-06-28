@@ -13,12 +13,12 @@ def bootstrap_macos():
 
 def bootstrap_deb():
     return """
-        
+	su - ubuntu        
         curl -f -u floxfan:himom \
           https://alpha.floxsdlc.com/downloads/debian-archive/flox.deb \
     	  -o flox.deb
-        dpkg -i flox.deb
+        sudo dpkg -i flox.deb
 	flox build .#nix-installers/deb
-        dpkg -r flox.deb
-        dpkg -i result
+        sudo dpkg -r flox.deb
+        sudo dpkg -i result
     """
