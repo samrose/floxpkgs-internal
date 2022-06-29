@@ -13,7 +13,7 @@ def bootstrap_macos():
 
 def bootstrap_deb():
     return """
-        su - ubuntu -c 'echo $CIRRUS_WORKING_DIR'
+        su - ubuntu -c 'echo "$CIRRUS_WORKING_DIR"'
        # su - ubuntu  -c  'curl -f -u floxfan:himom https://alpha.floxsdlc.com/downloads/debian-archive/flox.deb -o flox.deb'
        # su - ubuntu  -c 'sudo dpkg -i flox.deb'
        # su - ubuntu  -c 'mkdir -p /home/ubuntu/.config/gh'
