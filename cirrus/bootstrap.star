@@ -9,6 +9,7 @@ def bootstrap_macos():
         # nix won't accept new keys by default
         sudo -H ssh git@github.com -o StrictHostKeyChecking=accept-new || true
         sudo -H nix --extra-experimental-features 'flakes nix-command' profile install --profile /nix/var/nix/profiles/default 'git+ssh://git@github.com/flox/flox?ref=tng'
+        flox --version
     """
 
 def bootstrap_deb():
