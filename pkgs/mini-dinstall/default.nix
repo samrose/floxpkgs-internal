@@ -1,6 +1,5 @@
 { lib
 , python2Packages
-, fetchFrom
 , inputs
 }:
 
@@ -9,7 +8,7 @@ let
 
 in
 pythonPackages.buildPythonApplication rec {
-  src = fetchFrom inputs "git+ssh://git@github.com/flox/mini-dinstall?ref=main";
+  src = inputs."flox/mini-dinstall";
   name = "mini-dinstall";
   version = "0.6.28.1";
 
