@@ -26,7 +26,7 @@
   inputs.catalog.url = "git+ssh://git@github.com/flox/catalog?ref=minicapacitor";
   inputs.catalog.inputs.capacitor.follows = "capacitor";
 
-  inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=minicapacitor";
+  inputs.flox.url = "git+ssh://git@github.com/flox/flox?ref=tng";
   inputs.flox.inputs.capacitor.follows = "capacitor";
 
   # Third Party
