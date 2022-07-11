@@ -1,8 +1,7 @@
-{
+{lib}:{
   devshell,
   data,
   pkgs,
-  lib,
   floxpkgs,
   pins,
   ...
