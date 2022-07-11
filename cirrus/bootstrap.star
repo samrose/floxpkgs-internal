@@ -22,5 +22,8 @@ def bootstrap_deb():
          su - ubuntu  -c 'flox --version'
          su - ubuntu  -c 'mkdir -p myproj && cd myproj'
          su - ubuntu  -c 'curl -O https://raw.githubusercontent.com/flox/floxpkgs/master/test/flox-init.exp'
+         su - ubuntu  -c 'curl -O https://raw.githubusercontent.com/flox/floxpkgs/master/test/ops-env.exp'
+         su - ubuntu  -c 'curl -O https://raw.githubusercontent.com/flox/floxpkgs/master/test/ops-env.bats'
          su - ubuntu  -c 'expect flox-init.exp'
+         su - ubuntu  -c 'expect ops-env.exp'
     """
