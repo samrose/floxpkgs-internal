@@ -14,8 +14,10 @@ def bootstrap_macos():
 
 def bootstrap_deb():
     return """
-        su - ubuntu -c 'ls -la /tmp'
+        su - ubuntu -c 'ls -la .'
         su - ubuntu  -c  'curl -f -u floxfan:himom https://alpha.floxsdlc.com/downloads/debian-archive/flox.deb -o flox.deb'
          su - ubuntu  -c 'sudo dpkg -i flox.deb'
          su - ubuntu  -c 'flox --version'
+         su - ubuntu  -c 'mkdir -p myproj && cd myproj'
+         su - ubuntu  -c 'curl -O https://raw.githubusercontent.com/flox/floxpkgs/master/test/flox-init.exp'
     """
