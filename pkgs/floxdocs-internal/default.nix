@@ -5,7 +5,6 @@
 , mkdocs
 , python3Packages
 , which
-, fetchFrom
 , inputs
 }:
 
@@ -14,7 +13,7 @@ let
 
 in
 stdenv.mkDerivation {
-  src = fetchFrom inputs "git+ssh://git@github.com/flox/floxdocs?ref=tng";
+  src = inputs."flox/floxdocs/tng";
   name = "floxdocs-tng";
   version = "0.1";
 
