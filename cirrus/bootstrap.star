@@ -10,6 +10,12 @@ def bootstrap_macos():
         sudo -H ssh git@github.com -o StrictHostKeyChecking=accept-new || true
         sudo -H nix --extra-experimental-features 'flakes nix-command' profile install --profile /nix/var/nix/profiles/default 'git+ssh://git@github.com/flox/flox?ref=tng'
         flox --version
+        mkdir -p myproj && cd myproj
+        curl -O https://raw.githubusercontent.com/flox/floxpkgs/master/test/flox-init-dev-env.exp
+        curl -O https://raw.githubusercontent.com/flox/floxpkgs/master/test/dev-env.exp
+        curl -O https://raw.githubusercontent.com/flox/floxpkgs/master/test/dev-env.bats
+        expect flox-init-dev-env.exp
+        expect dev-env.exp
     """
 
 def bootstrap_deb():
