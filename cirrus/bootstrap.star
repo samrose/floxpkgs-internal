@@ -14,7 +14,6 @@ def bootstrap_macos():
 
 def bootstrap_deb():
     return """
-        su - ubuntu -c 'ls -la .'
         su - ubuntu -c 'sudo apt update'
         su - ubuntu -c 'sudo apt install -y expect bats'
         su - ubuntu  -c  'curl -f -u floxfan:himom https://alpha.floxsdlc.com/downloads/debian-archive/flox.deb -o flox.deb'
